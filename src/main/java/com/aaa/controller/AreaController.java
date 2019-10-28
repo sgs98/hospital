@@ -57,25 +57,7 @@ public class AreaController {
         }
 
     }
-    /*
-     * 修改生产地址
-     * */
-    @RequestMapping("editArea")
-    @ResponseBody
-    public Object editArea(Area Area){
-        int count = areaService.count(Area);
-        if(count==0){
-            int i = areaService.editArea(Area);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else {
-            return Area.getAreaName()+"已存在";
-        }
 
-    }
     /*
      * 删除生产地址
      * */

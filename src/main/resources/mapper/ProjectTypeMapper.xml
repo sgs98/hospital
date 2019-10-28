@@ -15,9 +15,6 @@
     <insert id="addProjecttype" parameterType="projecttype">
         insert into projecttype(projectName)values(#{projectName})
     </insert>
-    <update id="editProjecttype" parameterType="projecttype">
-        update projecttype set projectName=#{projectName} where projectId=#{projectId}
-    </update>
     <delete id="deleteProjecttype" parameterType="Integer">
         delete from projecttype where projectId=#{projectId}
     </delete>
@@ -38,7 +35,7 @@
         insert into Moneytype(moneytype,percent)values(#{moneytype},#{percent})
     </insert>
     <update id="editMoneytype" parameterType="Moneytype">
-        update Moneytype set moneytype=#{moneytype},percent=#{percent} where moneyId=#{moneyId}
+        update Moneytype set percent=#{percent} where moneyId=#{moneyId}
     </update>
     <delete id="deleteMoneytype" parameterType="Integer">
         delete from Moneytype where moneyId=#{moneyId}
@@ -59,7 +56,7 @@
        insert into Outpatienttype(projectName, unit, bigprojectId, price) values (#{projectName}, #{unit}, #{bigprojectId}, #{price})
    </insert>
     <update id="editOutpatienttype" parameterType="Outpatienttype">
-        update Outpatienttype set projectName=#{projectName},price=#{price},unit=#{unit},bigprojectId=#{bigprojectId} where outpatientId=#{outpatientId}
+        update Outpatienttype set price=#{price},unit=#{unit},bigprojectId=#{bigprojectId} where outpatientId=#{outpatientId}
     </update>
     <delete id="deleteOutpatienttype" parameterType="Integer">
         delete from Outpatienttype where outpatientId=#{outpatientId}
@@ -79,7 +76,7 @@
         insert into Inoutpatienttype(projectName,price,unit,bigprojectId)values(#{projectName},#{price},#{unit},#{bigprojectId})
     </insert>
     <update id="editInoutpatienttype" parameterType="Inoutpatienttype">
-        update Inoutpatienttype set projectName=#{projectName},price=#{price},unit=#{unit},bigprojectId=#{bigprojectId} where inoutpatientId=#{inoutpatientId}
+        update Inoutpatienttype set price=#{price},unit=#{unit},bigprojectId=#{bigprojectId} where inoutpatientId=#{inoutpatientId}
     </update>
     <delete id="deleteInoutpatienttype" parameterType="Integer">
         delete from Inoutpatienttype where inoutpatientId=#{inoutpatientId}
@@ -99,7 +96,7 @@
         insert into Bed(bedname,price,state,departmentId)values(#{bedname},#{price},0,#{departmentId})
     </insert>
     <update id="editBed" parameterType="Bed">
-        update Bed set bedname=#{bedname},price=#{price},departmentId=#{departmentId} where bedId=#{bedId}
+        update Bed set price=#{price},departmentId=#{departmentId} where bedId=#{bedId}
     </update>
     <delete id="deleteBed" parameterType="Integer">
         delete from Bed where bedId=#{bedId}

@@ -28,10 +28,6 @@ public class UnitServiceImpl implements UnitService {
         return unitMapper.addUnit(unit);
     }
 
-    @Override
-    public int editUnit(Unit unit) {
-        return unitMapper.editUnit(unit);
-    }
 
     @Override
     public int count(Unit unit) {

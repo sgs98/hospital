@@ -57,25 +57,7 @@ public class WarehuoseController {
         }
 
     }
-    /*
-     * 修改仓库
-     * */
-    @RequestMapping("editWarehuose")
-    @ResponseBody
-    public Object editWarehuose(Warehuose warehuose){
-        int count = warehuoseService.count(warehuose);
-        if(count==0){
-            int i = warehuoseService.editWarehuose(warehuose);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else {
-            return warehuose.getSupplierName()+"已存在";
-        }
 
-    }
     /*
      * 删除仓库
      * */

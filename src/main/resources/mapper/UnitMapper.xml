@@ -14,9 +14,6 @@
     <insert id="addUnit" parameterType="Unit">
         insert into Unit(unitName)values(#{unitName})
     </insert>
-    <update id="editUnit" parameterType="Unit">
-        update Unit set unitName=#{unitName} where unitId=#{unitId}
-    </update>
     <delete id="deleteUnit" parameterType="Integer">
         delete from Unit where unitId=#{unitId}
     </delete>

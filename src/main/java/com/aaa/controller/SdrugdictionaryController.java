@@ -67,16 +67,11 @@ public class SdrugdictionaryController {
     @RequestMapping("editSdrugdictionary")
     @ResponseBody
     public Object editSdrugdictionary(Sdrugdictionary sdrugdictionary){
-        int count = sdrugdictionaryService.count(sdrugdictionary);
-        if(count==0){
-            int i = sdrugdictionaryService.editSdrugdictionary(sdrugdictionary);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else {
-            return sdrugdictionary.getDrugName()+"已存在";
+        int i = sdrugdictionaryService.editSdrugdictionary(sdrugdictionary);
+        if(i==1){
+            return "修改成功";
+        }else{
+            return "修改失败";
         }
 
     }

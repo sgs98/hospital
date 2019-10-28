@@ -35,7 +35,7 @@
                 <label class="layui-form-label">产地:</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="areaId">
-                    <input type="text" name="areaName" lay-verify="required"   placeholder="请输入产地" autocomplete="off"
+                    <input type="text" name="areaName"  lay-verify="required"   placeholder="请输入产地" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -61,7 +61,6 @@
 <table class="layui-hide" id="areaTable" lay-filter="areaTable"></table>
 
 <div  id="area" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
     <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
 </div>
 <!-- 数据表格结束 -->
@@ -132,7 +131,7 @@
         function openAddArea(){
             mainIndex=layer.open({
                 type:1,
-                title:'添加科室',
+                title:'添加产地',
                 content:$("#saveOrUpdateDiv"),
                 area:['380px','300px'],
                 success:function(index){
@@ -142,19 +141,7 @@
                 }
             });
         }
-        //打开修改页面
-        function openUpdateArea(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'修改医生',
-                content:$("#saveOrUpdateDiv"),
-                area:['380px','300px'],
-                success:function(index){
-                    form.val("dataFrm",data);
-                    url="area/editArea";
-                }
-            });
-        }
+
         //保存
         form.on("submit(doSubmit)",function(obj){
             //序列化表单数据

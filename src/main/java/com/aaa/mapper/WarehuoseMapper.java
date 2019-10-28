@@ -10,6 +10,5 @@ public interface WarehuoseMapper {
     List<Warehuose> findAllWarehuose(Warehuose warehuose);
     int deleteWarehuose(Integer warehouseId);
     int addWarehuose(Warehuose warehuose);
-    int editWarehuose(Warehuose warehuose);
     int count(Warehuose warehuose);
 }

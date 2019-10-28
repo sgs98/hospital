@@ -66,16 +66,11 @@ public class DoctorController {
     @RequestMapping("editDoctor")
     @ResponseBody
     public Object editDoctor(Doctor doctor){
-        int count = doctorService.count(doctor);
-        if(count==0){
-            int i = doctorService.editDoctor(doctor);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
+        int i = doctorService.editDoctor(doctor);
+        if(i==1){
+            return "修改成功";
         }else{
-            return doctor.getDoctorName()+"已存在";
+            return "修改失败";
         }
 
     }

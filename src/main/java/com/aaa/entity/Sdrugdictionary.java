@@ -10,7 +10,6 @@ public class Sdrugdictionary {
     private String areaName;
     private Integer typeId;
     private String typeName;
-    private Integer exprationDate;
 
     public String getUnitName() {
         return unitName;
@@ -84,11 +83,4 @@ public class Sdrugdictionary {
         this.typeId = typeId;
     }
 
-    public Integer getExprationDate() {
-        return exprationDate;
-    }
-
-    public void setExprationDate(Integer exprationDate) {
-        this.exprationDate = exprationDate;
-    }
 }

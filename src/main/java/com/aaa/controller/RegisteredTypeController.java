@@ -64,16 +64,11 @@ public class RegisteredTypeController {
     @RequestMapping("editRegisteredType")
     @ResponseBody
     public Object editRegisteredType(Registeredtype registeredtype){
-        int count = registeredTypeService.count(registeredtype);
-        if(count==0){
-            int i = registeredTypeService.editRegisteredType(registeredtype);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
+        int i = registeredTypeService.editRegisteredType(registeredtype);
+        if(i==1){
+            return "修改成功";
         }else{
-            return registeredtype.getType()+"已存在";
+            return "修改失败";
         }
 
     }

@@ -27,10 +27,7 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
         return prjectTypeMapper.addProjecttype(projecttype);
     }
 
-    @Override
-    public int editProjecttype(Projecttype projecttype) {
-        return prjectTypeMapper.editProjecttype(projecttype);
-    }
+
 
     @Override
     public int deleteProjecttype(Integer projectId) {

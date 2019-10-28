@@ -10,6 +10,5 @@ public interface UnitMapper {
     List<Unit> findAllUnit(Unit unit);
     int deleteUnit(Integer unitId);
     int addUnit(Unit unit);
-    int editUnit(Unit unit);
     int count(Unit unit);
 }

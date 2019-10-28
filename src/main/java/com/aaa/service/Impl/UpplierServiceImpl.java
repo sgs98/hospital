@@ -28,10 +28,6 @@ public class UpplierServiceImpl implements UpplierService {
         return UpplierMapper.addUpplier(upplier);
     }
 
-    @Override
-    public int editUpplier(Upplier upplier) {
-        return UpplierMapper.editUpplier(upplier);
-    }
 
     @Override
     public int count(Upplier upplier) {

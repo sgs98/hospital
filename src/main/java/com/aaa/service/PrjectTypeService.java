@@ -10,7 +10,6 @@ public interface PrjectTypeService {
      * */
     List<Projecttype> findAllProjecttype(Projecttype projecttype);
     int addProjecttype(Projecttype projecttype);
-    int editProjecttype(Projecttype projecttype);
     int deleteProjecttype(Integer projectId);
     int count1(Projecttype projecttype);
     /*

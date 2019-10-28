@@ -57,25 +57,7 @@ public class UpplierController {
         }
 
     }
-    /*
-     * 修改供货单位
-     * */
-    @RequestMapping("editUpplier")
-    @ResponseBody
-    public Object editUpplier(Upplier upplier){
-        int count = upplierService.count(upplier);
-        if(count==0){
-            int i = upplierService.editUpplier(upplier);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else{
-            return upplier.getSupplierName()+"已存在";
-        }
 
-    }
     /*
      * 删除供货单位
      * */

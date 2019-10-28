@@ -61,25 +61,6 @@ public class PrjectTypeController {
 
     }
     /*
-     * 修改生产项目大类
-     * */
-    @RequestMapping("editProjecttype")
-    @ResponseBody
-    public Object editProjecttype(Projecttype projecttype){
-        int i1 = prjectTypeService.count1(projecttype);
-        if(i1==0){
-            int i = prjectTypeService.editProjecttype(projecttype);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else {
-            return projecttype.getProjectName()+"已存在";
-        }
-
-    }
-    /*
      * 删除生产项目大类
      * */
     @RequestMapping("deleteProjecttype")
@@ -138,16 +119,11 @@ public class PrjectTypeController {
     @RequestMapping("editMoneytype")
     @ResponseBody
     public Object editMoneytype(Moneytype moneytype){
-        int i1 = prjectTypeService.count4(moneytype);
-        if(i1==0){
-            int i = prjectTypeService.editMoneytype(moneytype);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
+        int i = prjectTypeService.editMoneytype(moneytype);
+        if(i==1){
+            return "修改成功";
         }else{
-            return moneytype.getMoneytype()+"已存在";
+            return "修改失败";
         }
 
     }
@@ -235,17 +211,13 @@ public class PrjectTypeController {
     public Object editOutpatienttype(Outpatienttype outpatienttype,Integer projectId,Integer unitId){
         outpatienttype.setBigprojectId(projectId);
         outpatienttype.setUnit(unitId);
-        int i1 = prjectTypeService.count2(outpatienttype);
-        if(i1==0){
             int i = prjectTypeService.editOutpatienttype(outpatienttype);
             if(i==1){
                 return "修改成功";
             }else{
                 return "修改失败";
             }
-        }else {
-            return outpatienttype.getProjectName()+"已存在";
-        }
+
 
     }
     /*
@@ -330,17 +302,13 @@ public class PrjectTypeController {
     public Object editInoutpatienttype(Inoutpatienttype inoutpatienttype,Integer projectId,Integer unitId){
         inoutpatienttype.setBigprojectId(projectId);
         inoutpatienttype.setUnit(unitId);
-        int i1 = prjectTypeService.count3(inoutpatienttype);
-        if(i1==0){
+
             int i = prjectTypeService.editInoutpatienttype(inoutpatienttype);
             if(i==1){
                 return "修改成功";
             }else{
                 return "修改失败";
             }
-        }else {
-            return inoutpatienttype.getProjectName()+"已存在";
-        }
 
     }
     /*
@@ -404,19 +372,16 @@ public class PrjectTypeController {
     @RequestMapping("editBed")
     @ResponseBody
     public Object editBed(Bed bed){
-        int i1 = prjectTypeService.count5(bed);
-        if(i1==0){
+
             int i = prjectTypeService.editBed(bed);
             if(i==1){
                 return "修改成功";
             }else{
                 return "修改失败";
             }
-        }else {
-            return bed.getBedname()+"已存在";
         }
 
-    }
+
     /*
      * 删除床位
      * */

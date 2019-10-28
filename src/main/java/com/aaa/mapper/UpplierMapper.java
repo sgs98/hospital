@@ -10,6 +10,5 @@ public interface UpplierMapper {
     List<Upplier> findAllUpplier(Upplier upplier);
     int deleteUpplier(Integer supplierId);
     int addUpplier(Upplier upplier);
-    int editUpplier(Upplier upplier);
     int count(Upplier upplier);
 }

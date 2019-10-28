@@ -57,25 +57,7 @@ public class DepartmentController {
         }
 
     }
-    /*
-     * 修改科室
-     * */
-    @RequestMapping("edit")
-    @ResponseBody
-    public Object editDepartment(Departments departments){
-        int count = departmentService.count(departments);
-        if(count==0){
-            int i = departmentService.edit(departments);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else{
-            return departments.getDepartment()+"已存在";
-        }
 
-    }
     /*
      * 删除科室
      * */

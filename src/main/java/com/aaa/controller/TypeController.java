@@ -57,25 +57,7 @@ public class TypeController {
         }
 
     }
-    /*
-     * 修改药品类型
-     * */
-    @RequestMapping("editType")
-    @ResponseBody
-    public Object editType(Type type){
-        int count = typeService.count(type);
-        if(count==0){
-            int i = typeService.editType(type);
-            if(i==1){
-                return "修改成功";
-            }else{
-                return "修改失败";
-            }
-        }else {
-            return type.getTypeName()+"已存在";
-        }
 
-    }
     /*
      * 删除药品类型
      * */
