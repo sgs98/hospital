@@ -1,0 +1,54 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.CreportMapper">
+    <!--查询所有的挂号信息-->
+    <select id="sel" resultType="ReportVo" parameterType="ReportVo">
+            SELECT r.reportId,r.reportName,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+            FROM  report r,doctor d,registeredtype e,departments p
+            WHERE r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+        <if test="reportName!=null and reportName!=''">
+            and r.reportName like concat('%' ,concat(#{reportName},'%'))
+            or d.doctorName like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or e.type like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or p.department like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+        </if>
+    </select>
+    <!--查询所有的科室-->
+    <select id="seldep" resultType="CDepartments">
+        select * from  departments
+    </select>
+    <!--查询所有的挂号类型-->
+    <select id="selreg" resultType="CRegisteredtype">
+        select * from  registeredtype
+    </select>
+    <!--根据科室和挂号类型查询医生-->
+    <select id="seldector" parameterType="CDoctor" resultType="CDoctor">
+        select * FROM doctor where departmentId=#{departmentId} and registeredid=#{registeredid}
+    </select>
+    <!--根据挂号类型去查找多钱-->
+    <select id="seltymo" parameterType="CRegisteredtype" resultType="Integer">
+        select price from registeredtype where registeredId=#{registeredId}
+    </select>
+    <!--添加挂号人员-->
+    <insert id="addre" parameterType="CReport">
+        INSERT INTO report (reportname,sex,age,department,doctor,reporttype,price,time,users,state,phone,carid)
+ VALUES (#{reportName},#{sex},#{age},#{department},#{doctor},#{reporttype},#{price},NOW(),'装三',1,#{phone},#{carid})
+    </insert>
+    <!--根据患者id修改该患者的状态让他在前台不显示-->
+    <update id="delre" parameterType="Integer">
+        UPDATE report SET state = 0 WHERE reportid = #{id}
+    </update>
+    <select id="selById" resultType="ReportVo">
+        select*from report where reportId=#{reportId}
+    </select>
+</mapper>
