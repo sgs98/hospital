@@ -19,6 +19,10 @@
         delete from Registeredtype where registeredId=#{registeredId}
     </delete>
     <update id="editRegisteredType" parameterType="Registeredtype">
-        update Registeredtype set type=#{type},price=#{price} where registeredId=#{registeredId}
+        update Registeredtype set price=#{price} where registeredId=#{registeredId}
     </update>
+    <select id="count" resultType="int">
+        select count(*) from registeredtype where type=#{type}
+
+    </select>
 </mapper>

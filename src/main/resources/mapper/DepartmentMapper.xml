@@ -14,10 +14,10 @@
     <insert id="addDepartment" parameterType="departments">
         insert into departments(department)values(#{department})
     </insert>
-    <update id="edit" parameterType="departments">
-        update departments set department=#{department} where departmentId=#{departmentId}
-    </update>
     <delete id="deleteDepartment" parameterType="Integer">
         delete from departments where departmentId=#{departmentId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from departments where department = #{department}
+    </select>
 </mapper>

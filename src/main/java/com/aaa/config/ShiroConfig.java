@@ -50,8 +50,6 @@ public class ShiroConfig {
 
 
         filtermap.put("/sel/toLogin", "anon");
-
-
         filtermap.put("/sel/login", "anon");
         filtermap.put("/css/**", "anon");
         filtermap.put("/layui/**", "anon");
@@ -61,11 +59,11 @@ public class ShiroConfig {
 
 
         //未认证都不允许通过
-      //  filtermap.put("/**", "authc");
+        filtermap.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filtermap);
         //如果访问的页面未认证   跳转到登陆页面
-        shiroFilterFactoryBean.setLoginUrl("/index");
+        shiroFilterFactoryBean.setLoginUrl("/sel/toLogin");
 
         return shiroFilterFactoryBean;
     }

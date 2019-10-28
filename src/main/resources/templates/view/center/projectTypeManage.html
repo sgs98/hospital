@@ -45,7 +45,6 @@
             <table class="layui-hide" id="projecttypeTable" lay-filter="projecttypeTable"></table>
 
             <div  id="projecttype" style="display: none;">
-                <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </div>
             <!-- 数据表格结束 -->
@@ -115,7 +114,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">价格:</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="price" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
+                                <input type="number" name="price" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
@@ -207,7 +206,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">价格:</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="price" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
+                                <input type="number" name="price" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
@@ -296,7 +295,7 @@
                         <div class="layui-inline">
                             <label class="layui-form-label">价格:</label>
                             <div class="layui-input-inline">
-                                <input type="text" name="price" lay-verify="required"   placeholder="价格" autocomplete="off"
+                                <input type="number" name="price" lay-verify="required"   placeholder="价格" autocomplete="off"
                                        class="layui-input">
                             </div>
                         </div>
@@ -466,8 +465,6 @@
                         tableIns.reload();
                     })
                 });
-            } else if(layEvent === 'edit'){ //编辑
-                openUpdateProjecttype(data);
             }
         });
 
@@ -487,19 +484,7 @@
                 }
             });
         }
-        //打开修改页面
-        function openUpdateProjecttype(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'修改项目大类',
-                content:$("#saveOrUpdateDiv54321"),
-                area:['380px','300px'],
-                success:function(index){
-                    form.val("dataFrm54321",data);
-                    url="prjectType/editProjecttype";
-                }
-            });
-        }
+
         //保存
         form.on("submit(doSubmit54321)",function(obj){
             //序列化表单数据

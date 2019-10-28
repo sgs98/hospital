@@ -77,7 +77,7 @@
 </form>
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
-    <select name="supplierName" id="warehouseId" lay-verify="required" lay-filter="warehouse">
+    <select name="supplierName" id="warehouseId" lay-filter="warehouse" lay-event="warehouse">
         <option value=""></option>
     </select>
 </div>
@@ -146,18 +146,17 @@
                 }
             })
         }
-        $.ajax({
+        /*$.ajax({
             url: '../liao/selSupplier',
             dataType: 'json',
             type: 'post',
             success: function (data) {
                 $.each(data, function (index, item) {
-                    alert(item.supplierName+"+"+item.warehouseId);
-                    $('#warehouseId').append(new Option(item.warehouseId, item.warehouseId));// 下拉菜单里添加元素
+                    $('#warehouseId').append(new Option(item.supplierName, item.warehouseId));// 下拉菜单里添加元素
                 });
                 layui.form.render("select");//重新渲染 固定写法
             }
-        })
+        })*/
     });
 </script>
 </body>

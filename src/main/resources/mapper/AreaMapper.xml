@@ -14,10 +14,10 @@
     <insert id="addArea" parameterType="Area">
         insert into Area(areaName)values(#{areaName})
     </insert>
-    <update id="editArea" parameterType="Area">
-        update Area set areaName=#{areaName} where areaId=#{areaId}
-    </update>
     <delete id="deleteArea" parameterType="Integer">
         delete from Area where areaId=#{areaId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from Area where areaName=#{areaName}
+    </select>
 </mapper>

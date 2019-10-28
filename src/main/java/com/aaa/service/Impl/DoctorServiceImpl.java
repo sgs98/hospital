@@ -46,7 +46,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.findAllRegisteredtype();
     }
 
-
+    @Override
+    public int count(Doctor doctor) {
+        return doctorMapper.count(doctor);
+    }
 
 
 }

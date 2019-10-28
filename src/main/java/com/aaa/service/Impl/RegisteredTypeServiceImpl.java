@@ -32,4 +32,9 @@ public class RegisteredTypeServiceImpl implements RegisteredTypeService {
     public int addRegisteredType(Registeredtype registeredType) {
         return registeredTypeMapper.addRegisteredType(registeredType);
     }
+
+    @Override
+    public int count(Registeredtype registeredType) {
+        return registeredTypeMapper.count(registeredType);
+    }
 }

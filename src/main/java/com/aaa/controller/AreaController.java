@@ -44,26 +44,20 @@ public class AreaController {
     @RequestMapping("addArea")
     @ResponseBody
     public Object addArea(Area Area){
-        int i = areaService.addArea(Area);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int count = areaService.count(Area);
+        if(count==0){
+            int i = areaService.addArea(Area);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return Area.getAreaName()+"已存在";
         }
+
     }
-    /*
-     * 修改生产地址
-     * */
-    @RequestMapping("editArea")
-    @ResponseBody
-    public Object editArea(Area Area){
-        int i = areaService.editArea(Area);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
-        }
-    }
+
     /*
      * 删除生产地址
      * */

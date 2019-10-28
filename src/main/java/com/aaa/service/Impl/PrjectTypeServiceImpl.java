@@ -27,15 +27,18 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
         return prjectTypeMapper.addProjecttype(projecttype);
     }
 
-    @Override
-    public int editProjecttype(Projecttype projecttype) {
-        return prjectTypeMapper.editProjecttype(projecttype);
-    }
+
 
     @Override
     public int deleteProjecttype(Integer projectId) {
         return prjectTypeMapper.deleteProjecttype(projectId);
     }
+
+    @Override
+    public int count1(Projecttype projecttype) {
+        return prjectTypeMapper.count1(projecttype);
+    }
+
     /*
      * 门诊项目增删改查
      * */
@@ -58,6 +61,12 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
     public int deleteOutpatienttype(Integer outpatientId) {
         return prjectTypeMapper.deleteOutpatienttype(outpatientId);
     }
+
+    @Override
+    public int count2(Outpatienttype outpatienttype) {
+        return prjectTypeMapper.count2(outpatienttype);
+    }
+
     /*
      * 住院项目增删改查
      * */
@@ -79,6 +88,11 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
     @Override
     public int deleteInoutpatienttype(Integer inoutpatientId) {
         return prjectTypeMapper.deleteInoutpatienttype(inoutpatientId);
+    }
+
+    @Override
+    public int count3(Inoutpatienttype inoutpatienttype) {
+        return prjectTypeMapper.count3(inoutpatienttype);
     }
 
 
@@ -104,6 +118,12 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
     public int deleteMoneytype(Integer moneyId) {
         return prjectTypeMapper.deleteMoneytype(moneyId);
     }
+
+    @Override
+    public int count4(Moneytype moneytype) {
+        return prjectTypeMapper.count4(moneytype);
+    }
+
     /*
      * 床位项目增删改查
      * */
@@ -125,5 +145,10 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
     @Override
     public int deleteBed(Integer bedId) {
         return prjectTypeMapper.deleteBed(bedId);
+    }
+
+    @Override
+    public int count5(Bed bed) {
+        return prjectTypeMapper.count5(bed);
     }
 }

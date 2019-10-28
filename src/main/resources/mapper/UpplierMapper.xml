@@ -14,10 +14,10 @@
     <insert id="addUpplier" parameterType="Upplier">
         insert into Upplier(supplierName)values(#{supplierName})
     </insert>
-    <update id="editUpplier" parameterType="Upplier">
-        update Upplier set supplierName=#{supplierName} where supplierId=#{supplierId}
-    </update>
     <delete id="deleteUpplier" parameterType="Integer">
         delete from Upplier where supplierId=#{supplierId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from Upplier where supplierName=#{supplierName}
+    </select>
 </mapper>

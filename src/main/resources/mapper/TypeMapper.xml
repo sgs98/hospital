@@ -14,10 +14,10 @@
     <insert id="addType" parameterType="type">
         insert into type(typeName)values(#{typeName})
     </insert>
-    <update id="editType" parameterType="type">
-        update type set typeName=#{typeName} where typeId=#{typeId}
-    </update>
     <delete id="deleteType" parameterType="Integer">
         delete from type where typeId=#{typeId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from type where typeName=#{typeName}
+    </select>
 </mapper>

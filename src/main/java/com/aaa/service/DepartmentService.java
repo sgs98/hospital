@@ -8,5 +8,5 @@ public interface DepartmentService {
     List<Departments> departmentList(Departments departments);
     int deleteDepartment(Integer departmentId);
     int addDepartment(Departments departments);
-    int edit(Departments departments);
+    int count(Departments departments);
 }

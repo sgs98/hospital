@@ -10,5 +10,5 @@ public interface AreaMapper {
     List<Area> findAllArea(Area area);
     int deleteArea(Integer areaId);
     int addArea(Area area);
-    int editArea(Area area);
+    int count(Area area);
 }
