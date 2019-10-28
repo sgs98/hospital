@@ -109,9 +109,9 @@
                 <i class="fa fa-user reset-i fs65"><img src="../images/1.png"/></i>
             </div>
             <div class="num"><h5>门诊人数</h5></div>
-            <div class="n"><h5>5</h5></div>
-            <div class="desc"><h5>就诊概况</h5><span></span></div>
-            <div class="total"><h2>总人数:</h2><span></span></div>
+            <div class="n"><h5><span class="currentNum"></span></h5></div>
+            <div class="desc"><h5>就诊概况</h5></div>
+            <div class="total"><h2>总人数:&nbsp;<span class="Total"></span></h2></div>
         </div>
     </div>
     <div class="work" id="work2">
@@ -237,7 +237,30 @@
                 });
             }
         })
-
+        $.ajax({
+            url: 'main/currentNum',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $(".currentNum").text(data);
+            }
+        })
+        $.ajax({
+        url: 'main/Total',
+        dataType: 'json',
+        type: 'post',
+        success: function (data) {
+            $(".Total").text(data);
+        }
+    })
+        $.ajax({
+            url: 'main/zhuyuanTotal',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+               alert(data);
+            }
+        })
     });
 </script>
 </body>

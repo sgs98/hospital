@@ -16,5 +16,6 @@ public interface MainMapper {
     List<Paiban> seven();
     int currentNum();
     int Total();
+    int zhuyuanTotal();
 
 }

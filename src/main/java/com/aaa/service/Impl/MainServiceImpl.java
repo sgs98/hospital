@@ -58,5 +58,10 @@ public class MainServiceImpl implements MainService {
         return mainMapper.Total();
     }
 
+    @Override
+    public int zhuyuanTotal() {
+        return mainMapper.zhuyuanTotal();
+    }
+
 
 }

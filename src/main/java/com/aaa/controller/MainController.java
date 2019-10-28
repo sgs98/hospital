@@ -56,4 +56,31 @@ public class MainController {
         List<Paiban> seven = mainService.seven();
         return seven;
     }
+    /*
+    * 查询当天门诊人数
+    * */
+    @RequestMapping("currentNum")
+    @ResponseBody
+    public Object currentNum(){
+        int currentNum = mainService.currentNum();
+        return currentNum;
+    }
+    /*
+    * 查询所有人数
+    * */
+    @RequestMapping("Total")
+    @ResponseBody
+    public Object Total(){
+        int Total = mainService.Total();
+        return Total;
+    }
+    /*
+     * 查询所有人数
+     * */
+    @RequestMapping("zhuyuanTotal")
+    @ResponseBody
+    public Object zhuyuanTotal(){
+        int zhuyuanTotal = mainService.zhuyuanTotal();
+        return zhuyuanTotal;
+    }
 }
