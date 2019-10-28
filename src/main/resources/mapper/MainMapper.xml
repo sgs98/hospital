@@ -24,5 +24,14 @@
     <select id="seven" resultType="paiban">
         select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.seven  != '无班'
     </select>
+    <select id="currentNum" resultType="Integer">
+         SELECT count(*) FROM report where time=DATE_FORMAT(DATE_ADD(NOW(),INTERVAL 0 DAY),'%Y-%m-%d')
+     </select>
+    <select id="Total" resultType="Integer">
+         SELECT count(*) FROM report
+     </select>
+    <select id="zhuyuanTotal" resultType="Integer">
+         select count(*) from register
+     </select>
 
 </mapper>

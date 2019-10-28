@@ -14,4 +14,5 @@ public interface MainService {
     List<Paiban> seven();
     int currentNum();
     int Total();
+    int zhuyuanTotal();
 }
