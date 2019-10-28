@@ -47,4 +47,16 @@ public class MainServiceImpl implements MainService {
     public List<Paiban> seven() {
         return mainMapper.seven();
     }
+
+    @Override
+    public int currentNum() {
+        return mainMapper.currentNum();
+    }
+
+    @Override
+    public int Total() {
+        return mainMapper.Total();
+    }
+
+
 }

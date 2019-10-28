@@ -14,4 +14,7 @@ public interface MainMapper {
     List<Paiban> five();
     List<Paiban> six();
     List<Paiban> seven();
+    int currentNum();
+    int Total();
+
 }
