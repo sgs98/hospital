@@ -12,4 +12,6 @@ public interface MainService {
     List<Paiban> five();
     List<Paiban> six();
     List<Paiban> seven();
+    int currentNum();
+    int Total();
 }
