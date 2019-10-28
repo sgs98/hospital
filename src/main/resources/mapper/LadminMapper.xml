@@ -1,0 +1,35 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.LadminMapper">
+    <select id="selDepartment" resultType="Departments">
+        select * from departments
+    </select>
+    <select id="selDoctor" parameterType="Doctor" resultType="Doctor">
+        select * from doctor where departmentId=#{departmentId}
+    </select>
+    <select id="selBed" parameterType="Bed" resultType="Bed">
+        select * from bed where state=#{state} and departmentId=#{departmentId}
+    </select>
+    <insert id="addRegister" parameterType="Register">
+        insert into register(userName,age,sex,department,doctor,diagnose,address,Phone,Idcard,registerDate,bedNum,Operator,money,state)
+        values(#{userName},#{age},#{sex},#{departmentId},#{doctorId},#{diagnose},#{address},#{phone},#{idcard},SYSDATE(),#{bedId},#{Operator},#{money},0)
+    </insert>
+    <select id="selRegister" parameterType="Register" resultType="Register">
+        select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.Operator
+        from register r,departments d,doctor c,bed b
+         <where>
+             r.state=0 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId
+             <if test="userName!=null and userName!=''">
+                and r.userName like concat('%',concat(#{userName},'%'))
+             </if>
+             <if test="registerid!=null and registerid!=''">
+                and r.registerid=#{registerid}
+             </if>
+         </where>
+    </select>
+    <update id="updBed" parameterType="Register">
+        update bed set state=1 where bedid=#{bedId}
+    </update>
+</mapper>

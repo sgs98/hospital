@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>入院登记</title>
+    <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
+</head>
+<body>
+<!-- 搜索条件开始 -->
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>查询条件</legend>
+</fieldset>
+<form class="layui-form" method="post" id="searchFrm">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">姓名:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="userName"  autocomplete="off" class="layui-input" style="width:200px" >
+            </div>
+        </div>
+        <div class="layui-inline" style="position: absolute;left: 340px;top:66px;">
+            <div class="layui-input-inline">
+                <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">查询</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!--搜索结束-->
+<!-- 添加和修改的弹出层开始 -->
+<div style="display: none;padding: 20px" id="saveOrUpdateDiv" >
+    <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">姓名:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="userName" lay-verify="required"  placeholder="请输入姓名" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">入院诊断:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="diagnose" lay-verify="required"  placeholder="请输入入院诊断" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">性别:</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="sex" value="男" checked="checked" title="男">
+                    <input type="radio" name="sex" value="女" title="女">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">科室:</label>
+                <div class="layui-input-inline">
+                    <select name="department" id="departmentId" lay-verify="required" lay-filter="department">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">年龄:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">医生:</label>
+                <div class="layui-input-inline">
+                    <select name="doctor" id="doctorId" lay-verify="required" lay-filter="doctor">
+                        <option value=""></option>
+                    </select>
+                </div>
+            </div>
+        </div><div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">地址:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" lay-verify="required"  placeholder="请输入住址" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">床位:</label>
+            <div class="layui-input-inline">
+                <select name="bedNum" id="bedId" lay-verify="required" lay-filter="bedNum">
+                    <option value=""></option>
+                </select>
+            </div>
+        </div>
+    </div><div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">电话:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="phone" lay-verify="required"  placeholder="请输入电话" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">预交金额:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="money"   placeholder="请输入预交金额" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+    </div><div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">身份证号:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="idcard" lay-verify="required"  placeholder="请输入身份证号" autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-inline">
+            <label class="layui-form-label">操作员:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="Operator" th:value="${session.yonghu}" autocomplete="off" disabled="disabled"
+                       class="layui-input">
+            </div>
+        </div>
+    </div>
+        <div class="layui-form-item" style="text-align: center;margin-left: -80px;">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>
+                <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+<!-- 添加和修改的弹出层结束 -->
+
+
+<!-- 搜索条件结束 -->
+<!-- 数据表格开始 -->
+<div  style="display: none;" id="ToolBar">
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add">增加</button>
+</div>
+<table class="layui-hide" id="selRegister" lay-filter="selRegister"></table>
+
+<!-- 数据表格结束 -->
+<script th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="none">
+    var tableIns;
+    layui.use([ 'jquery', 'layer', 'form', 'table'  ], function() {
+        var $ = layui.jquery;
+        var layer = layui.layer;
+        var form = layui.form;
+        var table = layui.table;
+        var laydate = layui.laydate;
+        //渲染数据表格
+        tableIns=table.render({
+            elem: '#selRegister'   //渲染的目标对象
+            ,url:'../liao/selRegister' //数据接口
+            ,title: '用户数据表'//数据导出来的标题
+            ,toolbar:"#ToolBar"   //表格的工具条
+            ,height:'full-200'
+            ,page: 1  //是否启用分页, limits: [10, 20, 30]
+            ,limits: [7, 20, 30]
+            ,limit: 7//默认采用3
+            ,cols: [[   //列表数据
+                {field:'registerid', title:'住院号',align:'center',width:'6%'}
+                ,{field:'userName', title:'姓名',align:'center',width:'6%'}
+                ,{field:'sex', title:'性别',align:'center',width:'5%'}
+                ,{field:'age', title:'年龄',align:'center',width:'5%'}
+                ,{field:'address', title:'地址',align:'center',width:'16%'}
+                ,{field:'phone', title:'电话',align:'center',width:'11.2%'}
+                ,{field:'idcard', title:'身份证号',align:'center',width:'13%'}
+                ,{field:'registerDate', title:'入院日期', templet: "<div>{{layui.util.toDateString(d.registerDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:'13%'}
+                ,{field:'department', title:'科室',align:'center',width:'7%'}
+                ,{field:'doctorName', title:'医生',align:'center',width:'6%'}
+                ,{field:'bedName', title:'床位',align:'center',width:'6%'}
+                ,{field:'Operator', title:'操作员',align:'center',width:'6%'}
+                /*,{fixed: 'right', title:'操作', toolbar: '#doctor',align:'center'}*/
+            ]]
+        })
+        //模糊查询
+        $("#doSearch").click(function(){
+            var params=$("#searchFrm").serialize();
+            tableIns.reload({
+                url:"../liao/selRegister?"+params
+            })
+        });
+
+        //监听头部工具栏事件
+        table.on("toolbar(selRegister)",function(obj){
+            switch(obj.event){
+                case 'add':
+                    //清空表单数据
+                    $("#dataFrm")[0].reset();
+                    openAddDoctor();
+                    break;
+            };
+        })
+
+        var url;
+        var mainIndex;
+        //打开添加页面
+        function openAddDoctor(){
+            mainIndex=layer.open({
+                type:1,
+                title:'入院登记',
+                content:$("#saveOrUpdateDiv"),
+                area:['800px','550px'],
+                success:function(index){
+                    url="../liao/addRegister";
+                }
+            });
+        }
+        //初始化添加or修改到下拉框中的值
+        $.ajax({
+            url: '../liao/selDepartment',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#departmentId').append(new Option(item.department, item.departmentId));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");//重新渲染 固定写法
+            }
+        })
+            // select下拉框选中触发事件
+            form.on("select(department)", function(data){
+                $("#doctorId").empty();
+                $("#bedId").empty();
+                $.ajax({
+                    url: '../liao/selDoctor',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{
+                        departmentId:data.value
+                    },
+                    success: function (data) {
+                        $.each(data, function (index, item) {
+                            $('#doctorId').append(new Option(item.doctorName, item.doctorId));// 下拉菜单里添加元素
+                        });
+                        layui.form.render("select");//重新渲染 固定写法
+                    }
+                })
+                //查询床位
+                $.ajax({
+                    url: '../liao/selBed',
+                    dataType: 'json',
+                    type: 'post',
+                    data:{
+                        departmentId:data.value
+                    },
+                    success: function (data) {
+                        $.each(data, function (index, item) {
+                            $('#bedId').append(new Option(item.bedname, item.bedId));// 下拉菜单里添加元素
+                        });
+                        layui.form.render("select");//重新渲染 固定写法
+                    }
+                })
+            });
+        //保存
+        form.on("submit(doSubmit)",function(obj){
+            //序列化表单数据
+            var params=$("#dataFrm").serialize();
+            $.post(url,params,function(obj){
+                layer.msg(obj);
+                //关闭弹出层
+                layer.close(mainIndex)
+                //刷新数据 表格
+                tableIns.reload();
+            })
+        });
+
+    });
+</script>
+</body>
+</html>
