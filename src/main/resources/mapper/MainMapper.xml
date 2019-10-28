@@ -1,0 +1,28 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.MainMapper">
+    <select id="one" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.one  != '无班'
+    </select>
+    <select id="two" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.two  != '无班'
+    </select>
+    <select id="three" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.three  != '无班'
+    </select>
+    <select id="four" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.four  != '无班'
+    </select>
+    <select id="five" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.five  != '无班'
+    </select>
+    <select id="six" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.six  != '无班'
+    </select>
+    <select id="seven" resultType="paiban">
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.seven  != '无班'
+    </select>
+
+</mapper>

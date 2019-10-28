@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.UnitMapper">
+ <select id="findAllUnit" resultType="Unit">
+     select *from Unit
+     <where>
+         <if test="unitName!=null and unitName!=''">
+             unitName like concat('%',concat(#{unitName},'%'))
+         </if>
+     </where>
+ </select>
+    <insert id="addUnit" parameterType="Unit">
+        insert into Unit(unitName)values(#{unitName})
+    </insert>
+    <update id="editUnit" parameterType="Unit">
+        update Unit set unitName=#{unitName} where unitId=#{unitId}
+    </update>
+    <delete id="deleteUnit" parameterType="Integer">
+        delete from Unit where unitId=#{unitId}
+    </delete>
+</mapper>

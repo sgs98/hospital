@@ -1,0 +1,23 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.UpplierMapper">
+ <select id="findAllUpplier" resultType="Upplier">
+     select *from Upplier
+     <where>
+         <if test="supplierName!=null and supplierName!=''">
+             supplierName like concat('%',concat(#{supplierName},'%'))
+         </if>
+     </where>
+ </select>
+    <insert id="addUpplier" parameterType="Upplier">
+        insert into Upplier(supplierName)values(#{supplierName})
+    </insert>
+    <update id="editUpplier" parameterType="Upplier">
+        update Upplier set supplierName=#{supplierName} where supplierId=#{supplierId}
+    </update>
+    <delete id="deleteUpplier" parameterType="Integer">
+        delete from Upplier where supplierId=#{supplierId}
+    </delete>
+</mapper>
