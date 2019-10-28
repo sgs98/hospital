@@ -165,4 +165,28 @@ public class Register {
     public void setBedName(String bedName) {
         this.bedName = bedName;
     }
+
+    @Override
+    public String toString() {
+        return "Register{" +
+                "registerid=" + registerid +
+                ", userName='" + userName + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                ", diagnose='" + diagnose + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", registerDate=" + registerDate +
+                ", Operator='" + Operator + '\'' +
+                ", money=" + money +
+                ", state=" + state +
+                ", departmentId=" + departmentId +
+                ", doctorId=" + doctorId +
+                ", bedId=" + bedId +
+                ", department='" + department + '\'' +
+                ", doctorName='" + doctorName + '\'' +
+                ", bedName='" + bedName + '\'' +
+                '}';
+    }
 }
