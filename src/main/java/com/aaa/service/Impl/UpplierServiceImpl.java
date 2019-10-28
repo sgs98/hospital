@@ -19,8 +19,8 @@ public class UpplierServiceImpl implements UpplierService {
     }
 
     @Override
-    public int deleteUpplier(Integer upplierId) {
-        return UpplierMapper.deleteUpplier(upplierId);
+    public int deleteUpplier(Integer supplierId) {
+        return UpplierMapper.deleteUpplier(supplierId);
     }
 
     @Override
@@ -31,5 +31,10 @@ public class UpplierServiceImpl implements UpplierService {
     @Override
     public int editUpplier(Upplier upplier) {
         return UpplierMapper.editUpplier(upplier);
+    }
+
+    @Override
+    public int count(Upplier upplier) {
+        return UpplierMapper.count(upplier);
     }
 }

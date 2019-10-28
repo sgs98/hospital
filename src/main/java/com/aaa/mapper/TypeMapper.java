@@ -11,4 +11,5 @@ public interface TypeMapper {
     int deleteType(Integer typeId);
     int addType(Type type);
     int editType(Type type);
+    int count(Type type);
 }

@@ -27,4 +27,7 @@
     <select id="findAllUnit" resultType="Unit">
         select*from unit
     </select>
+    <select id="count" resultType="int">
+        select count(*) from drugdictionary where drugName=#{drugName}
+    </select>
 </mapper>

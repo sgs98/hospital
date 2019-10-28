@@ -11,4 +11,5 @@ public interface RegisteredTypeMapper {
     int deleteType(Integer registeredId);
     int editRegisteredType(Registeredtype Registeredtype);
     int addRegisteredType(Registeredtype Registeredtype);
+    int count(Registeredtype registeredType);
 }

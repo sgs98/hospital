@@ -47,12 +47,18 @@ public class DoctorController {
     @RequestMapping("addDoctor")
     @ResponseBody
     public Object addDoctor(Doctor doctor, Paiban paiban){
-        int i = doctorService.addDoctor(doctor);
-        if(i==1){
-            return "添加成功";
+        int count = doctorService.count(doctor);
+        if(count==0){
+            int i = doctorService.addDoctor(doctor);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return doctor.getDoctorName()+"已存在";
         }
+
     }
     /*
      * 修改医生
@@ -60,12 +66,18 @@ public class DoctorController {
     @RequestMapping("editDoctor")
     @ResponseBody
     public Object editDoctor(Doctor doctor){
-        int i = doctorService.editDoctor(doctor);
-        if(i==1){
-            return "修改成功";
+        int count = doctorService.count(doctor);
+        if(count==0){
+            int i = doctorService.editDoctor(doctor);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
         }else{
-            return "修改失败";
+            return doctor.getDoctorName()+"已存在";
         }
+
     }
     /*
      * 删除医生

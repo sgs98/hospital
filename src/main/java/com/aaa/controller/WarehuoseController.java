@@ -44,12 +44,18 @@ public class WarehuoseController {
     @RequestMapping("addWarehuose")
     @ResponseBody
     public Object addWarehuose(Warehuose warehuose){
-        int i = warehuoseService.addWarehuose(warehuose);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int count = warehuoseService.count(warehuose);
+        if(count==0){
+            int i = warehuoseService.addWarehuose(warehuose);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return warehuose.getSupplierName()+"已存在";
         }
+
     }
     /*
      * 修改仓库
@@ -57,12 +63,18 @@ public class WarehuoseController {
     @RequestMapping("editWarehuose")
     @ResponseBody
     public Object editWarehuose(Warehuose warehuose){
-        int i = warehuoseService.editWarehuose(warehuose);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int count = warehuoseService.count(warehuose);
+        if(count==0){
+            int i = warehuoseService.editWarehuose(warehuose);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return warehuose.getSupplierName()+"已存在";
         }
+
     }
     /*
      * 删除仓库

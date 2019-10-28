@@ -20,4 +20,7 @@
     <delete id="deleteUnit" parameterType="Integer">
         delete from Unit where unitId=#{unitId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from Unit where unitName=#{unitName}
+    </select>
 </mapper>

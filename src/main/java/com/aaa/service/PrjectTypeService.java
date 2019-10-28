@@ -12,6 +12,7 @@ public interface PrjectTypeService {
     int addProjecttype(Projecttype projecttype);
     int editProjecttype(Projecttype projecttype);
     int deleteProjecttype(Integer projectId);
+    int count1(Projecttype projecttype);
     /*
      * 门诊收费项目Outpatienttype
      * */
@@ -19,6 +20,7 @@ public interface PrjectTypeService {
     int addOutpatienttype(Outpatienttype outpatienttype);
     int editOutpatienttype(Outpatienttype outpatienttype);
     int deleteOutpatienttype(Integer outpatientId);
+    int count2(Outpatienttype outpatienttype);
     /*
      * 住院收费项目Inoutpatienttype
      * */
@@ -26,6 +28,7 @@ public interface PrjectTypeService {
     int addInoutpatienttype(Inoutpatienttype inoutpatienttype);
     int editInoutpatienttype(Inoutpatienttype inoutpatienttype);
     int deleteInoutpatienttype(Integer inoutpatientId);
+    int count3(Inoutpatienttype inoutpatienttype);
     /*
      * 收费类型Monetype
      * */
@@ -33,6 +36,7 @@ public interface PrjectTypeService {
     int addMoneytype(Moneytype moneytype);
     int editMoneytype(Moneytype moneytype);
     int deleteMoneytype(Integer moneyId);
+    int count4(Moneytype moneytype);
     /*
      * 床位Bed
      * */
@@ -40,4 +44,5 @@ public interface PrjectTypeService {
     int addBed(Bed bed);
     int editBed(Bed bed);
     int deleteBed(Integer bedId);
+    int count5(Bed bed);
 }

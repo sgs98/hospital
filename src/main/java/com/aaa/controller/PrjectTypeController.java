@@ -47,12 +47,18 @@ public class PrjectTypeController {
     @RequestMapping("addProjecttype")
     @ResponseBody
     public Object addProjecttype(Projecttype projecttype){
-        int i = prjectTypeService.addProjecttype(projecttype);
-        if(i==1){
-            return "添加成功";
+        int i1 = prjectTypeService.count1(projecttype);
+        if(i1==0){
+            int i = prjectTypeService.addProjecttype(projecttype);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return projecttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 修改生产项目大类
@@ -60,12 +66,18 @@ public class PrjectTypeController {
     @RequestMapping("editProjecttype")
     @ResponseBody
     public Object editProjecttype(Projecttype projecttype){
-        int i = prjectTypeService.editProjecttype(projecttype);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int i1 = prjectTypeService.count1(projecttype);
+        if(i1==0){
+            int i = prjectTypeService.editProjecttype(projecttype);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return projecttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 删除生产项目大类
@@ -107,12 +119,18 @@ public class PrjectTypeController {
     @RequestMapping("addMoneytype")
     @ResponseBody
     public Object addMoneytype(Moneytype moneytype){
-        int i = prjectTypeService.addMoneytype(moneytype);
-        if(i==1){
-            return "添加成功";
+        int i1 = prjectTypeService.count4(moneytype);
+        if(i1==0){
+            int i = prjectTypeService.addMoneytype(moneytype);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return moneytype.getMoneytype()+"已存在";
         }
+
     }
     /*
      * 修改收费类型
@@ -120,12 +138,18 @@ public class PrjectTypeController {
     @RequestMapping("editMoneytype")
     @ResponseBody
     public Object editMoneytype(Moneytype moneytype){
-        int i = prjectTypeService.editMoneytype(moneytype);
-        if(i==1){
-            return "修改成功";
+        int i1 = prjectTypeService.count4(moneytype);
+        if(i1==0){
+            int i = prjectTypeService.editMoneytype(moneytype);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
         }else{
-            return "修改失败";
+            return moneytype.getMoneytype()+"已存在";
         }
+
     }
     /*
      * 删除收费类型
@@ -190,12 +214,18 @@ public class PrjectTypeController {
     public Object addOutpatienttype(Outpatienttype outpatienttype,Integer projectId,Integer unitId){
         outpatienttype.setBigprojectId(projectId);
         outpatienttype.setUnit(unitId);
-        int i = prjectTypeService.addOutpatienttype(outpatienttype);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int i1 = prjectTypeService.count2(outpatienttype);
+        if(i1==0){
+            int i = prjectTypeService.addOutpatienttype(outpatienttype);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return outpatienttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 修改门诊收费项
@@ -205,12 +235,18 @@ public class PrjectTypeController {
     public Object editOutpatienttype(Outpatienttype outpatienttype,Integer projectId,Integer unitId){
         outpatienttype.setBigprojectId(projectId);
         outpatienttype.setUnit(unitId);
-        int i = prjectTypeService.editOutpatienttype(outpatienttype);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int i1 = prjectTypeService.count2(outpatienttype);
+        if(i1==0){
+            int i = prjectTypeService.editOutpatienttype(outpatienttype);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return outpatienttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 删除门诊收费项
@@ -273,12 +309,18 @@ public class PrjectTypeController {
 
         inoutpatienttype.setBigprojectId(projectId);
         inoutpatienttype.setUnit(unitId);
-        int i = prjectTypeService.addInoutpatienttype(inoutpatienttype);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int i1 = prjectTypeService.count3(inoutpatienttype);
+        if(i1==0){
+            int i = prjectTypeService.addInoutpatienttype(inoutpatienttype);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return inoutpatienttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 修改住院收费项
@@ -288,12 +330,18 @@ public class PrjectTypeController {
     public Object editInoutpatienttype(Inoutpatienttype inoutpatienttype,Integer projectId,Integer unitId){
         inoutpatienttype.setBigprojectId(projectId);
         inoutpatienttype.setUnit(unitId);
-        int i = prjectTypeService.editInoutpatienttype(inoutpatienttype);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int i1 = prjectTypeService.count3(inoutpatienttype);
+        if(i1==0){
+            int i = prjectTypeService.editInoutpatienttype(inoutpatienttype);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return inoutpatienttype.getProjectName()+"已存在";
         }
+
     }
     /*
      * 删除住院收费项
@@ -336,14 +384,19 @@ public class PrjectTypeController {
     @RequestMapping("addBed")
     @ResponseBody
     public Object addBed(Bed bed){
-        System.out.println(bed.getBedname());
-        System.out.println(bed.getPrice());
-        int i = prjectTypeService.addBed(bed);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+
+        int i1 = prjectTypeService.count5(bed);
+        if(i1==0){
+            int i = prjectTypeService.addBed(bed);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return bed.getBedname()+"已存在";
         }
+
     }
     /*
      * 修改床位
@@ -351,12 +404,18 @@ public class PrjectTypeController {
     @RequestMapping("editBed")
     @ResponseBody
     public Object editBed(Bed bed){
-        int i = prjectTypeService.editBed(bed);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int i1 = prjectTypeService.count5(bed);
+        if(i1==0){
+            int i = prjectTypeService.editBed(bed);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return bed.getBedname()+"已存在";
         }
+
     }
     /*
      * 删除床位

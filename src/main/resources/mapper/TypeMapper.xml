@@ -20,4 +20,7 @@
     <delete id="deleteType" parameterType="Integer">
         delete from type where typeId=#{typeId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from type where typeName=#{typeName}
+    </select>
 </mapper>

@@ -44,12 +44,18 @@ public class DepartmentController {
     @RequestMapping("addDepartment")
     @ResponseBody
     public Object addDepartment(Departments departments){
-        int i = departmentService.addDepartment(departments);
-        if(i==1){
-            return "添加成功";
+        int count = departmentService.count(departments);
+        if(count==0){
+            int i = departmentService.addDepartment(departments);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return departments.getDepartment()+"已存在";
         }
+
     }
     /*
      * 修改科室
@@ -57,12 +63,18 @@ public class DepartmentController {
     @RequestMapping("edit")
     @ResponseBody
     public Object editDepartment(Departments departments){
-        int i = departmentService.edit(departments);
-        if(i==1){
-            return "修改成功";
+        int count = departmentService.count(departments);
+        if(count==0){
+            int i = departmentService.edit(departments);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
         }else{
-            return "修改失败";
+            return departments.getDepartment()+"已存在";
         }
+
     }
     /*
      * 删除科室

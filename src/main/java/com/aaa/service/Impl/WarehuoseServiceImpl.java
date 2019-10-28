@@ -32,4 +32,9 @@ public class WarehuoseServiceImpl implements WarehuoseService {
     public int editWarehuose(Warehuose warehuose) {
         return warehuoseMapper.editWarehuose(warehuose);
     }
+
+    @Override
+    public int count(Warehuose warehuose) {
+        return warehuoseMapper.count(warehuose);
+    }
 }

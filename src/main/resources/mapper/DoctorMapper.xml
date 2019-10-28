@@ -25,5 +25,7 @@
     <select id="findAllRegisteredtype" resultType="Registeredtype">
         select*from Registeredtype
     </select>
-
+    <select id="count" resultType="int">
+        select count(*) from doctor where doctorName=#{doctorName}
+    </select>
 </mapper>

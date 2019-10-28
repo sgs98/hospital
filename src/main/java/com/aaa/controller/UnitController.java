@@ -44,12 +44,18 @@ public class UnitController {
     @RequestMapping("addUnit")
     @ResponseBody
     public Object addUnit(Unit unit){
-        int i = unitService.addUnit(unit);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int count = unitService.count(unit);
+        if(count==0){
+            int i = unitService.addUnit(unit);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return unit.getUnitName()+"已存在";
         }
+
     }
     /*
      * 修改计量单位
@@ -57,12 +63,18 @@ public class UnitController {
     @RequestMapping("editUnit")
     @ResponseBody
     public Object editUnit(Unit unit){
-        int i = unitService.editUnit(unit);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
+        int count = unitService.count(unit);
+        if(count==0){
+            int i = unitService.editUnit(unit);
+            if(i==1){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
+        }else {
+            return unit.getUnitName()+"已存在";
         }
+
     }
     /*
      * 删除计量单位

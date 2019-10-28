@@ -33,4 +33,9 @@ public class AreaServiceImpl implements AreaService {
     public int editArea(Area area) {
         return areaMapper.editArea(area);
     }
+
+    @Override
+    public int count(Area area) {
+        return areaMapper.count(area);
+    }
 }

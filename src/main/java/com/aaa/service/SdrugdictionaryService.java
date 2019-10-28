@@ -16,4 +16,5 @@ public interface SdrugdictionaryService {
     List<Unit> findAllUnit();
     List<Area> findAllArea();
     List<Type> findAllType();
+    int count(Sdrugdictionary sdrugdictionary);
 }

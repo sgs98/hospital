@@ -83,4 +83,13 @@ public class MainController {
         int zhuyuanTotal = mainService.zhuyuanTotal();
         return zhuyuanTotal;
     }
+    /*
+     * 查询所有人数
+     * */
+    @RequestMapping("currentZhuYuan")
+    @ResponseBody
+    public Object currentZhuYuan(){
+        int currentZhuYuan = mainService.currentZhuYuan();
+        return currentZhuYuan;
+    }
 }

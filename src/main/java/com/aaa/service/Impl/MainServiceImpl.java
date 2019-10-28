@@ -63,5 +63,10 @@ public class MainServiceImpl implements MainService {
         return mainMapper.zhuyuanTotal();
     }
 
+    @Override
+    public int currentZhuYuan() {
+        return mainMapper.currentZhuYuan();
+    }
+
 
 }

@@ -9,4 +9,5 @@ public interface UnitService {
     int deleteUnit(Integer unitId);
     int addUnit(Unit unit);
     int editUnit(Unit unit);
+    int count(Unit unit);
 }

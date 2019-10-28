@@ -9,4 +9,5 @@ public interface TypeService {
     int deleteType(Integer typeId);
     int addType(Type type);
     int editType(Type type);
+    int count(Type type);
 }

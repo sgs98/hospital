@@ -32,4 +32,9 @@ public class TypeServiceImpl implements TypeService {
     public int editType(Type type) {
         return typeMapper.editType(type);
     }
+
+    @Override
+    public int count(Type type) {
+        return typeMapper.count(type);
+    }
 }

@@ -15,4 +15,5 @@ public interface MainService {
     int currentNum();
     int Total();
     int zhuyuanTotal();
+    int currentZhuYuan();
 }

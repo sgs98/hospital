@@ -17,5 +17,6 @@ public interface MainMapper {
     int currentNum();
     int Total();
     int zhuyuanTotal();
+    int currentZhuYuan();
 
 }

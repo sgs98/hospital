@@ -14,5 +14,5 @@ public interface DoctorService {
     int editDoctor(Doctor doctor);
     List<Departments> findAllDepartments();
     List<Registeredtype>findAllRegisteredtype();
-
+    int count(Doctor doctor);
 }
