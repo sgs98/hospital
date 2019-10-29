@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>药品登记</title>
+    <title>预交金</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <style>
         #dataFrm{
@@ -22,6 +22,13 @@
         }
         #add{
             margin: 0px;
+        }
+        #addPay{
+            width:200px;
+            font-size: 16px;
+            width: 150px;
+            height: 30px;
+            margin-right: 20px;
         }
     </style>
 </head>
@@ -46,8 +53,9 @@
     </div>
 </form>
 <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
-    <input type="hidden" id="show" name="registerid">
-    <input type="hidden" id="hidden" name="moneys" value="0">
+    <input type="text" id="show" name="registerid">
+    <input type="text" id="hidden" name="pharmacyName" value="">
+    <input type="text" id="hid" name="moneys" value=0>
     <table>
         <tr>
             <td class="dataFrm_td">姓名：</td>
@@ -77,14 +85,12 @@
 </form>
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
-    <select name="supplierName" id="warehouseId" lay-filter="warehouse" lay-event="warehouse">
-        <option value=""></option>
-    </select>
+    <input type="text" name="pay" id="addPay" autocomplete="off" lay-event="addPay" placeholder="请输入预交金额" class="pay" >
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">预交</button>
 </div>
 <div style="display: block;width: 50%;">
-    <table class="layui-hide" id="drugs" lay-filter="drugs"></table>
+    <table class="layui-hide" id="pay" lay-filter="pay"></table>
 </div>
-    <table class="layui-hide" id="drug" lay-filter="drug"></table>
 <!-- 数据表格结束 -->
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
@@ -97,8 +103,8 @@
         var laydate = layui.laydate;
         //渲染数据表格
         tableIns=table.render({
-            elem: '#drugs'   //渲染的目标对象
-            ,url:'../liao/selPays' //数据接口
+            elem: '#pay'   //渲染的目标对象
+            ,url:'../liao/selDrug' //数据接口
             ,title: '用户数据表'//数据导出来的标题
             ,toolbar:"#ToolBar"   //表格的工具条
             ,height:'full-200'
@@ -106,10 +112,15 @@
             ,limits: [7, 20, 30]
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
-                {field:'registerid', title:'住院号',align:'center',width:'25%'}
-                ,{field:'userName', title:'姓名',align:'center',width:'25%'}
-                ,{field:'money', title:'预交金额',align:'center',width:'25%'}
-                ,{field:'payDate', title:'交款时间', templet: "<div>{{layui.util.toDateString(d.payDate, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'25%'}
+                {field:'pharmacyId', title:'药品序号',align:'center',width:'25%'}
+                ,{field:'pharmacyName', title:'药品名称',align:'center',width:'25%'}
+                ,{field:'unitName', title:'计量单位',align:'center',width:'25%'}
+                ,{field:'sellingPrice', title:'售价',align:'center',width:'25%'}
+                ,{field:'areaName', title:'产地',align:'center',width:'25%'}
+                ,{field:'typeName', title:'类型',align:'center',width:'25%'}
+                ,{field:'produceDate', title:'生产日期', templet: "<div>{{layui.util.toDateString(d.produceDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:'25%'}
+                ,{field:'validDate', title:'有效期', templet: "<div>{{layui.util.toDateString(d.validDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:'25%'}
+                ,{field:'drugstorenum', title:'数量',align:'center',width:'25%'}
             ]]
         })
         //查询
@@ -119,12 +130,18 @@
                 $("#shows").select();
                 return false;
             }
+            $("#hidden").val(0);
             sel();
+            /*var params=$("#dataFrm").serialize();
+            tableIns.reload({
+                url:"../liao/selPays?"+params
+            })*/
         });
         //失焦事件
         $("#shows").blur(function(){
             $("#dataFrm")[0].reset();
             $("#show").val($(this).val());
+            $("#hidden").val("");
         });
         function sel(){
             var params=$("#dataFrm").serialize();
@@ -146,17 +163,40 @@
                 }
             })
         }
-        /*$.ajax({
-            url: '../liao/selSupplier',
-            dataType: 'json',
-            type: 'post',
-            success: function (data) {
-                $.each(data, function (index, item) {
-                    $('#warehouseId').append(new Option(item.supplierName, item.warehouseId));// 下拉菜单里添加元素
+        table.on("toolbar(pay)",function(obj){
+            if(obj.event=='addPay'){
+                $("#hidden").val("");
+                if($("#shows").val()==""){
+                    alert("请输入住院号！");
+                    $("#shows").select();
+                    return false;
+                }
+                $(this).blur(function(){
+                    $("#hidden").val($(this).val());
                 });
-                layui.form.render("select");//重新渲染 固定写法
             }
-        })*/
+            if(obj.event=='add') {
+                if($("#shows").val()==""){
+                    alert("请输入住院号！");
+                    $("#shows").select();
+                    return false;
+                }
+                if($("#ceshi").val()==""){
+                    alert("请点击查询！");
+                    return false;
+                }
+                if($("#hidden").val()==""){
+                    alert("请输入你要查询的药品名称！");
+                    return false;
+                }
+                if($("#hidden").val()==0){
+                    alert("请输入你要查询的药品名称！");
+                    return false;
+                }
+                sel();
+                $("#hidden").val("");
+            }
+        })
     });
 </script>
 </body>
