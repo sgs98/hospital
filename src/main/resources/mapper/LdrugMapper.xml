@@ -9,7 +9,7 @@
         <where>
             p.unit=u.unitId and p.area=a.areaId and p.type=t.typeId
             <if test="pharmacyName!=null and pharmacyName!=''">
-                and p.pharmacyName like concat('%',concat('#{pharmacyName}','%'))
+                and p.pharmacyName like concat('%',concat(#{pharmacyName},'%'))
             </if>
         </where>
     </select>

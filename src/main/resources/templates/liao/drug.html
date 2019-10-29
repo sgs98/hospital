@@ -26,7 +26,7 @@
         #addPay{
             width:200px;
             font-size: 16px;
-            width: 150px;
+            width: 200px;
             height: 30px;
             margin-right: 20px;
         }
@@ -53,9 +53,9 @@
     </div>
 </form>
 <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
-    <input type="text" id="show" name="registerid">
-    <input type="text" id="hidden" name="pharmacyName" value="">
-    <input type="text" id="hid" name="moneys" value=0>
+    <input type="hidden" id="show" name="registerid">
+    <input type="hidden" id="hidden" name="pharmacyName" value="">
+    <input type="hidden" id="hid" name="moneys" value=0>
     <table>
         <tr>
             <td class="dataFrm_td">姓名：</td>
@@ -85,7 +85,7 @@
 </form>
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
-    <input type="text" name="pay" id="addPay" autocomplete="off" lay-event="addPay" placeholder="请输入预交金额" class="pay" >
+    <input type="text" name="pay" id="addPay" autocomplete="off" lay-event="addPay" placeholder="请输入要查询的药品名称" class="pay" >
     <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">预交</button>
 </div>
 <div style="display: block;width: 50%;">
@@ -130,7 +130,6 @@
                 $("#shows").select();
                 return false;
             }
-            $("#hidden").val(0);
             sel();
             /*var params=$("#dataFrm").serialize();
             tableIns.reload({
@@ -166,35 +165,16 @@
         table.on("toolbar(pay)",function(obj){
             if(obj.event=='addPay'){
                 $("#hidden").val("");
-                if($("#shows").val()==""){
-                    alert("请输入住院号！");
-                    $("#shows").select();
-                    return false;
-                }
                 $(this).blur(function(){
                     $("#hidden").val($(this).val());
                 });
             }
             if(obj.event=='add') {
-                if($("#shows").val()==""){
-                    alert("请输入住院号！");
-                    $("#shows").select();
-                    return false;
-                }
-                if($("#ceshi").val()==""){
-                    alert("请点击查询！");
-                    return false;
-                }
-                if($("#hidden").val()==""){
-                    alert("请输入你要查询的药品名称！");
-                    return false;
-                }
-                if($("#hidden").val()==0){
-                    alert("请输入你要查询的药品名称！");
-                    return false;
-                }
-                sel();
+                var params=$("#dataFrm").serialize()
                 $("#hidden").val("");
+                tableIns.reload({
+                    url:"../liao/selDrug?"+params
+                })
             }
         })
     });

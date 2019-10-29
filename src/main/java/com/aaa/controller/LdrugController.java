@@ -31,6 +31,7 @@ public class LdrugController {
     @RequestMapping("/selDrug")
     @ResponseBody
     public Object selDrug(Integer page, Integer limit,Lpharmacy lpharmacy){
+        System.out.println(lpharmacy);
         PageHelper.startPage(page, limit);
         List<Lpharmacy> listAll =ldrugService.selDrug(lpharmacy);
         PageInfo pageInfo = new PageInfo(listAll);
