@@ -86,6 +86,18 @@
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!--数据源监控-->
+         <dependency>
+              <groupId>com.github.drtrang</groupId>
+              <artifactId>druid-spring-boot2-starter</artifactId>
+              <version>1.1.9</version>
+         </dependency>
+
+        <dependency>
+              <groupId>com.alibaba</groupId>
+              <artifactId>druid</artifactId>
+              <version>1.0.31</version>
+         </dependency>
     </dependencies>
 
     <build>

@@ -8,5 +8,5 @@ public interface TypeService {
     List<Type> findAllType(Type type);
     int deleteType(Integer typeId);
     int addType(Type type);
-    int editType(Type type);
+    int count(Type type);
 }

@@ -14,7 +14,7 @@
         insert into doctor(doctorName,departmentId,registeredId)values(#{doctorName},#{departmentId},#{registeredId})
     </insert>
     <update id="editDoctor" parameterType="doctor">
-        update doctor set doctorName=#{doctorName},departmentId=#{departmentId},registeredId=#{registeredId} where doctorId=#{doctorId}
+        update doctor set departmentId=#{departmentId},registeredId=#{registeredId} where doctorId=#{doctorId}
     </update>
     <delete id="deleteDoctor" parameterType="Integer">
         delete from doctor where DoctorId=#{DoctorId}
@@ -25,5 +25,7 @@
     <select id="findAllRegisteredtype" resultType="Registeredtype">
         select*from Registeredtype
     </select>
-
+    <select id="count" resultType="int">
+        select count(*) from doctor where doctorName=#{doctorName}
+    </select>
 </mapper>

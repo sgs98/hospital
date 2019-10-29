@@ -44,26 +44,20 @@ public class TypeController {
     @RequestMapping("addType")
     @ResponseBody
     public Object addType(Type type){
-        int i = typeService.addType(type);
-        if(i==1){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int count = typeService.count(type);
+        if(count==0){
+            int i = typeService.addType(type);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
+        }else {
+            return type.getTypeName()+"已存在";
         }
+
     }
-    /*
-     * 修改药品类型
-     * */
-    @RequestMapping("editType")
-    @ResponseBody
-    public Object editType(Type type){
-        int i = typeService.editType(type);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
-        }
-    }
+
     /*
      * 删除药品类型
      * */

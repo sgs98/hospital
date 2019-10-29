@@ -45,13 +45,18 @@ public class RegisteredTypeController {
     @RequestMapping("addRegisteredType")
     @ResponseBody
     public Object addRegisteredType(Registeredtype registeredtype){
-        System.out.println("asdsad");
-        int i = registeredTypeService.addRegisteredType(registeredtype);
-        if(i==1){
-            return "添加成功";
+        int count = registeredTypeService.count(registeredtype);
+        if(count==0){
+            int i = registeredTypeService.addRegisteredType(registeredtype);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return registeredtype.getType()+"已存在";
         }
+
     }
     /*
      * 修改类型
@@ -65,6 +70,7 @@ public class RegisteredTypeController {
         }else{
             return "修改失败";
         }
+
     }
     /*
     * 删除类型

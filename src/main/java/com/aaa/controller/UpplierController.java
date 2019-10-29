@@ -44,33 +44,27 @@ public class UpplierController {
     @RequestMapping("addUpplier")
     @ResponseBody
     public Object addUpplier(Upplier upplier){
-        int i = upplierService.addUpplier(upplier);
-        if(i==1){
-            return "添加成功";
+        int count = upplierService.count(upplier);
+        if(count==0){
+            int i = upplierService.addUpplier(upplier);
+            if(i==1){
+                return "添加成功";
+            }else{
+                return "添加失败";
+            }
         }else{
-            return "添加失败";
+            return upplier.getSupplierName()+"已存在";
         }
+
     }
-    /*
-     * 修改供货单位
-     * */
-    @RequestMapping("editUpplier")
-    @ResponseBody
-    public Object editUpplier(Upplier upplier){
-        int i = upplierService.editUpplier(upplier);
-        if(i==1){
-            return "修改成功";
-        }else{
-            return "修改失败";
-        }
-    }
+
     /*
      * 删除供货单位
      * */
     @RequestMapping("deleteUpplier")
     @ResponseBody
-    public Object deleteUpplier(Integer upplierId){
-        int i = upplierService.deleteUpplier(upplierId);
+    public Object deleteUpplier(Integer supplierId){
+        int i = upplierService.deleteUpplier(supplierId);
         if(i==1){
             return "删除成功";
         }else{

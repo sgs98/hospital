@@ -14,10 +14,11 @@
     <insert id="addWarehuose" parameterType="Warehuose">
         insert into Warehuose(supplierName)values(#{supplierName})
     </insert>
-    <update id="editWarehuose" parameterType="Warehuose">
-        update Warehuose set supplierName=#{supplierName} where warehouseId=#{warehouseId}
-    </update>
     <delete id="deleteWarehuose" parameterType="Integer">
         delete from Warehuose where warehouseId=#{warehouseId}
     </delete>
+    <select id="count" resultType="int">
+        select count(*) from Warehuose where supplierName=#{supplierName}
+
+    </select>
 </mapper>

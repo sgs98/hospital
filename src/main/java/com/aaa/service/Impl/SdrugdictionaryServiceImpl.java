@@ -50,4 +50,9 @@ public class SdrugdictionaryServiceImpl implements SdrugdictionaryService {
     public List<Type> findAllType() {
         return sdrugdictionaryMapper.findAllType();
     }
+
+    @Override
+    public int count(Sdrugdictionary sdrugdictionary) {
+        return sdrugdictionaryMapper.count(sdrugdictionary);
+    }
 }

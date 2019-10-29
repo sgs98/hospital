@@ -28,8 +28,9 @@ public class DepartmentServiceImpl implements DepartmentService {
         return departmentMapper.addDepartment(departments);
     }
 
+
     @Override
-    public int edit(Departments departments) {
-        return departmentMapper.edit(departments);
+    public int count(Departments departments) {
+        return departmentMapper.count(departments);
     }
 }

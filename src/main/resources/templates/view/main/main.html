@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>首页</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <link rel="stylesheet" th:href="@{/css/public.css}" media="all"/>
     <style>
@@ -79,13 +79,8 @@
             margin-left: 50px;
         }
         .num{
-            margin-left:40px;
-            margin-top: 10px;
-            color: #fff;
-        }
-        .n{
-            margin-left:40px;
-            margin-top: 5px;
+            margin-left:45px;
+            margin-top: 15px;
             color: #fff;
         }
         .total{
@@ -95,7 +90,7 @@
         }
         .desc{
             margin-left:200px;
-            margin-top: -130px;
+            margin-top: -90px;
             color: #fff;
         }
     </style>
@@ -108,8 +103,7 @@
             <div class="img">
                 <i class="fa fa-user reset-i fs65"><img src="../images/1.png"/></i>
             </div>
-            <div class="num"><h5>门诊人数</h5></div>
-            <div class="n"><h5><span class="currentNum"></span></h5></div>
+            <div class="num"><h5>今日门诊人数:&nbsp;<span class="currentNum"></span></h5></div>
             <div class="desc"><h5>就诊概况</h5></div>
             <div class="total"><h2>总人数:&nbsp;<span class="Total"></span></h2></div>
         </div>
@@ -119,10 +113,9 @@
             <div class="img">
                 <i class="fa fa-user reset-i fs65"><img src="../images/2.png"/></i>
             </div>
-            <div class="num"><h5>住院人数</h5></div>
-            <div class="n"><h5>5</h5></div>
-            <div class="desc"><h5>就诊概况</h5><span></span></div>
-            <div class="total"><h2>总人数:</h2><span></span></div>
+            <div class="num"><h5>今日住院人数:&nbsp;<span class="currentZhuYuan"></span></h5></div>
+            <div class="desc"><h5>就诊概况</h5></div>
+            <div class="total"><h2>总人数:&nbsp;<span class="zhuyuan"></span></h2></div>
         </div>
     </div>
 </div>
@@ -258,10 +251,19 @@
             dataType: 'json',
             type: 'post',
             success: function (data) {
-               alert(data);
+               $(".zhuyuan").text(data);
+            }
+        })
+        $.ajax({
+            url: 'main/currentZhuYuan',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $(".currentZhuYuan").text(data);
             }
         })
     });
+
 </script>
 </body>
 </html>

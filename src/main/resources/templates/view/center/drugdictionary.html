@@ -55,7 +55,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">价格:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingPrice" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
+                    <input type="number" name="sellingPrice" lay-verify="required"   placeholder="请输入价格" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -78,15 +78,6 @@
                         <option value=""></option>
                     </select>
 
-                </div>
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">保质期:</label>
-                <div class="layui-input-inline">
-                    <input type="text" name="exprationDate" lay-verify="required"   placeholder="请输入保质期" autocomplete="off"
-                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -138,11 +129,8 @@
                 ,{field:'unitName', title:'单位',align:'center',width:"10%"}
                 ,{field:'sellingPrice', title:'价格',align:'center',width:"10%"}
                 ,{field:'areaName', title:'生产地址',align:'center',width:"20%"}
-                ,{field:'typeName', title:'类型',align:'center',width:"10%"}
-                ,{field:'exprationDate', title:'保质期',align:'center',width:"10%",templet:function(d){
-                        return d.exprationDate+"个月"
-                    }}
-                ,{fixed: 'right', title:'操作', toolbar: '#drugdictionary',align:'center',width:'10%'}
+                ,{field:'typeName', title:'类型',align:'center',width:"15%"}
+                ,{fixed: 'right', title:'操作', toolbar: '#drugdictionary',align:'center',width:'15%'}
             ]]
         })
         //模糊查询
@@ -187,7 +175,7 @@
                 type:1,
                 title:'添加药品',
                 content:$("#saveOrUpdateDiv"),
-                area:['500px','530px'],
+                area:['500px','510px'],
                 success:function(index){
                     //清空表单数据
                     $("#dataFrm")[0].reset();
@@ -201,7 +189,7 @@
                 type:1,
                 title:'修改药品',
                 content:$("#saveOrUpdateDiv"),
-                area:['500px','530px'],
+                area:['500px','510px'],
                 success:function(index){
                     form.val("dataFrm",data);
                     url="drugdictionary/editSdrugdictionary";

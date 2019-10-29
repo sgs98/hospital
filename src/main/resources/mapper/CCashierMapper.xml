@@ -1,0 +1,43 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.aaa.mapper.CCashierMapper">
+    <!--查询所有患者-->
+    <select id="sel" resultType="ReportVo">
+        SELECT r.reportId,r.reportName,r.carid,r.phone,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+            FROM  report r,doctor d,registeredtype e,departments p
+            WHERE r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+    </select>
+    <!--查询所有药房-->
+    <select id="selware" resultType="CWarehuose">
+        select * from warehuose
+    </select>
+    <!--查询所有药品信息-->
+    <select id="selpharm" resultType="CPharmacy" parameterType="Integer">
+        SELECT p.*,u.unitName unitName FROM pharmacy p ,unit u WHERE p.unit=u.unitId
+    </select>
+    <!--查询这个用户的处方表上有没有这个-->
+    <select id="selcadr" resultType="Integer" parameterType="CCashier">
+        SELECT * FROM cashier WHERE reportId=#{reportId} AND durgname=#{durgname}
+    </select>
+    <!--添加处方药品-->
+    <insert id="addchu" parameterType="CCashier">
+        INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state)
+ VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},0)
+    </insert>
+    <!--查询该用户的处方-->
+    <select id="selpepi" resultType="CCashier" parameterType="Integer">
+        select * from cashier where reportId=#{perid} and state !=2
+    </select>
+    <!--删除处方中的药品-->
+    <delete id="del" parameterType="CCashier">
+        DELETE FROM cashier WHERE cashier = #{cashier}
+    </delete>
+    <!--减少药房中数量-->
+    <update id="deldrunum" parameterType="CPharmacy">
+        UPDATE pharmacy SET drugstorenum = drugstorenum-#{drugstorenum} WHERE pharmacyName = #{pharmacyName} and warehouseId=#{warehouseId}
+    </update>
+</mapper>
