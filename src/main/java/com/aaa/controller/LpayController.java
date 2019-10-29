@@ -43,7 +43,6 @@ public class LpayController {
             lpayService.addPay(register);
         }
         List<Register> registers = ladminService.selRegister(register);
-        System.out.println(registers);
         return registers;
     }
 

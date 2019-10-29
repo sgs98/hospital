@@ -13,4 +13,7 @@
             </if>
         </where>
     </select>
+    <select id="selDrugs" parameterType="Lrecord" resultType="Lrecord">
+        select hospitalpriceid,registerId registerid,durgname,durgnum,repiceprice,repicetotal,htime,state from hospitalprice where state=#{state} and registerId=#{registerid}
+    </select>
 </mapper>
