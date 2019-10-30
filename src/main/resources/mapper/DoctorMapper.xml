@@ -7,18 +7,22 @@
      select*from doctor d,departments de,registeredtype r where d.departmentId=de.departmentId and d.registeredId=r.registeredId
          <if test="doctorName!=null and doctorName!=''">
           and   d.doctorName like concat('%',concat(#{doctorName},'%'))
-         </if> ORDER BY doctorId asc
+         </if>
+         <if test="dstate!=null">
+             and   d.dstate =#{dstate}
+         </if> and dstate!=3
+          ORDER BY doctorId asc
 
  </select>
     <insert id="addDoctor" parameterType="doctor">
-        insert into doctor(doctorName,departmentId,registeredId)values(#{doctorName},#{departmentId},#{registeredId})
+        insert into doctor(doctorName,departmentId,registeredId,dstate)values(#{doctorName},#{departmentId},#{registeredId},#{dstate})
     </insert>
     <update id="editDoctor" parameterType="doctor">
-        update doctor set departmentId=#{departmentId},registeredId=#{registeredId} where doctorId=#{doctorId}
+        update doctor set departmentId=#{departmentId},registeredId=#{registeredId},dstate=#{dstate} where doctorId=#{doctorId}
     </update>
-    <delete id="deleteDoctor" parameterType="Integer">
-        delete from doctor where DoctorId=#{DoctorId}
-    </delete>
+    <update id="deleteDoctor" parameterType="Integer">
+        update doctor set dstate=3 where DoctorId=#{DoctorId}
+    </update>
     <select id="findAllDepartments" resultType="Departments">
         select*from departments
     </select>
@@ -26,6 +30,10 @@
         select*from Registeredtype
     </select>
     <select id="count" resultType="int">
-        select count(*) from doctor where doctorName=#{doctorName}
+        select count(*) from doctor where doctorName=#{doctorName} and dstate=0
     </select>
+    <select id="checkCount" resultType="int">
+    select count(r.reportId) from report r ,doctor d where r.doctor=d.doctorId and r.doctor=#{doctorId} and d.dstate=0 and r.state=1
+    </select>
+
 </mapper>

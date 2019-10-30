@@ -4,7 +4,7 @@
 
 <mapper namespace="com.aaa.mapper.PaibanMapper">
  <select id="findAllPaiban" resultType="paiban">
-select d.doctorId doctorId,d.doctorName  doctorName, p.one one,p.two two,p.three three,p.four four,p.five five,p.six six,p.seven seven from doctor d LEFT JOIN paiban p on  p.doctorId=d.doctorId
+select d.doctorId doctorId,d.doctorName  doctorName, p.one one,p.two two,p.three three,p.four four,p.five five,p.six six,p.seven seven from doctor d LEFT JOIN paiban p on  p.doctorId=d.doctorId where d.dstate!=3
   <where>
    <if test="doctorName!=null and doctorName!=''">
     doctorName like concat('%' ,concat(#{doctorName},'%'))

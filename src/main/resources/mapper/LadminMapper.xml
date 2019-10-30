@@ -7,14 +7,14 @@
         select * from departments
     </select>
     <select id="selDoctor" parameterType="Doctor" resultType="Doctor">
-        select * from doctor where departmentId=#{departmentId}
+        select * from doctor where departmentId=#{departmentId} and dstate=1
     </select>
     <select id="selBed" parameterType="Bed" resultType="Bed">
         select * from bed where state=#{state} and departmentId=#{departmentId}
     </select>
     <insert id="addRegister" parameterType="Register">
         insert into register(userName,age,sex,department,doctor,diagnose,address,Phone,Idcard,registerDate,bedNum,Operator,money,state)
-        values(#{userName},#{age},#{sex},#{departmentId},#{doctorId},#{diagnose},#{address},#{phone},#{idcard},SYSDATE(),#{bedId},#{Operator},#{money},0)
+        values(#{userName},#{age},#{sex},#{departmentId},#{doctorId},#{diagnose},#{address},#{phone},#{idcard},NOW(),#{bedId},#{Operator},#{money},0)
     </insert>
     <select id="selRegister" parameterType="Register" resultType="Register">
         select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.Operator

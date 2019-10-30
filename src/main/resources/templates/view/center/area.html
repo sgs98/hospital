@@ -60,9 +60,7 @@
 </div>
 <table class="layui-hide" id="areaTable" lay-filter="areaTable"></table>
 
-<div  id="area" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</div>
+
 <!-- 数据表格结束 -->
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
@@ -87,8 +85,7 @@
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
                 {field:'areaId', title:'ID',align:'center',width:'30%'}
-                ,{field:'areaName', title:'部门',align:'center',width:"40%"}
-                ,{fixed: 'right', title:'操作', toolbar: '#area',align:'center',width:'30%'}
+                ,{field:'areaName', title:'药品产地',align:'center',width:"70%"}
             ]]
         })
         //模糊查询

@@ -388,12 +388,18 @@ public class PrjectTypeController {
     @RequestMapping("deleteBed")
     @ResponseBody
     public Object deleteBed(Integer bedId){
-        int i = prjectTypeService.deleteBed(bedId);
-        if(i==1){
-            return "删除成功";
-        }else{
-            return "删除失败";
+        int i1 = prjectTypeService.checkCount(bedId);
+        if(i1==1){
+           return "该床位还有病人" ;
+        }else {
+            int i = prjectTypeService.deleteBed(bedId);
+            if(i==1){
+                return "删除成功";
+            }else{
+                return "删除失败";
+            }
         }
+
     }
     @Autowired
     private DepartmentService departmentService;

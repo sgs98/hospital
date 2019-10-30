@@ -33,4 +33,9 @@ public class DepartmentServiceImpl implements DepartmentService {
     public int count(Departments departments) {
         return departmentMapper.count(departments);
     }
+
+    @Override
+    public int checkCount(Integer departmentId) {
+        return departmentMapper.checkCount(departmentId);
+    }
 }

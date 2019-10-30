@@ -7,7 +7,7 @@
         update register set money=money+#{money} where registerid=#{registerid};
     </update>
     <insert id="addPay" parameterType="Register">
-        insert into pay(registerid,money,payDate) values(#{registerid},#{money},SYSDATE())
+        insert into pay(registerid,money,payDate) values(#{registerid},#{money},NOW())
     </insert>
     <select id="selPays" parameterType="Register" resultType="Pay">
         select p.payid,p.registerid,r.userName,p.money,p.payDate  from pay p,register r where p.registerid=#{registerid} and r.registerid=p.registerid order by p.payDate desc

@@ -80,12 +80,18 @@ public class DoctorController {
     @RequestMapping("deleteDoctor")
     @ResponseBody
     public Object deleteDoctor(Integer doctorId){
-        int i = doctorService.deleteDoctor(doctorId);
-        if(i==1){
-            return "删除成功";
+        int i1 = doctorService.checkCount(doctorId);
+        if(i1>0){
+           return "该医生还有病人";
         }else{
-            return "删除失败";
+            int i = doctorService.deleteDoctor(doctorId);
+            if(i==1){
+                return "删除成功";
+            }else{
+                return "删除失败";
+            }
         }
+
     }
     /*
      * 查询科室

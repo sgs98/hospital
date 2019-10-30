@@ -44,4 +44,9 @@ public interface PrjectTypeService {
     int editBed(Bed bed);
     int deleteBed(Integer bedId);
     int count5(Bed bed);
+    /*
+     * 判断该床位是否有人
+     * */
+
+    int checkCount(Integer bedId);
 }

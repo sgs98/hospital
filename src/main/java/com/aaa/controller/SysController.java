@@ -174,4 +174,35 @@ public class SysController {
     public String toMain() {
         return "view/main/main";
     }
+    /*
+     * 跳转加载reportManage.html
+     * */
+    @RequestMapping("toReportFinance")
+    public String toReportFinance() {
+        return "view/finance/reportManage";
+    }
+
+    /*
+     * 跳转加载zhuYuanManage.html
+     * */
+    @RequestMapping("toZhuYaunManage")
+    public String toZhuYaunManage() {
+        return "view/finance/zhuYuanManage";
+    }
+    /*
+     * 跳转加载zhuYuanManage.html
+     * */
+    @RequestMapping("toBingYear")
+    public String toBingYear() {
+        return "view/finance/reportBing";
+    }
+    /*
+     * 跳转加载zhuYuanBing.html
+     * */
+    @RequestMapping("toBing2")
+    public String toBing2() {
+        return "view/finance/zhuYuanBing";
+    }
+
+
 }

@@ -51,5 +51,10 @@ public class DoctorServiceImpl implements DoctorService {
         return doctorMapper.count(doctor);
     }
 
+    @Override
+    public int checkCount(Integer doctorId) {
+        return doctorMapper.checkCount(doctorId);
+    }
+
 
 }

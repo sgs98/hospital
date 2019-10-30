@@ -19,7 +19,14 @@
                 <input type="text" name="doctorName"  autocomplete="off" class="layui-input" style="width:200px" >
             </div>
         </div>
-        <div class="layui-inline" style="position: absolute;left: 340px;top:66px;">
+        <div class="layui-inline">
+            <label class="layui-form-label">类型:</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="dstate" value="1" title="住院部">
+                <input type="radio" name="dstate" value="0" title="门诊部">
+            </div>
+        </div>
+        <div class="layui-inline" style="position: absolute;left: 650px;top:66px;">
             <div class="layui-input-inline">
                 <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch">查询</button>
             </div>
@@ -52,7 +59,7 @@
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">类型:</label>
+                <label class="layui-form-label">挂号类型:</label>
                 <div class="layui-input-inline">
                     <select name="registeredId" id="registeredId" lay-verify="required" lay-filter="xmFilter">
                         <option value=""></option>
@@ -60,7 +67,15 @@
                 </div>
             </div>
         </div>
-
+        <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">类型:</label>
+            <div class="layui-input-inline">
+                <input type="radio" name="dstate" value="1" checked="checked" title="住院部">
+                <input type="radio" name="dstate" value="0" title="门诊部">
+            </div>
+        </div>
+        </div>
         <div class="layui-form-item" style="text-align: center;">
             <div class="layui-input-block" style=" margin-left:0px">
                 <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">提交</button>
@@ -107,9 +122,12 @@
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
                 {field:'doctorId', title:'ID',align:'center',width:'10%'}
-                ,{field:'doctorName', title:'姓名',align:'center',width:"25%"}
+                ,{field:'doctorName', title:'姓名',align:'center',width:"15%"}
                 ,{field:'department', title:'科室',align:'center',width:"20%"}
-                ,{field:'type', title:'类型',align:'center',width:"25%"}
+                ,{field:'type', title:'挂号类型',align:'center',width:"25%"}
+                ,{field:'dstate', title:'类型',align:'center',width:"10%",templet:function(d){
+                        return d.dstate=='1'?'<font color=blue>住院部</font>':'<font color=red>门诊部</font>';
+                    }}
                 ,{fixed: 'right', title:'操作', toolbar: '#doctor',align:'center',width:'20%'}
             ]]
         })
