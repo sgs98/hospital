@@ -11,4 +11,9 @@ public interface DepartmentMapper {
     int deleteDepartment(Integer departmentId);
     int addDepartment(Departments departments);
     int count(Departments departments);
+
+    /*
+    * 判断该科室是否还有医生
+    * */
+    int checkCount(Integer departmentId);
 }

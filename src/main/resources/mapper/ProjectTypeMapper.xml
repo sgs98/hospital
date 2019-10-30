@@ -105,4 +105,9 @@
         select  count(*) from Bed where bedname=#{bedname}
     </select>
     <!-- 床位增删改查结束-->
+
+    <!--判断-->
+    <select id="checkCount" resultType="int">
+        select count(*) from bed b,register r where r.bednum=b.bedid and b.bedid=#{bedid}
+    </select>
 </mapper>

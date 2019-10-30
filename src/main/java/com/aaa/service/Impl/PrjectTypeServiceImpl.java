@@ -151,4 +151,9 @@ public class PrjectTypeServiceImpl implements PrjectTypeService {
     public int count5(Bed bed) {
         return prjectTypeMapper.count5(bed);
     }
+
+    @Override
+    public int checkCount(Integer bedId) {
+        return prjectTypeMapper.checkCount(bedId);
+    }
 }

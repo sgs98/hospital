@@ -44,9 +44,7 @@
             </div>
             <table class="layui-hide" id="projecttypeTable" lay-filter="projecttypeTable"></table>
 
-            <div  id="projecttype" style="display: none;">
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-            </div>
+
             <!-- 数据表格结束 -->
             <!-- 添加和修改的弹出层开始 -->
             <div style="display: none;padding: 20px" id="saveOrUpdateDiv54321" >
@@ -432,8 +430,7 @@
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
                 {field:'projectId', title:'ID',align:'center',width:'30%'}
-                ,{field:'projectName', title:'部门',align:'center',width:"40%"}
-                ,{fixed: 'right', title:'操作', toolbar: '#projecttype',align:'center',width:'30%'}
+                ,{field:'projectName', title:'项目大类',align:'center',width:"70%"}
             ]]
         })
         //模糊查询

@@ -58,9 +58,7 @@
 </div>
 <table class="layui-hide" id="typeTable" lay-filter="typeTable"></table>
 
-<div  id="type" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
-</div>
+
 <!-- 数据表格结束 -->
 </body>
 <script type="text/javascript" th:inline="none">
@@ -85,8 +83,7 @@
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
                 {field:'typeId', title:'ID',align:'center',width:'30%'}
-                ,{field:'typeName', title:'药品类型',align:'center',width:"40%"}
-                ,{fixed: 'right', title:'操作', toolbar: '#type',align:'center',width:'30%'}
+                ,{field:'typeName', title:'药品类型',align:'center',width:"70%"}
             ]]
         })
         //模糊查询

@@ -15,4 +15,8 @@ public interface DoctorService {
     List<Departments> findAllDepartments();
     List<Registeredtype>findAllRegisteredtype();
     int count(Doctor doctor);
+    /*
+     * 判断该医生是否还有病人
+     * */
+    int checkCount(Integer doctorId);
 }

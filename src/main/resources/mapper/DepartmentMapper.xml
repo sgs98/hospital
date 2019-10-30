@@ -7,17 +7,19 @@
      select *from departments
      <where>
          <if test="department!=null and department!=''">
-             department like concat('%',concat(#{department},'%'))
+            and department like concat('%',concat(#{department},'%'))
          </if>
      </where>
  </select>
     <insert id="addDepartment" parameterType="departments">
-        insert into departments(department)values(#{department})
+        insert into departments(department,ddstate)values(#{department},0)
     </insert>
-    <delete id="deleteDepartment" parameterType="Integer">
-        delete from departments where departmentId=#{departmentId}
-    </delete>
+    <update id="deleteDepartment" parameterType="Integer">
+        update departments set ddstate=1  where departmentId=#{departmentId}
+    </update>
     <select id="count" resultType="int">
         select count(*) from departments where department = #{department}
     </select>
+
+
 </mapper>

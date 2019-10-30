@@ -38,6 +38,7 @@ public interface PrjectTypeMapper {
     int editMoneytype(Moneytype moneytype);
     int deleteMoneytype(Integer moneyId);
     int count4(Moneytype moneytype);
+
     /*
      * 床位Bed
      * */
@@ -46,4 +47,9 @@ public interface PrjectTypeMapper {
     int editBed(Bed bed);
     int deleteBed(Integer bedId);
     int count5(Bed bed);
+    /*
+     * 判断该床位是否有人
+     * */
+
+    int checkCount(Integer bedId);
 }

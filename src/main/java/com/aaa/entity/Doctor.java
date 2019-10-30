@@ -8,6 +8,7 @@ public class Doctor {
     private String department;
     private Integer registeredId;
     private String type;
+    private Integer dstate;
 
     public Integer getDoctorId() {
         return doctorId;
@@ -55,5 +56,13 @@ public class Doctor {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Integer getDstate() {
+        return dstate;
+    }
+
+    public void setDstate(Integer dstate) {
+        this.dstate = dstate;
     }
 }

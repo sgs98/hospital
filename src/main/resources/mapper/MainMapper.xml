@@ -4,25 +4,25 @@
 
 <mapper namespace="com.aaa.mapper.MainMapper">
     <select id="one" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.one  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.one  != '无班' and d.dstate!=3
     </select>
     <select id="two" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.two  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.two  != '无班' and d.dstate!=3
     </select>
     <select id="three" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.three  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.three  != '无班' and d.dstate!=3
     </select>
     <select id="four" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.four  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.four  != '无班' and d.dstate!=3
     </select>
     <select id="five" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.five  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.five  != '无班' and d.dstate!=3
     </select>
     <select id="six" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.six  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.six  != '无班' and d.dstate!=3
     </select>
     <select id="seven" resultType="paiban">
-        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.seven  != '无班'
+        select d.doctorName doctorName,d.doctorId from doctor d, paiban p where d.doctorId=p.doctorId and p.seven  != '无班' and d.dstate!=3
     </select>
     <select id="currentNum" resultType="Integer">
          SELECT count(*) FROM report where time=DATE_FORMAT(DATE_ADD(NOW(),INTERVAL 0 DAY),'%Y-%m-%d') and  state=1

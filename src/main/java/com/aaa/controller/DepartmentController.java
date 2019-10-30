@@ -64,11 +64,13 @@ public class DepartmentController {
     @RequestMapping("deleteDepartment")
     @ResponseBody
     public Object deleteDepartment(Integer departmentId){
-        int i = departmentService.deleteDepartment(departmentId);
-        if(i==1){
-            return "删除成功";
-        }else{
-            return "删除失败";
-        }
+            int i = departmentService.deleteDepartment(departmentId);
+            if(i==1){
+                return "删除成功";
+            }else{
+                return "删除失败";
+            }
+
+
     }
 }
