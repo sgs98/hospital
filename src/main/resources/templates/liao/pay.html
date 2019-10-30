@@ -58,27 +58,27 @@
     <table>
         <tr>
             <td class="dataFrm_td">姓名：</td>
-            <td><input type="text" id="ceshi" class="dataFrm_input" name="userName" disabled="disabled"></td>
+            <td><input type="text" id="ceshi" class="dataFrm_input" name="userName" readonly></td>
             <td class="dataFrm_td">科室：</td>
-            <td><input type="text" class="dataFrm_input" name="department" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="department" readonly></td>
             <td class="dataFrm_td">预交金：</td>
-            <td><input type="text" class="dataFrm_input" name="money" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="money" readonly></td>
         </tr>
         <tr>
             <td class="dataFrm_td">性别：</td>
-            <td><input type="text" class="dataFrm_input" name="sex" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="sex" readonly></td>
             <td class="dataFrm_td">医生：</td>
-            <td><input type="text" class="dataFrm_input" name="doctorName" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="doctorName" readonly></td>
             <td class="dataFrm_td">已用：</td>
-            <td><input type="text" class="dataFrm_input" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" readonly></td>
         </tr>
         <tr>
             <td class="dataFrm_td">年龄：</td>
-            <td><input type="text" class="dataFrm_input" name="age" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="age" readonly></td>
             <td class="dataFrm_td">床位：</td>
-            <td><input type="text" class="dataFrm_input" name="bedName" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" name="bedName" readonly></td>
             <td class="dataFrm_td">余款：</td>
-            <td><input type="text" class="dataFrm_input" disabled="disabled"></td>
+            <td><input type="text" class="dataFrm_input" readonly></td>
         </tr>
     </table>
 </form>
@@ -118,7 +118,7 @@
         //查询
         $("#doSearch").click(function(){
             if($("#shows").val()==""){
-                alert("请输入住院号！");
+                layer.msg("请输入住院号！");
                 $("#shows").select();
                 return false;
             }
@@ -135,6 +135,9 @@
             $("#dataFrm")[0].reset();
             $("#show").val($(this).val());
             $("#hidden").val(0);
+            tableIns.reload({
+                url:"../liao/selPays"
+            })
         });
         function sel(){
             var params=$("#dataFrm").serialize();
@@ -145,7 +148,7 @@
                 data:params,
                 success: function (data) {
                     if(data==""){
-                        alert("请输入正确的住院号！");
+                        layer.msg("请输入正确的住院号！");
                         $("shows").select();
                     }
                     $.each(data, function (index, item) {
@@ -160,7 +163,7 @@
             if(obj.event=='addPay'){
                 $("#hidden").val(0);
                 if($("#shows").val()==""){
-                    alert("请输入住院号！");
+                    layer.msg("请输入住院号！");
                     $("#shows").select();
                     return false;
                 }
@@ -170,20 +173,20 @@
             }
             if(obj.event=='add') {
                 if($("#shows").val()==""){
-                    alert("请输入住院号！");
+                    layer.msg("请输入住院号！");
                     $("#shows").select();
                     return false;
                 }
                 if($("#ceshi").val()==""){
-                    alert("请点击查询！");
+                    layer.msg("请点击查询！");
                     return false;
                 }
                 if($("#hidden").val()==""){
-                    alert("请输入预交金额！");
+                    layer.msg("请输入预交金额！");
                     return false;
                 }
                 if($("#hidden").val()==0){
-                    alert("请重新输入预交金额！");
+                    layer.msg("请重新输入预交金额！");
                     return false;
                 }
                 sel();

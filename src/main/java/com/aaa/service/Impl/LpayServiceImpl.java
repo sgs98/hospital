@@ -5,11 +5,13 @@ import com.aaa.entity.Register;
 import com.aaa.mapper.LpayMapper;
 import com.aaa.service.LpayService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional
 public class LpayServiceImpl implements LpayService {
 
     @Resource
