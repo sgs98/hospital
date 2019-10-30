@@ -6,6 +6,26 @@ public class CDoctor {
     private String doctorName;//医生姓名
     private Integer departmentId;//外键科室id
     private Integer registeredid;//外键类型id
+    private Integer dstate;
+
+    @Override
+    public String toString() {
+        return "CDoctor{" +
+                "doctorId=" + doctorId +
+                ", doctorName='" + doctorName + '\'' +
+                ", departmentId=" + departmentId +
+                ", registeredid=" + registeredid +
+                ", dstate=" + dstate +
+                '}';
+    }
+
+    public Integer getDstate() {
+        return dstate;
+    }
+
+    public void setDstate(Integer dstate) {
+        this.dstate = dstate;
+    }
 
     public int getDoctorId() {
         return doctorId;

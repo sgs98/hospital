@@ -5,15 +5,38 @@
 <mapper namespace="com.aaa.mapper.LdrugMapper">
     <select id="selDrug" parameterType="Lpharmacy" resultType="Lpharmacy">
         select p.pharmacyId,p.pharmacyName,p.drugstoreId rugstoreId,p.skullId,p.warehouseId,p.unit unitId,p.sellingPrice,
-        p.area areaId,p.type typeId,p.produceDate,p.validDate,p.drugstorenum,p.skullbatch,u.unitName,a.areaName,t.typeName from pharmacy p,unit u,area a,type t
+        p.area areaId,p.type typeId,p.produceDate,p.validDate,p.drugstorenum,p.skullbatch,u.unitName,a.areaName,t.typeName
+        from pharmacy p,unit u,area a,type t
         <where>
             p.unit=u.unitId and p.area=a.areaId and p.type=t.typeId
             <if test="pharmacyName!=null and pharmacyName!=''">
                 and p.pharmacyName like concat('%',concat(#{pharmacyName},'%'))
             </if>
+            <if test="pharmacyId!='' and pharmacyId!=null">
+                and p.pharmacyId=#{pharmacyId}
+            </if>
         </where>
     </select>
     <select id="selDrugs" parameterType="Lrecord" resultType="Lrecord">
-        select hospitalpriceid,registerId registerid,durgname,durgnum,repiceprice,repicetotal,htime,state from hospitalprice where state=#{state} and registerId=#{registerid}
+        select hospitalpriceid,registerId registerid,durgname,durgnum,repiceprice,repicetotal,htime,state
+        from hospitalprice where state=#{state} and registerId=#{registerid}
     </select>
+    <insert id="addDrug" parameterType="Lrecord">
+        insert into hospitalprice(registerid,durgname,durgnum,repiceprice,repicetotal,htime,state)
+         values(#{registerid},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},NOW(),#{state});
+    </insert>
+    <update id="updDrug" parameterType="Lrecord">
+        update hospitalprice set durgnum=durgnum+#{durgnum},repicetotal=durgnum*repiceprice,htime=NOW() where registerId=#{registerid} and state=#{state} and durgname=#{durgname}
+    </update>
+    <delete id="delDrug" parameterType="Lrecord">
+        delete from hospitalprice where hospitalpriceid=#{hospitalpriceid}
+    </delete>
+    <!--移除药品-->
+    <update id="updDrugs" parameterType="Lrecord">
+        update pharmacy set drugstorenum=drugstorenum+#{durgnum} where pharmacyName=#{durgname};
+    </update>
+    <!--添加药品-->
+    <update id="updNum" parameterType="Lrecord">
+        update pharmacy set drugstorenum=drugstorenum-#{durgnum} where pharmacyName=#{durgname};
+    </update>
 </mapper>
