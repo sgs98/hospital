@@ -108,15 +108,24 @@
         var table = layui.table;
 
         //保存
-        form.on("submit(doSubmit)",function(obj){
-            //序列化表单数据
-            var params=$("#dataFrm").serialize();
 
-            $.post("user/editLogin",params,function(obj){
-                layer.msg(obj);
-                location.reload();
-            })
-        });
+
+            form.on("submit(doSubmit)",function(obj){
+                layer.confirm('确定修改吗', function(index){
+                //序列化表单数据
+                var params=$("#dataFrm").serialize();
+
+                $.post("user/editLogin",params,function(obj){
+                    layer.msg(obj);
+                    setTimeout(function(){
+                        location.reload();
+                    },1000)
+
+                })
+            });
+
+        })
+
 
           var op;
         $("#pwd").click(function () {
