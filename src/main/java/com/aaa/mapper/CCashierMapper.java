@@ -20,10 +20,14 @@ public interface CCashierMapper {
     Integer selcadr(CCashier cCashier);
     //添加处方药品
     Integer addchu(CCashier cCashier);
+    //如果有该药品则改变该药品的数量
+    Integer updchu(CCashier cCashier);
     //查询该用户的处方
     List<CCashier> selpepi(Integer perid);
     //删除处方中的药品
     Integer del(CCashier cCashier);
     //减少药房中的数量
     Integer deldrunum(CPharmacy cPharmacy);
+    //添加药品数量
+    Integer adddrunum(CPharmacy cPharmacy);
 }

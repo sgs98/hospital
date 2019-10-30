@@ -80,8 +80,10 @@ public class CCashierController {
     public Object addchu(CCashier cCashier,CPharmacy cPharmacy){
         //向处方添加药品
         Integer addchu = cCashierService.addchu(cCashier);
+        String pharmacyName=cCashier.getDurgname();
+        cPharmacy.setPharmacyName(pharmacyName);
         //减少药房中的数量
-        cCashierService.deldrunum(cPharmacy);
+        Integer deldrunum = cCashierService.deldrunum(cPharmacy);
         return addchu;
     }
     //查询该用户的处方
@@ -104,12 +106,27 @@ public class CCashierController {
     //删除处方中的药品
     @RequestMapping("del")
     @ResponseBody
-    public Object del(CCashier cCashier){
+    public Object del(CCashier cCashier,String durnme,Integer durnum,CPharmacy cPharmacy){
         Integer del = cCashierService.del(cCashier);
+        cPharmacy.setPharmacyName(durnme);
+        cPharmacy.setDrugstorenum(durnum);
+        cCashierService.adddrunum(cPharmacy);
         if(del==0){
             return "删除失败";
         }else{
             return "删除成功";
         }
+    }
+    //如果处方中有该药品则修改该药品的数量和价钱
+    @RequestMapping("updchu")
+    @ResponseBody
+    public Object updchu(CCashier cCashier,CPharmacy cPharmacy){
+        //修改处方中药品的数量
+        Integer updchu = cCashierService.updchu(cCashier);
+        String pharmacyName=cCashier.getDurgname();
+        cPharmacy.setPharmacyName(pharmacyName);
+        //修改仓库中药品的数量
+        Integer deldrunum = cCashierService.deldrunum(cPharmacy);
+        return updchu;
     }
 }

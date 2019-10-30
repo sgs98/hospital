@@ -7,11 +7,13 @@ import com.aaa.entity.ReportVo;
 import com.aaa.mapper.CCashierMapper;
 import com.aaa.service.CCashierService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional
 public class CCashierServiceImpl implements CCashierService {
     @Resource
     private CCashierMapper cCashierMapper;
@@ -40,6 +42,12 @@ public class CCashierServiceImpl implements CCashierService {
     public Integer addchu(CCashier cCashier) {
         return cCashierMapper.addchu(cCashier);
     }
+    //如果处方中含有该药品则修改数量和价钱
+    @Override
+    public Integer updchu(CCashier cCashier) {
+        return cCashierMapper.updchu(cCashier);
+    }
+
     //根据用户查询这个人的处方
     @Override
     public List<CCashier> selpepi(Integer perid) {
@@ -54,5 +62,10 @@ public class CCashierServiceImpl implements CCashierService {
     @Override
     public Integer deldrunum(CPharmacy cPharmacy) {
         return  cCashierMapper.deldrunum(cPharmacy);
+    }
+    //添加仓库中的数量
+    @Override
+    public Integer adddrunum(CPharmacy cPharmacy) {
+        return cCashierMapper.adddrunum(cPharmacy);
     }
 }

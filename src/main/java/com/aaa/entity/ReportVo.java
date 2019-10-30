@@ -17,8 +17,8 @@ public class ReportVo {
     private String department;//科室
     private String doctorName;//医生姓名
     private String type;//挂号类型
-    private String carid;
-    private String phone;
+    private String carid;//身份证号
+    private String phone;//电话
 
     public String getCarid() {
         return carid;

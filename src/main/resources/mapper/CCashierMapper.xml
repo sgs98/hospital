@@ -25,9 +25,13 @@
     </select>
     <!--添加处方药品-->
     <insert id="addchu" parameterType="CCashier">
-        INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state)
- VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},0)
+        INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state,ctime)
+        VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},0,NOW())
     </insert>
+    <!--修改处方表上的信息-->
+    <update id="updchu" parameterType="CCashier">
+        UPDATE cashier SET durgnum = durgnum+#{durgnum},repicetotal=repicetotal+#{repicetotal} WHERE durgname = #{durgname}
+    </update>
     <!--查询该用户的处方-->
     <select id="selpepi" resultType="CCashier" parameterType="Integer">
         select * from cashier where reportId=#{perid} and state !=2
@@ -38,6 +42,10 @@
     </delete>
     <!--减少药房中数量-->
     <update id="deldrunum" parameterType="CPharmacy">
-        UPDATE pharmacy SET drugstorenum = drugstorenum-#{drugstorenum} WHERE pharmacyName = #{pharmacyName} and warehouseId=#{warehouseId}
+        UPDATE pharmacy SET drugstorenum = drugstorenum-#{drugstorenum} WHERE pharmacyName = #{pharmacyName}
+    </update>
+    <!--添加药品的数量-->
+    <update id="adddrunum" parameterType="CPharmacy">
+         UPDATE pharmacy SET drugstorenum = drugstorenum+#{drugstorenum} WHERE pharmacyName = #{pharmacyName}
     </update>
 </mapper>

@@ -33,7 +33,7 @@
     </select>
     <!--根据科室和挂号类型查询医生-->
     <select id="seldector" parameterType="CDoctor" resultType="CDoctor">
-        select * FROM doctor where departmentId=#{departmentId} and registeredid=#{registeredid}
+        select * FROM doctor where departmentId=#{departmentId} and registeredid=#{registeredid} and dstate=0
     </select>
     <!--根据挂号类型去查找多钱-->
     <select id="seltymo" parameterType="CRegisteredtype" resultType="Integer">

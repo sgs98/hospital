@@ -4,11 +4,13 @@ import com.aaa.entity.*;
 import com.aaa.mapper.CreportMapper;
 import com.aaa.service.CreportService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional
 public class CreportServiceImpl implements CreportService {
 
     @Resource
