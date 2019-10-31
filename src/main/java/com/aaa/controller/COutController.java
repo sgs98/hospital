@@ -3,6 +3,7 @@ package com.aaa.controller;
 
 import com.aaa.entity.CCashier;
 import com.aaa.entity.CPharmacy;
+import com.aaa.entity.Coutpatienttype;
 import com.aaa.entity.ReportVo;
 import com.aaa.service.COutService;
 import com.github.pagehelper.PageHelper;
@@ -30,9 +31,10 @@ public class COutController {
     //查询药品所有信息
     @RequestMapping("selout")
     @ResponseBody
-    public Object seldrug(Integer wareid,Integer page, Integer limit){
+    public Object seldrug(Coutpatienttype coutpatienttype, Integer page, Integer limit,String projectName){
+        coutpatienttype.setProjectName(projectName);
         PageHelper.startPage(page, limit);
-        List<CPharmacy> selout = cOutService.selout();
+        List<CPharmacy> selout = cOutService.selout(coutpatienttype);
         PageInfo pageInfo = new PageInfo(selout);
         Map<String, Object> tableData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式，如果后台没有加上这句话的话需要在前台页面手动设置

@@ -41,6 +41,21 @@
             border: 0px;
             border-radius: 2px;
         }
+        #selinp1{
+            width: 200px;
+            height: 40px;
+            border:solid #CCCCCC 1px;
+            border-radius: 2px;
+            margin-left: 20px;
+        }
+        #selbut1{
+            width: 100px;
+            height: 40px;
+            background-color:rgb(1,150,136);
+            color: white;
+            border: 0px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
@@ -66,18 +81,14 @@
             </tr>
             <tr style="height: 20px"></tr>
             <tr>
-                <td class="nam">划价药房:</td>
-                <td class="valu">
-                    <select lay-filter="wareid">
-                        <option th:each="map:${selware}" th:value="${map.warehouseId}" th:text="${map.supplierName}"></option>
-                    </select>
-                </td>
                 <td class="nam">科室:</td>
                 <td class="valu"><input class="layui-input" id="rede" type="text" readonly/> </td>
                 <td class="nam">医生:</td>
                 <td class="valu"><input class="layui-input" id="redo" type="text" readonly/> </td>
                 <td class="nam">电话:</td>
                 <td class="valu"><input class="layui-input"  id="phone" type="text" readonly/> </td>
+                <td class="nam">挂号费:</td>
+                <td class="valu"><input class="layui-input"  id="price" type="text" readonly/> </td>
          </table>
          </form>
     </div>
@@ -85,6 +96,10 @@
 
 <!--病号信息弹出层开始-->
 <div style="display: none;padding-top: 20px" id="peopleimgeDiv" >
+    <div id="adddrug1">
+        <input type="text" placeholder="请输入药品名字" id="selinp1" autocomplete="off" >
+        <input type="button" id="selbut1" value="查询"/>
+    </div>
     <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
     <div  id="userBar" style="display: none;">
         <a class="layui-btn layui-btn-xs" lay-event="edit">选择</a>
@@ -104,7 +119,7 @@
     <table class="layui-hide" id="drugtable" lay-filter="drugtable"></table>
     <div style="display: none;" id="adddrug">
         <input type="text" placeholder="请输入药品名字" id="selinp" autocomplete="off" >
-        <button type="button"  lay-event="drusel" id="selbut">查询</button>
+        <input type="button" id="selbut" value="查询"/>
     </div>
     <div  id="choose" style="display: none;">
         <a class="layui-btn layui-btn-xs" lay-event="druedit">选择</a>
@@ -128,6 +143,8 @@
 <script type="text/javascript" th:inline="none">
     var tableIns;
     var hua;
+    var yaopin;
+    var people;
     layui.use([ 'jquery', 'layer', 'form', 'table' ], function() {
 
         var $ = layui.jquery;
@@ -144,7 +161,7 @@
                 content:$("#peopleimgeDiv"),
                 area:['1300px','500px'],
                 success:function(index){
-                    tableIns=table.render({
+                    people=table.render({
                         elem: '#userTable'   //渲染的目标对象
                         ,url:'selpreson' //数据接口
                         ,title: '用户数据表'//数据导出来的标题
@@ -159,20 +176,21 @@
                         ,limits: [5, 10, 15]
                         ,limit: 2//默认采用3
                         ,cols: [[   //列表数据
-                            {field:'reportId', title:'单据号',align:'center',width:"9%"}
-                            ,{field:'reportName', title:'姓名',align:'center',width:"9%"}
-                            ,{field:'phone', title:'电话',align:'center',width:"9%"}
-                            ,{field:'carid', title:'身份证号',align:'center',width:"9%"}
-                            ,{field:'sex', title:'性别',align:'center',width:"9%"}
-                            ,{field:'age', title:'年龄',align:'center',width:"9%"}
-                            ,{field:'department', title:'科室',align:'center',width:"9%"}
-                            ,{field:'doctorName', title:'医生',align:'center',width:"9%"}
-                            ,{field:'type', title:'挂号类别',align:'center',width:"9%"}
-                            ,{field:'time', title:'挂号时间',align:'center',width:"9%"}
-                            ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'9%'}
+                            {field:'reportId', title:'单据号',align:'center',width:"8%"}
+                            ,{field:'reportName', title:'姓名',align:'center',width:"8%"}
+                            ,{field:'phone', title:'电话',align:'center',width:"8%"}
+                            ,{field:'carid', title:'身份证号',align:'center',width:"8%"}
+                            ,{field:'sex', title:'性别',align:'center',width:"8%"}
+                            ,{field:'age', title:'年龄',align:'center',width:"8%"}
+                            ,{field:'department', title:'科室',align:'center',width:"8%"}
+                            ,{field:'doctorName', title:'医生',align:'center',width:"8%"}
+                            ,{field:'type', title:'挂号类别',align:'center',width:"8%"}
+                            ,{field:'time', title:'挂号时间',align:'center',width:"8%"}
+                            ,{field:'price', title:'挂号费',align:'center',width:"8%"}
+                            ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'8%'}
                         ]]
                     })
-                    tableIns=table.render({
+                    yaopin=table.render({
                         elem: '#drugtable'   //渲染的目标对象
                         ,url:'seldrug' //数据接口
                         ,title: '药品信息'
@@ -210,7 +228,7 @@
                 $("#rede").val(data.department);
                 $("#redo").val(data.doctorName);
                 $("#carid").val(data.carid);
-                $("#phone").val(data.phone);
+                $("#price").val(data.price);
                 var perid=data.reportId;
                 //查询该用户的处方
                 layer.close(mainIndex)
@@ -311,6 +329,18 @@
             layer.close(mainIndex)
             $("#num").val("");
         })
+        $(document).on('click',"#selbut",function(){
+            var durgname=$("#selinp").val()
+            yaopin.reload({
+                url:"../caocc/seldrug?durgname="+durgname
+            })
+        });
+        $(document).on('click',"#selbut1",function(){
+            var durgname=$("#selinp1").val()
+            people.reload({
+                url:"../caocc/mohu?durgname="+durgname
+            })
+        });
         //监听行工具事件
         table.on('tool(repiid)', function(obj){
             var data = obj.data; //获得当前行数据

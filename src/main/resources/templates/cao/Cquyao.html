@@ -20,6 +20,21 @@
             margin-left: 60px;
             width: 1200px;
         }
+        #selinp1{
+            width: 200px;
+            height: 40px;
+            border:solid #CCCCCC 1px;
+            border-radius: 2px;
+            margin-left: 20px;
+        }
+        #selbut1{
+            width: 100px;
+            height: 40px;
+            background-color:rgb(1,150,136);
+            color: white;
+            border: 0px;
+            border-radius: 2px;
+        }
     </style>
 </head>
 
@@ -64,6 +79,10 @@
 
 <!--病号信息弹出层开始-->
 <div style="display: none;padding-top: 20px" id="peopleimgeDiv" >
+    <div id="adddrug1">
+        <input type="text" placeholder="请输入药品名字" id="selinp1" autocomplete="off" >
+        <input type="button" id="selbut1" value="查询"/>
+    </div>
     <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
     <div  id="userBar" style="display: none;">
         <a class="layui-btn layui-btn-xs" lay-event="edit">选择</a>
@@ -86,6 +105,7 @@
         var table = layui.table;
         //查询患者信息表
         var mainIndex;
+        var people;
         $("#sbut").click(function(){
             mainIndex=layer.open({
                 type:1,
@@ -93,7 +113,7 @@
                 content:$("#peopleimgeDiv"),
                 area:['1300px','500px'],
                 success:function(index){
-                    tableIns=table.render({
+                    people=table.render({
                         elem: '#userTable'   //渲染的目标对象
                         ,url:'../caotake/tselpreson' //数据接口
                         ,title: '用户数据表'//数据导出来的标题
@@ -179,6 +199,13 @@
             }
 
         })
+        //用户模糊查询
+        $(document).on('click',"#selbut1",function(){
+            var durgname=$("#selinp1").val()
+            people.reload({
+                url:"../caocc/mohu?durgname="+durgname
+            })
+        });
     })
 
 </script>

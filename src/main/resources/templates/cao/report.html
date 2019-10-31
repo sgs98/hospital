@@ -7,20 +7,21 @@
 </head>
 <style>
     .image{
-        padding:40px;
+        padding:30px;
+        width: 95%;
     }
     .image li{
         display: block;
         float: left;
-        border: #CCCCCC solid 1.5px;
-        height: 260px;
-        width: 240px;
+        border: #CCCCCC solid 1px;
+        height: 330px;
+        width: 230px;
         text-align: center;
-        border-radius: 10px;
+        border-radius: 12px;
         margin: 30px;
     }
     .xiang{
-        line-height: 260px;
+        line-height: 330px;
         cursor:pointer;
     }
 </style>
@@ -48,35 +49,47 @@
     <div id="all">
         <ul class="image">
             <li class="xiang" lay-event="add"><span style="font-size: 150px">+</span></li>
-            <li th:each="map:${report}" style="line-height: 40px;box-shadow: 3px 3px 6px #93D1FF">
+            <li th:each="map:${report}" style="line-height: 40px;">
                 <form class="layui-form"  lay-filter="reall" id="reall" name="reall">
-
                 <div class="layui-form-item">
                     <label class="layui-form-label"  style="text-align: right">患者姓名:</label>
                         <div class="layui-input-block" style="text-align: left">
                         <span th:text="${map.reportName}"></span>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                    <div class="layui-form-item"style="margin-top:-10px;">
+                        <label class="layui-form-label"  style="text-align: right">手机号:</label>
+                        <div class="layui-input-block" style="text-align: left">
+                            <span th:text="${map.phone}"></span>
+                        </div>
+                    </div>
+                    <div class="layui-form-item"style="margin-top:-10px;">
+                        <label class="layui-form-label"  style="text-align: right">身份证号:</label>
+                        <div class="layui-input-block" style="text-align: left">
+                            <span th:text="${map.carido}"></span><span>****</span><span th:text="${map.caridt}"></span>
+                        </div>
+                    </div>
+                <div class="layui-form-item"style="margin-top:-10px;">
                     <label class="layui-form-label" style="text-align: right">挂号类型:</label>
                     <div class="layui-input-block"  style="text-align: left">
                         <span th:text="${map.type}"></span>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item"style="margin-top:-10px;">
                     <label class="layui-form-label" >所属科室:</label>
                     <div class="layui-input-block"  style="text-align: left">
                         <span th:text="${map.department}"></span>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item"style="margin-top:-10px;">
                     <label class="layui-form-label" >就诊医生:</label>
                     <div class="layui-input-block" style="text-align: left">
                         <span th:text="${map.doctorName}"></span>
                     </div>
                 </div>
                     <input type="hidden" th:value="${map.reportId}">
-                <input type="button" class="layui-btn layui-icon-delete" style="background-color: #CCCCCC;width:110px;" id="delre" value="删除">
+                    <button type="button"style="width:110px;margin-top:-10px;" id="delre" class="layui-btn"><i class="layui-icon"></i>删除</button>
+
                 </form>
             </li>
         </ul>
@@ -102,21 +115,22 @@
             <div class="layui-inline">
                 <label class="layui-form-label">年龄:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="age" lay-verify="required"   placeholder="请输入用户年龄" autocomplete="off"
+                    <input type="text" name="age" lay-verify="required|number"   placeholder="请输入用户年龄" autocomplete="off"
                            class="layui-input">
+                    <input type="hidden" name="users" th:value="${session.yonghu}"></input>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">电话:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="phone" lay-verify="required"   placeholder="请输入用户电话" autocomplete="off"
+                    <input type="text" name="phone" id="phon"  lay-verify="required|phone|number"   placeholder="请输入用户电话" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">身份证号:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="carid" lay-verify="required"  placeholder="请输入用户身份证号" autocomplete="off"
+                    <input type="text" name="carid" id="idcard" lay-verify="required|identity|number"  placeholder="请输入用户身份证号" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -304,16 +318,32 @@
 
         //保存
         form.on("submit(doSubmit)",function(obj){
-            layer.close(mainIndex)
+            var phone=$("#phon").val();
+            var carid=$("#idcard").val();
             //序列化表单数据
-            var params=$("#dataFrm").serialize();
-            $.post(url,params,function(obj){
-                layer.msg(obj);
-                //关闭弹出层
-                layer.close(mainIndex)
-                //刷新数据 表格
-                location.reload();
-            })
+            var ad=$("#doctorId").val();
+            if(ad==null){
+                layer.msg("请选择要就诊的医生")
+            }else{
+                $.post("../cao/phone",{"phone":phone,"carid":carid},function(obj){ alert(obj);
+                    if(obj==1){
+                        layer.msg("该手机号的患者已存在");
+                    }else if(obj==2){
+                        layer.msg("该身份证号的患者已存在");
+                    }else if(obj==3){
+                        var params=$("#dataFrm").serialize();
+                        $.post(url,params,function(obj){
+                            layer.msg(obj);
+                            //关闭弹出层
+                            layer.close(mainIndex)
+                            //刷新数据 表格
+                            location.reload();
+                        })
+                    }
+                })
+
+            }
+
         });
         //删除
         $(document).on("click","#delre",function(){

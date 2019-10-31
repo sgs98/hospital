@@ -57,18 +57,19 @@ import java.util.List;
     @RequestMapping("addre")
     @ResponseBody
     public Object addre(CReport cReport){
-        Integer addre = creportService.addre(cReport);
-        if(addre==1){
-            return "添加成功";
-        }else{
-            return "添加失败，请联系管理员";
-        }
+            int addre = creportService.addre(cReport);
+            if(addre==1){
+                return "添加成功";
+            }else{
+                return "添加失败，请联系管理员";
+            }
+
     }
     //根据id删除某个患者信息
     @RequestMapping("delre")
     @ResponseBody
     public Object delre(Integer id){
-        Integer delre = creportService.delre(id);
+        int delre = creportService.delre(id);
         if(delre==1){
             return  "修改成功";
         }else{
@@ -76,27 +77,25 @@ import java.util.List;
         }
 
     }
-    /*@RequestMapping("report")
-    @ResponseBody
-    public Object report(ReportVo reportVo, Integer page, Integer limit){
-        PageHelper.startPage(page, limit);
-        List<ReportVo> sel = creportService.sel(reportVo);
-        PageInfo pageInfo = new PageInfo(sel);
-        Map<String, Object> tableData = new HashMap<String, Object>();
-        //这是layui要求返回的json数据格式
-        tableData.put("code", 0);
-        tableData.put("msg", "");
-        //将全部数据的条数作为count传给前台（一共多少条）
-        tableData.put("count", pageInfo.getTotal());
-        //将分页后的数据返回（每页要显示的数据）
-        tableData.put("data", pageInfo.getList());
-        return tableData;
-    }*/
     //根据id删除某个患者信息
     @RequestMapping("selById")
     @ResponseBody
     public Object selById(Integer reportId){
         List<ReportVo> reportVos = creportService.selById(reportId);
         return reportVos;
+    }
+    //判断就诊用户电话身份证号唯一
+    @RequestMapping("phone")
+    @ResponseBody
+    public Object phone(CReport cReport){
+        int carid = creportService.carid(cReport);
+        int phone = creportService.phone(cReport);
+        if(carid==1){
+            return 2;
+        }else if(phone==1){
+            return 1;
+        }else{
+           return 3;
+        }
     }
 }

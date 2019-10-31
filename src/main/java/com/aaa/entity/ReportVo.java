@@ -19,6 +19,24 @@ public class ReportVo {
     private String type;//挂号类型
     private String carid;//身份证号
     private String phone;//电话
+    private  Integer carido;
+    private Integer caridt;
+
+    public Integer getCarido() {
+        return carido;
+    }
+
+    public void setCarido(Integer carido) {
+        this.carido = carido;
+    }
+
+    public Integer getCaridt() {
+        return caridt;
+    }
+
+    public void setCaridt(Integer caridt) {
+        this.caridt = caridt;
+    }
 
     public String getCarid() {
         return carid;

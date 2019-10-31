@@ -2,6 +2,7 @@ package com.aaa.service.Impl;
 
 import com.aaa.entity.CCashier;
 import com.aaa.entity.CPharmacy;
+import com.aaa.entity.Coutpatienttype;
 import com.aaa.entity.ReportVo;
 import com.aaa.mapper.CCashierMapper;
 import com.aaa.mapper.COutMapper;
@@ -19,8 +20,8 @@ public class COutServiceImpl implements COutService {
     private COutMapper cOutMapper;
     //查询门诊收费项目
     @Override
-    public List<CPharmacy> selout() {
-        return cOutMapper.selout();
+    public List<CPharmacy> selout(Coutpatienttype coutpatienttype) {
+        return cOutMapper.selout(coutpatienttype);
     }
     //查询该用户的处方中是否有该项目
     @Override

@@ -20,4 +20,8 @@ public interface CreportService {
     Integer addre(CReport cReport);
     //根据id删除某个患者的信息
     Integer delre(Integer id);
+    //判断正在就诊的电话唯一
+    Integer phone(CReport cReport);
+    //判断正在就诊的电话唯一
+    Integer carid(CReport cReport);
 }
