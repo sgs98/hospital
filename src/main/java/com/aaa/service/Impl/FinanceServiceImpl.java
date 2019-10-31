@@ -1,6 +1,7 @@
 package com.aaa.service.Impl;
 
 import com.aaa.entity.Finance;
+import com.aaa.entity.SdoctorDuibi;
 import com.aaa.mapper.FinanceMapper;
 import com.aaa.service.FinanceService;
 import org.springframework.stereotype.Service;
@@ -29,5 +30,15 @@ public class FinanceServiceImpl implements FinanceService {
     @Override
     public List<Finance> zhuYuanYearBingFinance() {
         return FinanceMapper.zhuYuanYearBingFinance();
+    }
+
+    @Override
+    public List<SdoctorDuibi> doctorDuibi(SdoctorDuibi sdoctorDuibi) {
+        return FinanceMapper.doctorDuibi(sdoctorDuibi);
+    }
+
+    @Override
+    public List<SdoctorDuibi> zDoctorDuibi(SdoctorDuibi sdoctorDuibi) {
+        return FinanceMapper.zDoctorDuibi(sdoctorDuibi);
     }
 }
