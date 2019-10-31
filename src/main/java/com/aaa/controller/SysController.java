@@ -203,6 +203,13 @@ public class SysController {
     public String toBing2() {
         return "view/finance/zhuYuanBing";
     }
+    /*
+     * 跳转加载doctorDuibi.html
+     * */
+    @RequestMapping("toDoctorDuibi")
+    public String toDoctorDuibi() {
+        return "view/finance/doctorDuibi";
+    }
 
 
 }
