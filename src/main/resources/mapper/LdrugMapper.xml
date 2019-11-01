@@ -39,4 +39,8 @@
     <update id="updNum" parameterType="Lrecord">
         update pharmacy set drugstorenum=drugstorenum-#{durgnum} where pharmacyName=#{durgname};
     </update>
+    <!--修改药品的状态-->
+    <update id="upd" parameterType="Lrecord">
+        update hospitalprice set state=2,htime=NOW() where state=0 and registerId=#{registerid}
+    </update>
 </mapper>

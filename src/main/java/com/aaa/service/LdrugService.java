@@ -14,4 +14,5 @@ public interface LdrugService {
     int delDrug(Lrecord lrecord);
     int updDrugs(Lrecord lrecord);
     int updNum(Lrecord lrecord);
+    int upd(Lrecord lrecord);
 }

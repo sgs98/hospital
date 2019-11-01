@@ -69,9 +69,7 @@ public class LpayController {
     @RequestMapping("/selSurplus")
     @ResponseBody
     public Object selSurplus(Lrecord lrecord){
-        lrecord.setRegisterid(1);
         List<Lrecord> list = lpayService.selSurplus(lrecord);
-        Double price = list.get(0).getRepicetotal();
-        return price;
+        return list;
     }
 }

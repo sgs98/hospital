@@ -277,7 +277,17 @@
             var params=$("#dataFrm").serialize();
             //查询余额
             $.post("selSurplus",params,function(inp) {
-                $("#yong").val(inp);
+                if(inp==""){
+                    $("#yong").val(0);
+                }else{
+                    $.each(inp, function (index, item) {
+                        for(var i in item){
+                            if(i=="repicetotal"){
+                                $("#yong").val(item[i]);
+                            }
+                        }
+                    });
+                }
                 $("#yu").val($("input[name='money']").val()-$("#yong").val());
             })
         }

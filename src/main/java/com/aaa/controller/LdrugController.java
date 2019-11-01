@@ -30,6 +30,11 @@ public class LdrugController {
     public String admin(){
         return "liao/drug";
     }
+    //跳转取药页面
+    @RequestMapping("/pharmacy")
+    public String pharmacy(){
+        return "liao/pharmacy";
+    }
 
     //查询药品信息
     @RequestMapping("/selDrug")
@@ -54,6 +59,25 @@ public class LdrugController {
     @ResponseBody
     public Object selDrugs(Integer page, Integer limit, Lrecord lrecord){
         lrecord.setState(0);
+        PageHelper.startPage(page, limit);
+        List<Lrecord> listAll =ldrugService.selDrugs(lrecord);
+        PageInfo pageInfo = new PageInfo(listAll);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
+
+    //查询用户取过的药品信息
+    @RequestMapping("/selPhar")
+    @ResponseBody
+    public Object selPhar(Integer page, Integer limit, Lrecord lrecord){
+        lrecord.setState(2);
         PageHelper.startPage(page, limit);
         List<Lrecord> listAll =ldrugService.selDrugs(lrecord);
         PageInfo pageInfo = new PageInfo(listAll);
@@ -147,5 +171,14 @@ public class LdrugController {
         } else {
             return "移除失败";
         }
+    }
+
+    //改变患者的药品状态
+    @RequestMapping("/updDrug")
+    @ResponseBody
+    public Object updItem(Lrecord lrecord){
+        int upd = ldrugService.upd(lrecord);
+        System.out.println(upd);
+        return "取药成功";
     }
 }

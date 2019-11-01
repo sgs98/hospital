@@ -55,7 +55,7 @@
 <!--显示患者信息开始-->
 <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
     <input type="hidden" id="show" name="registerid">
-    <input type="hidden" id="hidden" name="pharmacyName" value="">
+    <input type="hidden" id="hidden" name="projectName" value="">
     <input type="hidden" id="hid" name="moneys" value=0>
     <table>
         <tr>
@@ -87,34 +87,11 @@
 <!--显示患者信息结束-->
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
-    <input type="text" name="pay" id="addPay" autocomplete="off" lay-event="addPay" placeholder="请输入要查询的药品名称" class="pay" >
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">查询</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">取药</button>
 </div>
 <div  style="display: none;" id="ToolBars"></div>
-<!--药品行操作-->
-<div  id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="edit">选择</a>
-</div>
-<div  id="userBars" style="display: none;">
-    <a class="layui-btn layui-btn-xs" lay-event="del">移除</a>
-</div>
-<!--添加界面开始-->
-<div id="drugnum" style="text-align: center;display: none">
-    <form class="layui-form" method="post" id="frm">
-        <input type="number" id="durgnum" name="durgnum" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量">
-        <input type="hidden" name="registerid" id="rid"><!--患者住院号-->
-        <input type="hidden" id="num"><!--药品库存数量-->
-        <input type="hidden" id="durgname" name="durgname"><!--药品名字-->
-        <input type="hidden" id="repiceprice" name="repiceprice"><!--药品单价-->
-        <input type="hidden" id="pharmacyId" name="pharmacyId"><!--药品序号，用来查询库房-->
-        <span id="uni"></span><br/><br/><br/><br/>
-        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" id="sub">提交</button>
-        <button type="button" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh layui-icon-delete" id="guan" >取消</button>
-    </form>
-</div>
-<!--添加界面结束-->
 <!--药品显示-->
-<div style="display: block;width: 40%; margin:0px 0px 0px 50px">
+<div style="display: none;width: 40%; margin:0px 0px 0px 50px" id="show4">
     <table class="layui-hide" id="pay" lay-filter="pay"></table>
 </div>
 <!--图标显示-->
@@ -140,7 +117,7 @@
         //渲染数据表格
         tableIns=table.render({
             elem: '#pay'   //渲染的目标对象
-            ,url:'../liao/selDrug' //数据接口
+            ,url:'' //数据接口
             ,title: '用户数据表'//数据导出来的标题
             ,toolbar:"#ToolBar"   //表格的工具条
             ,height:'full-200'
@@ -148,12 +125,11 @@
             ,limits: [7, 20, 30]
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
-                {field:'pharmacyId', title:'药品序号',align:'center'}
-                ,{field:'pharmacyName', title:'药品名称',align:'center'}
-                ,{field:'unitName', title:'计量单位',align:'center'}
-                ,{field:'sellingPrice', title:'售价',align:'center'}
-                ,{field:'drugstorenum', title:'数量',align:'center'}
-                ,{fixed: '', title:'操作', toolbar: '#userBar',align:'center'}
+                {field:'hospitalpriceid', title:'序号',align:'center'}
+                ,{field:'durgname', title:'药品名称',align:'center'}
+                ,{field:'durgnum', title:'数量',align:'center'}
+                ,{field:'repiceprice', title:'售价',align:'center'}
+                ,{field:'repicetotal', title:'总价',align:'center'}
             ]]
         })
         //渲染数据表格
@@ -167,12 +143,11 @@
             ,limits: [7, 20, 30]
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
-                {field:'hospitalpriceid', title:'序号',align:'center'}
-                ,{field:'durgname', title:'药品名称',align:'center'}
-                ,{field:'durgnum', title:'数量',align:'center'}
-                ,{field:'repiceprice', title:'售价',align:'center'}
-                ,{field:'repicetotal', title:'总价',align:'center'}
-                ,{fixed: '', title:'操作', toolbar: '#userBars',align:'center'}
+                ,{field:'durgname', title:'药品名称',align:'center',width:"20%"}
+                ,{field:'durgnum', title:'数量',align:'center',width:"12%"}
+                ,{field:'repiceprice', title:'售价',align:'center',width:"12%"}
+                ,{field:'repicetotal', title:'总价',align:'center',width:"12%"}
+                ,{field:'htime', title:'取药时间',templet: "<div>{{layui.util.toDateString(d.htime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:"44%"}
             ]]
         })
         //查询
@@ -186,6 +161,7 @@
             $("#show1").fadeIn(1000);
             $("#show2").fadeIn(1000);
             $("#show3").fadeIn(1000);
+            $("#show4").fadeIn(1000);
         });
         //失焦事件
         $("#shows").blur(function(){
@@ -195,6 +171,7 @@
             $("#show1").fadeOut(1);
             $("#show2").fadeOut(1);
             $("#show3").fadeOut(1);
+            $("#show4").fadeOut(1);
         });
         function sel(){
             var params=$("#dataFrm").serialize();
@@ -213,123 +190,32 @@
                             $("input[name="+i+"]").val(item[i])
                         }
                     });
+                    //查询余额
                     sels();
                 }
             })
-            tableInss.reload({
+            tableIns.reload({
                 url:"../liao/selDrugs?"+params
+            })
+            tableInss.reload({
+                url:"../liao/selPhar?"+params
             })
         }
         table.on("toolbar(pay)",function(obj){
-            if(obj.event=='addPay'){
-                $("#hidden").val("");
-                $(this).blur(function(){
-                    $("#hidden").val($(this).val());
-                });
-            }
+            var params=$("#dataFrm").serialize();
             if(obj.event=='add') {
-                var params=$("#dataFrm").serialize();
-                $("#hidden").val("");
-                tableIns.reload({
-                    url:"../liao/selDrug?"+params
-                })
-            }
-        })
-        //监听药品行
-        table.on('tool(pay)', function(obj){
-            if($("#show").val()==""){
-                layer.msg("请先查询患者信息！");
-                return false;
-            }
-            if($("#ceshi").val()==""){
-                layer.msg("请先查询患者信息！");
-                return false;
-            }
-            var data = obj.data; //获得当前行数据
-            if(obj.event === 'edit'){ //操作
-                if($("#yu").val()<-500){
-                    layer.msg("您的余额已欠费太多，请先去缴费");
-                }else{
-                    //清空添加信息
-                    $("#frm")[0].reset();
-                    //把患者的住院号传进去
-                    $("#rid").val($("#shows").val());
-                    //打开添加窗口
-                    openUpdate(data);
-                }
-            }
-        });
-        //打开数量界面
-        function openUpdate(data) {
-            mainIndex = layer.open({
-                type: 1,
-                title: '选择数量',
-                content: $("#drugnum"),
-                area: ['300px', '200px']
-            });
-            $("#pharmacyId").val(data.pharmacyId);//药品id
-        }
-        //点击添加药品的取消按钮
-        $("#guan").click(function(){
-            //关闭弹出的页面
-            layer.close(mainIndex)
-            $("#durgnum").val("");
-        })
-        //提交按钮事件验证
-        $("#sub").click(function(){
-            //获取药品的及时信息
-            $.post("selNum",{pharmacyId:$("#pharmacyId").val()},function(res){
-                $.each(res, function (index, item) {
-                    $("#num").val(item.drugstorenum);//药品库存
-                    $("#durgname").val(item.pharmacyName);//药品名字
-                    $("#repiceprice").val(item.sellingPrice);//药品单价
-                });
-                //获取输入的药品数量
-                var num=$("#durgnum").val();
-                //获取库存药品数量
-                var nums=$("#num").val();
-                if(num==0||num==""||num<0){
-                    layer.msg("请输入正确的药品数量！");
-                    return false;
-                }
-                if(num>nums){
-                    layer.msg("对不起，药品数量不足！");
-                    return false;
-                }
-                var params=$("#frm").serialize();
-                $.post("addDrug",params,function(res){
-                    layer.msg(res);
-                    //关闭弹出层
-                    layer.close(mainIndex)
-                    //查询余额
-                    sels();
-                    //刷新数据 表格
-                    tableIns.reload();
-                    tableInss.reload();
-                })
-            })
-        });
-        //监听药品行
-        table.on('tool(pays)', function(obj){
-            var data = obj.data; //获得当前行数据
-            //获取药品信息
-            var hospitalpriceid=data.hospitalpriceid;
-            var durgname=data.durgname;
-            var durgnum=data.durgnum;
-            if(obj.event=="del"){
-                layer.confirm('确认要删除吗？', {
+                layer.confirm('确认要取出此药品订单吗？', {
                     btn : [ '确定', '取消' ]//按钮
                 }, function(index) {
                     layer.close(index);
-                    $.post("delDrug",{hospitalpriceid:hospitalpriceid,durgname:durgname,durgnum:durgnum},function(inp){
+                    $.post("updDrug",params,function(inp){
                         layer.msg(inp);
                         //查询余额
                         sels();
-                        //刷新数据 表格
                         tableIns.reload();
                         tableInss.reload();
                     })
-                });
+                })
             }
         })
         function sels(){
