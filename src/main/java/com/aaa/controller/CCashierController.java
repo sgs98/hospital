@@ -51,9 +51,10 @@ public class CCashierController {
     //查询药品所有信息
     @RequestMapping("seldrug")
     @ResponseBody
-    public Object seldrug(Integer wareid,Integer page, Integer limit){
+    public Object seldrug(String durgname,Integer page, Integer limit,CPharmacy cPharmacy){
+        cPharmacy.setPharmacyName(durgname);
         PageHelper.startPage(page, limit);
-        List<CPharmacy> selpharm = cCashierService.selpharm();
+        List<CPharmacy> selpharm = cCashierService.selpharm(cPharmacy);
         PageInfo pageInfo = new PageInfo(selpharm);
         Map<String, Object> tableData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式，如果后台没有加上这句话的话需要在前台页面手动设置
@@ -128,5 +129,23 @@ public class CCashierController {
         //修改仓库中药品的数量
         Integer deldrunum = cCashierService.deldrunum(cPharmacy);
         return updchu;
+    }
+    //模糊查询
+    @RequestMapping("mohu")
+    @ResponseBody
+    public Object mohu(String durgname,ReportVo reportVo, Integer page, Integer limit){
+        reportVo.setReportName(durgname);
+        PageHelper.startPage(page, limit);
+        List<ReportVo> mohu = cCashierService.mohu(reportVo);
+        PageInfo pageInfo = new PageInfo(mohu);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式，如果后台没有加上这句话的话需要在前台页面手动设置
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
     }
 }

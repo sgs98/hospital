@@ -5,7 +5,7 @@
 <mapper namespace="com.aaa.mapper.CCashierMapper">
     <!--查询所有患者-->
     <select id="sel" resultType="ReportVo">
-        SELECT r.reportId,r.reportName,r.carid,r.phone,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+        SELECT r.reportId,r.reportName,r.carid,r.phone,r.sex,r.price,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
             FROM  report r,doctor d,registeredtype e,departments p
             WHERE r.doctor=d.doctorId
             and d.registeredid=e.registeredId
@@ -16,8 +16,11 @@
         select * from warehuose
     </select>
     <!--查询所有药品信息-->
-    <select id="selpharm" resultType="CPharmacy" parameterType="Integer">
+    <select id="selpharm" resultType="CPharmacy" parameterType="cPharmacy">
         SELECT p.*,u.unitName unitName FROM pharmacy p ,unit u WHERE p.unit=u.unitId
+        <if test="pharmacyName!=null and pharmacyName!=''">
+            and  p.pharmacyName like concat('%' ,concat(#{pharmacyName},'%'))
+        </if>
     </select>
     <!--查询这个用户的处方表上有没有这个-->
     <select id="selcadr" resultType="Integer" parameterType="CCashier">
@@ -48,4 +51,30 @@
     <update id="adddrunum" parameterType="CPharmacy">
          UPDATE pharmacy SET drugstorenum = drugstorenum+#{drugstorenum} WHERE pharmacyName = #{pharmacyName}
     </update>
+    <!--模糊查询-->
+    <select id="mohu" resultType="ReportVo" parameterType="ReportVo">
+        SELECT r.reportId,r.reportName,substr(r.carid,1,6) carido, substr(r.carid,16,18) caridt,r.phone,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+        FROM  report r,doctor d,registeredtype e,departments p
+        WHERE r.doctor=d.doctorId
+        and d.registeredid=e.registeredId
+        and  r.department=p.departmentId and r.state=1
+        <if test="reportName!=null and reportName!=''">
+            and r.reportName like concat('%' ,concat(#{reportName},'%'))
+            or d.doctorName like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or e.type like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or p.department like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or r.phone like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or r.carid like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+        </if>
+    </select>
 </mapper>

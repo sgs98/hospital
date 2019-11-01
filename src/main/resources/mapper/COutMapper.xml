@@ -4,8 +4,11 @@
 
 <mapper namespace="com.aaa.mapper.COutMapper">
     <!--查询所有药品信息-->
-    <select id="selout" resultType="Coutpatienttype" parameterType="Integer">
+    <select id="selout" resultType="Coutpatienttype" parameterType="coutpatienttype">
         SELECT o.*,u.unitName FROM outpatienttype o,unit u WHERE o.unit=u.unitId
+        <if test="projectName!=null and projectName!=''">
+        and  o.projectName like concat('%' ,concat(#{projectName},'%'))
+        </if>
     </select>
     <!--查询该用户上有没有该项目-->
     <select id="selchuo" resultType="Integer" parameterType="CCashier">

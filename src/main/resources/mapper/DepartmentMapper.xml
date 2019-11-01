@@ -12,7 +12,7 @@
      </where>
  </select>
     <insert id="addDepartment" parameterType="departments">
-        insert into departments(department,ddstate)values(#{department},0)
+        insert into departments(department)values(#{department})
     </insert>
     <update id="deleteDepartment" parameterType="Integer">
         update departments set ddstate=1  where departmentId=#{departmentId}

@@ -1,7 +1,11 @@
 package com.aaa.controller;
 
+import com.aaa.entity.DataGridView;
 import com.aaa.entity.Finance;
+import com.aaa.entity.SdoctorDuibi;
 import com.aaa.service.FinanceService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +21,7 @@ import java.util.Map;
 public class FinanceController {
     @Autowired
     private FinanceService financeService;
+    /*门诊月收入对比*/
     @ResponseBody
     @RequestMapping("reportYearFinance")
     public Object reportYearFinance(String year){
@@ -28,6 +33,7 @@ public class FinanceController {
         }
         return doubles;
     }
+    /*住院月收入对比*/
     @ResponseBody
     @RequestMapping("zhuYuanYearFinance")
     public Object zhuYuanYearFinance(String year){
@@ -39,17 +45,54 @@ public class FinanceController {
         }
         return zhuYuan;
     }
+    /*门诊年收入对比*/
     @ResponseBody
     @RequestMapping("reportYearBingFinance")
     public Object reportYearBingFinance(){
         List<Finance> bingReport = financeService.reportYearBingFinance();
         return bingReport;
     }
+    /*住院年收入对比*/
     @ResponseBody
     @RequestMapping("zhuYuanYearBingFinance")
     public Object zhuYuanYearBingFinance(){
         List<Finance> bingZhuYuan = financeService.zhuYuanYearBingFinance();
         return bingZhuYuan;
+    }
+    /*门诊医生收入统计对比*/
+    @ResponseBody
+    @RequestMapping("doctorDuibi")
+    public Object doctorDuibi( SdoctorDuibi sdoctorDuibi,Integer page, Integer limit){
+        PageHelper.startPage(page, limit);
+        List<SdoctorDuibi> sdoctorDuibis = financeService.doctorDuibi(sdoctorDuibi);
+        PageInfo pageInfo = new PageInfo(sdoctorDuibis);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
+    /*住院医生收入统计对比*/
+    @ResponseBody
+    @RequestMapping("zDoctorDuibi")
+    public Object zDoctorDuibi(SdoctorDuibi sdoctorDuibi, Integer page, Integer limit){
+
+        PageHelper.startPage(page, limit);
+        List<SdoctorDuibi> zDoctorDuibis = financeService.zDoctorDuibi(sdoctorDuibi);
+        PageInfo pageInfo = new PageInfo(zDoctorDuibis);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
     }
 
 }

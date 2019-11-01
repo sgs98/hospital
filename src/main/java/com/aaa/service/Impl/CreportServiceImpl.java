@@ -56,4 +56,14 @@ public class CreportServiceImpl implements CreportService {
     public Integer delre(Integer id) {
         return creportMapper.delre(id);
     }
+
+    @Override
+    public Integer phone(CReport cReport) {
+        return creportMapper.phone(cReport);
+    }
+
+    @Override
+    public Integer carid(CReport cReport) {
+        return creportMapper.carid(cReport);
+    }
 }

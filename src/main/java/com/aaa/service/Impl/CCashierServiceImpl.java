@@ -29,8 +29,8 @@ public class CCashierServiceImpl implements CCashierService {
     }
     //根据药房id查询所有的药品信息
     @Override
-    public List<CPharmacy> selpharm() {
-        return cCashierMapper.selpharm();
+    public List<CPharmacy> selpharm(CPharmacy cPharmacy) {
+        return cCashierMapper.selpharm(cPharmacy);
     }
     //查询这个用户的处方表上有没有这个药
     @Override
@@ -67,5 +67,10 @@ public class CCashierServiceImpl implements CCashierService {
     @Override
     public Integer adddrunum(CPharmacy cPharmacy) {
         return cCashierMapper.adddrunum(cPharmacy);
+    }
+    //模糊查询
+    @Override
+    public List<ReportVo> mohu(ReportVo reportVo) {
+        return cCashierMapper.mohu(reportVo);
     }
 }

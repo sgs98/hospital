@@ -5,7 +5,7 @@
 <mapper namespace="com.aaa.mapper.CreportMapper">
     <!--查询所有的挂号信息-->
     <select id="sel" resultType="ReportVo" parameterType="ReportVo">
-            SELECT r.reportId,r.reportName,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+            SELECT r.reportId,r.reportName,substr(r.carid,1,6) carido, substr(r.carid,16,18) caridt,r.phone,r.sex,r.age,p.department,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
             FROM  report r,doctor d,registeredtype e,departments p
             WHERE r.doctor=d.doctorId
             and d.registeredid=e.registeredId
@@ -19,6 +19,12 @@
             and d.registeredid=e.registeredId
             and  r.department=p.departmentId and r.state=1
             or p.department like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or r.phone like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
+            and d.registeredid=e.registeredId
+            and  r.department=p.departmentId and r.state=1
+            or r.carid like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
             and  r.department=p.departmentId and r.state=1
         </if>
@@ -42,13 +48,22 @@
     <!--添加挂号人员-->
     <insert id="addre" parameterType="CReport">
         INSERT INTO report (reportname,sex,age,department,doctor,reporttype,price,time,users,state,phone,carid)
- VALUES (#{reportName},#{sex},#{age},#{department},#{doctor},#{reporttype},#{price},NOW(),'装三',1,#{phone},#{carid})
+ VALUES (#{reportName},#{sex},#{age},#{department},#{doctor},#{reporttype},#{price},NOW(),#{users},1,#{phone},#{carid})
     </insert>
     <!--根据患者id修改该患者的状态让他在前台不显示-->
     <update id="delre" parameterType="Integer">
         UPDATE report SET state = 0 WHERE reportid = #{id}
     </update>
+    <!--根据患者ID查询患者的详细信息-->
     <select id="selById" resultType="ReportVo">
         select*from report where reportId=#{reportId}
+    </select>
+    <!--判断正在就诊的电话唯一-->
+    <select id="phone" parameterType="ReportVo" resultType="int">
+        select count(*)from report where phone=#{phone} and state=1
+    </select>
+    <!--判断正在就诊的电话唯一-->
+    <select id="carid" parameterType="ReportVo" resultType="int">
+        select count(*) from report where carid=#{carid} and state=1
     </select>
 </mapper>

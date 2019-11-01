@@ -102,9 +102,25 @@
 		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'12') and h.registerId=r.registerid and r.state=1
 	</select>
 	<select id="reportYearBingFinance" resultType="Finance">
-     select sum(repicetotal) value,DATE_FORMAT(ctime,'%Y') name from cashier c,report r where c.reportId=r.reportId and r.state=2 GROUP BY DATE_FORMAT(ctime,'%Y')
+     select sum(repicetotal) value,DATE_FORMAT(ctime,'%Y') name from cashier c,report r where c.reportId=r.reportId and r.state=3 GROUP BY DATE_FORMAT(ctime,'%Y')
 	</select>
 	<select id="zhuYuanYearBingFinance" resultType="Finance">
     select sum(repicetotal) value,DATE_FORMAT(htime,'%Y') name from hospitalprice h,register r where r.registerid=h.registerid and r.state=1 GROUP BY DATE_FORMAT(htime,'%Y')
 	</select>
+    <!--/*医生收入统计对比*/-->
+    <select id="doctorDuibi" resultType="SdoctorDuibi">
+        select COUNT(DISTINCT(c.reportId)) num , sum(c.repicetotal) total,d.doctorName doctorName from report r,cashier c,doctor d where r.reportId=c.reportId and r.doctor=d.doctorId and r.state=3 and d.dstate=0
+            <if test="doctorName!=null and doctorName!=''">
+               and d.doctorName like concat('%',concat(#{doctorName},'%'))
+            </if>
+       GROUP BY d.doctorName
+	</select>
+    <!--/*住院医生收入统计对比*/-->
+    <select id="zDoctorDuibi" resultType="SdoctorDuibi">
+     select COUNT(DISTINCT(r.registerid)) num , sum(h.repicetotal) total,d.doctorName doctorName from register r,doctor d,hospitalprice h where h.registerid=r.registerid and r.registerid=d.registeredId and r.state=1 and d.dstate=1
+            <if test="doctorName!=null and doctorName!=''">
+                and d.doctorName like concat('%',concat(#{doctorName},'%'))
+            </if>
+     GROUP BY d.doctorName
+   </select>
 </mapper>

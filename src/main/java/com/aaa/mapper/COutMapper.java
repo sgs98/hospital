@@ -2,6 +2,7 @@ package com.aaa.mapper;
 
 import com.aaa.entity.CCashier;
 import com.aaa.entity.CPharmacy;
+import com.aaa.entity.Coutpatienttype;
 import com.aaa.entity.ReportVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,7 +11,7 @@ import java.util.List;
 @Mapper
 public interface COutMapper {
     //查询门诊收费项目
-    List<CPharmacy> selout();
+    List<CPharmacy> selout(Coutpatienttype coutpatienttype);
     //查询这个用户的处方表上有没有这个药
     Integer selchuo(CCashier cCashier);
     //添加处方项目

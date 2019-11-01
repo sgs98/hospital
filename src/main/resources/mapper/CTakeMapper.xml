@@ -12,6 +12,7 @@
             and  r.department=p.departmentId and r.state=2
     </select>
     <!--修改用户状态出院-->
+
     <update id="chuku" parameterType="ReportVo">
         UPDATE report set state=3 WHERE reportId=#{reportId}
     </update>

@@ -13,7 +13,7 @@ public interface CCashierService {
     //查询所有药房
     List<CWarehuose> selware();
     //根据药房查询所有药品信息在药品详情框中展示
-    List<CPharmacy> selpharm();
+    List<CPharmacy> selpharm(CPharmacy cPharmacy);
     //查询这个用户的处方表上有没有这个药
     Integer selcadr(CCashier cCashier);
     //添加处方药品
@@ -28,4 +28,6 @@ public interface CCashierService {
     Integer deldrunum(CPharmacy cPharmacy);
     //添加药品数量
     Integer adddrunum(CPharmacy cPharmacy);
+    //模糊查询
+    List<ReportVo> mohu(ReportVo reportVo);
 }
