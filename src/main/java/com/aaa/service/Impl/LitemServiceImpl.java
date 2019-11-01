@@ -1,6 +1,7 @@
 package com.aaa.service.Impl;
 
 import com.aaa.entity.Litem;
+import com.aaa.entity.Lrecord;
 import com.aaa.mapper.LitemMapper;
 import com.aaa.service.LitemService;
 import org.springframework.stereotype.Service;
@@ -20,4 +21,5 @@ public class LitemServiceImpl implements LitemService {
     public List<Litem> selItems(Litem litem) {
         return litemMapper.selItems(litem);
     }
+
 }

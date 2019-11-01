@@ -1,5 +1,6 @@
 package com.aaa.service.Impl;
 
+import com.aaa.entity.Lrecord;
 import com.aaa.entity.Pay;
 import com.aaa.entity.Register;
 import com.aaa.mapper.LpayMapper;
@@ -30,5 +31,10 @@ public class LpayServiceImpl implements LpayService {
     @Override
     public List<Pay> selPays(Register register) {
         return lpayMapper.selPays(register);
+    }
+
+    @Override
+    public List<Lrecord> selSurplus(Lrecord lrecord) {
+        return lpayMapper.selSurplus(lrecord);
     }
 }

@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>预交金</title>
+    <title>缴费</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <style>
         #dataFrm{
@@ -61,7 +61,7 @@
             <td><input type="text" id="ceshi" class="dataFrm_input" name="userName" readonly></td>
             <td class="dataFrm_td">科室：</td>
             <td><input type="text" class="dataFrm_input" name="department" readonly></td>
-            <td class="dataFrm_td">预交金：</td>
+            <td class="dataFrm_td">金额：</td>
             <td><input type="text" class="dataFrm_input" name="money" readonly></td>
         </tr>
         <tr>
@@ -70,7 +70,7 @@
             <td class="dataFrm_td">医生：</td>
             <td><input type="text" class="dataFrm_input" name="doctorName" readonly></td>
             <td class="dataFrm_td">已用：</td>
-            <td><input type="text" class="dataFrm_input" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yong" readonly></td>
         </tr>
         <tr>
             <td class="dataFrm_td">年龄：</td>
@@ -78,7 +78,7 @@
             <td class="dataFrm_td">床位：</td>
             <td><input type="text" class="dataFrm_input" name="bedName" readonly></td>
             <td class="dataFrm_td">余款：</td>
-            <td><input type="text" class="dataFrm_input" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yu" readonly></td>
         </tr>
     </table>
 </form>
@@ -112,7 +112,7 @@
                 {field:'registerid', title:'住院号',align:'center',width:'25%'}
                 ,{field:'userName', title:'姓名',align:'center',width:'25%'}
                 ,{field:'money', title:'预交金额',align:'center',width:'25%'}
-                ,{field:'payDate', title:'交款时间', templet: "<div>{{layui.util.toDateString(d.payDate, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'25%'}
+                ,{field:'payDate', title:'交款时间',templet: "<div>{{layui.util.toDateString(d.payDate, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'25%'}
             ]]
         })
         //查询
@@ -128,7 +128,6 @@
             tableIns.reload({
                 url:"../liao/selPays?"+params
             })
-
         });
         //失焦事件
         $("#shows").blur(function(){
@@ -156,6 +155,10 @@
                             $("input[name="+i+"]").val(item[i])
                         }
                     });
+                    $.post("selSurplus",params,function(inp) {
+                        $("#yong").val(inp);
+                        $("#yu").val($("input[name='money']").val()-$("#yong").val());
+                    })
                 }
             })
         }

@@ -12,7 +12,7 @@ public class Register {
     String phone;
     String idcard;
     Date registerDate;
-    String Operator;
+    String operator;
     Double money;
     Integer state;
     Integer departmentId;
@@ -95,11 +95,11 @@ public class Register {
     }
 
     public String getOperator() {
-        return Operator;
+        return operator;
     }
 
     public void setOperator(String operator) {
-        Operator = operator;
+        operator = operator;
     }
 
     public Double getMoney() {
@@ -178,7 +178,7 @@ public class Register {
                 ", phone='" + phone + '\'' +
                 ", idcard='" + idcard + '\'' +
                 ", registerDate=" + registerDate +
-                ", Operator='" + Operator + '\'' +
+                ", operator='" + operator + '\'' +
                 ", money=" + money +
                 ", state=" + state +
                 ", departmentId=" + departmentId +

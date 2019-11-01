@@ -1,6 +1,8 @@
 package com.aaa.controller;
 
 import com.aaa.entity.Litem;
+import com.aaa.entity.Lrecord;
+import com.aaa.service.LdrugService;
 import com.aaa.service.LitemService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -19,6 +21,8 @@ public class LitemController {
 
     @Autowired
     private LitemService litemService;
+    @Autowired
+    private LdrugService ldrugService;
 
     @RequestMapping("/item")
     public String item(){
@@ -40,7 +44,55 @@ public class LitemController {
         tableData.put("count", pageInfo.getTotal());
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo.getList());
-        System.out.println(tableData);
         return tableData;
+    }
+
+    //添加收费项目
+    @RequestMapping("/addItem")
+    @ResponseBody
+    public Object updItem(Lrecord lrecord){
+        lrecord.setDurgnum(1);
+        lrecord.setState(1);
+        lrecord.setRepicetotal(lrecord.getRepiceprice()*lrecord.getDurgnum());
+        Integer integer = ldrugService.addDrug(lrecord);
+        if(integer==1){
+            return "添加成功";
+        }else{
+            return "添加失败";
+        }
+    }
+
+    //查询患者收费项目
+    @RequestMapping("/selItem")
+    @ResponseBody
+    public Object selItem(Integer page, Integer limit, Lrecord lrecord){
+        lrecord.setState(1);
+        PageHelper.startPage(page, limit);
+        List<Lrecord> listAll =ldrugService.selDrugs(lrecord);
+        PageInfo pageInfo = new PageInfo(listAll);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
+
+    //移除患者收费项目
+    @RequestMapping("/delItem")
+    @ResponseBody
+    public Object delItem(Integer hospitalpriceid){
+        Lrecord lrecord=new Lrecord();
+        lrecord.setHospitalpriceid(hospitalpriceid);
+        System.out.println(lrecord);
+        int i = ldrugService.delDrug(lrecord);
+        if (i == 1) {
+            return "移除成功";
+        } else {
+            return "移除失败";
+        }
     }
 }

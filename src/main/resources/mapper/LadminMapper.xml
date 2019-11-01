@@ -14,10 +14,10 @@
     </select>
     <insert id="addRegister" parameterType="Register">
         insert into register(userName,age,sex,department,doctor,diagnose,address,Phone,Idcard,registerDate,bedNum,Operator,money,state)
-        values(#{userName},#{age},#{sex},#{departmentId},#{doctorId},#{diagnose},#{address},#{phone},#{idcard},NOW(),#{bedId},#{Operator},#{money},0)
+        values(#{userName},#{age},#{sex},#{departmentId},#{doctorId},#{diagnose},#{address},#{phone},#{idcard},NOW(),#{bedId},#{operator},#{money},0)
     </insert>
     <select id="selRegister" parameterType="Register" resultType="Register">
-        select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.Operator
+        select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.operator
         from register r,departments d,doctor c,bed b
          <where>
              r.state=0 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId

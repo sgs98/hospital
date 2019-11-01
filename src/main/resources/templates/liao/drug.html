@@ -63,7 +63,7 @@
             <td><input type="text" id="ceshi" class="dataFrm_input" name="userName" readonly></td>
             <td class="dataFrm_td">科室：</td>
             <td><input type="text" class="dataFrm_input" name="department" readonly></td>
-            <td class="dataFrm_td">预交金：</td>
+            <td class="dataFrm_td">金额：</td>
             <td><input type="text" class="dataFrm_input" name="money" readonly></td>
         </tr>
         <tr>
@@ -72,7 +72,7 @@
             <td class="dataFrm_td">医生：</td>
             <td><input type="text" class="dataFrm_input" name="doctorName" readonly></td>
             <td class="dataFrm_td">已用：</td>
-            <td><input type="text" class="dataFrm_input" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yong" readonly></td>
         </tr>
         <tr>
             <td class="dataFrm_td">年龄：</td>
@@ -80,7 +80,7 @@
             <td class="dataFrm_td">床位：</td>
             <td><input type="text" class="dataFrm_input" name="bedName" readonly></td>
             <td class="dataFrm_td">余款：</td>
-            <td><input type="text" class="dataFrm_input" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yu" readonly></td>
         </tr>
     </table>
 </form>
@@ -183,6 +183,7 @@
                 return false;
             }
             sel();
+            sels();
             $("#show1").fadeIn(1000);
             $("#show2").fadeIn(1000);
             $("#show3").fadeIn(1000);
@@ -246,12 +247,16 @@
             }
             var data = obj.data; //获得当前行数据
             if(obj.event === 'edit'){ //操作
-                //清空添加信息
-                $("#frm")[0].reset();
-                //把患者的住院号传进去
-                $("#rid").val($("#shows").val());
-                //打开添加窗口
-                openUpdate(data);
+                if($("#yu").val()<-500){
+                    layer.msg("您的余额已欠费太多，请先去缴费");
+                }else{
+                    //清空添加信息
+                    $("#frm")[0].reset();
+                    //把患者的住院号传进去
+                    $("#rid").val($("#shows").val());
+                    //打开添加窗口
+                    openUpdate(data);
+                }
             }
         });
         //打开数量界面
@@ -296,6 +301,8 @@
                     layer.msg(res);
                     //关闭弹出层
                     layer.close(mainIndex)
+                    //查询余额
+                    sels();
                     //刷新数据 表格
                     tableIns.reload();
                     tableInss.reload();
@@ -316,6 +323,8 @@
                     layer.close(index);
                     $.post("delDrug",{hospitalpriceid:hospitalpriceid,durgname:durgname,durgnum:durgnum},function(inp){
                         layer.msg(inp);
+                        //查询余额
+                        sels();
                         //刷新数据 表格
                         tableIns.reload();
                         tableInss.reload();
@@ -323,6 +332,18 @@
                 });
             }
         })
+        function sels(){
+            var params=$("#dataFrm").serialize();
+            //查询余额
+            $.post("selSurplus",params,function(inp) {
+                if(inp==""){
+                    $("#yong").val(0);
+                }else{
+                    $("#yong").val(inp);
+                }
+                $("#yu").val($("input[name='money']").val()-$("#yong").val());
+            })
+        }
     });
 </script>
 </body>

@@ -19,7 +19,7 @@
     </select>
     <select id="selDrugs" parameterType="Lrecord" resultType="Lrecord">
         select hospitalpriceid,registerId registerid,durgname,durgnum,repiceprice,repicetotal,htime,state
-        from hospitalprice where state=#{state} and registerId=#{registerid}
+        from hospitalprice where state=#{state} and registerId=#{registerid} order by htime desc
     </select>
     <insert id="addDrug" parameterType="Lrecord">
         insert into hospitalprice(registerid,durgname,durgnum,repiceprice,repicetotal,htime,state)
