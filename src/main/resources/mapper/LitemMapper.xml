@@ -13,4 +13,7 @@
              </if>
          </where>
     </select>
+    <insert id="addItem" parameterType="Lrecord">
+        insert into inoutpatienttype(registerid,durgname,durgnum,repiceprice,repicetotal,htime,state) values(#{registerid},#{durgname},#{durgnum},#{repiceprice},#{repiceprice},now(),#{state});
+    </insert>
 </mapper>

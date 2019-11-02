@@ -51,4 +51,9 @@ public class LdrugServiceImpl  implements LdrugService {
     public int updNum(Lrecord lrecord) {
         return ldrugMapper.updNum(lrecord);
     }
+
+    @Override
+    public int upd(Lrecord lrecord) {
+        return ldrugMapper.upd(lrecord);
+    }
 }

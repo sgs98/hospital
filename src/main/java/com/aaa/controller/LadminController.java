@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -80,7 +81,9 @@ public class LadminController {
     //添加患者
     @RequestMapping("/addRegister")
     @ResponseBody
-    public Object addRegister(Register register){
+    public Object addRegister(Register register, HttpServletRequest request){
+        String yonghu = (String)request.getSession().getAttribute("yonghu");
+        register.setOperator(yonghu);
         int i = ladminService.addRegister(register);
         if(i==1){int j = ladminService.updBed(register);
             if(j==1){

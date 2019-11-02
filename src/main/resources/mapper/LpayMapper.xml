@@ -12,4 +12,7 @@
     <select id="selPays" parameterType="Register" resultType="Pay">
         select p.payid,p.registerid,r.userName,p.money,p.payDate  from pay p,register r where p.registerid=#{registerid} and r.registerid=p.registerid order by p.payDate desc
     </select>
+    <select id="selSurplus" parameterType="Lrecord" resultType="Lrecord">
+        select SUM(repicetotal) repicetotal from hospitalprice where registerId=#{registerid}
+    </select>
 </mapper>

@@ -19,7 +19,7 @@
     </select>
     <select id="selDrugs" parameterType="Lrecord" resultType="Lrecord">
         select hospitalpriceid,registerId registerid,durgname,durgnum,repiceprice,repicetotal,htime,state
-        from hospitalprice where state=#{state} and registerId=#{registerid}
+        from hospitalprice where state=#{state} and registerId=#{registerid} order by htime desc
     </select>
     <insert id="addDrug" parameterType="Lrecord">
         insert into hospitalprice(registerid,durgname,durgnum,repiceprice,repicetotal,htime,state)
@@ -38,5 +38,9 @@
     <!--添加药品-->
     <update id="updNum" parameterType="Lrecord">
         update pharmacy set drugstorenum=drugstorenum-#{durgnum} where pharmacyName=#{durgname};
+    </update>
+    <!--修改药品的状态-->
+    <update id="upd" parameterType="Lrecord">
+        update hospitalprice set state=2,htime=NOW() where state=0 and registerId=#{registerid}
     </update>
 </mapper>

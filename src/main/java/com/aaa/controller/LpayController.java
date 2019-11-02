@@ -1,5 +1,6 @@
 package com.aaa.controller;
 
+import com.aaa.entity.Lrecord;
 import com.aaa.entity.Pay;
 import com.aaa.entity.Register;
 import com.aaa.service.LadminService;
@@ -62,5 +63,13 @@ public class LpayController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo.getList());
         return tableData;
+    }
+
+    //查询已用多少
+    @RequestMapping("/selSurplus")
+    @ResponseBody
+    public Object selSurplus(Lrecord lrecord){
+        List<Lrecord> list = lpayService.selSurplus(lrecord);
+        return list;
     }
 }
