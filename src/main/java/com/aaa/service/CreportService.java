@@ -13,7 +13,13 @@ public interface CreportService {
     //查询所有的门诊类型
     List<CRegisteredtype> selreg();
     //查询医生的信息
-    List<ReportVo> seldector(CDoctor cDoctor);
+    List<ReportVo> one(CDoctor cDoctor);
+    List<ReportVo> two(CDoctor cDoctor);
+    List<ReportVo> three(CDoctor cDoctor);
+    List<ReportVo> four(CDoctor cDoctor);
+    List<ReportVo> five(CDoctor cDoctor);
+    List<ReportVo> six(CDoctor cDoctor);
+    List<ReportVo> seven(CDoctor cDoctor);
     //根据所选科室查询该科室的价格
     Integer seltymo(CRegisteredtype cRegisteredtype);
     //添加挂号人员
@@ -24,4 +30,6 @@ public interface CreportService {
     Integer phone(CReport cReport);
     //判断正在就诊的电话唯一
     Integer carid(CReport cReport);
+    //把今天预约而没有来的人进行删除
+    int upddang();
 }

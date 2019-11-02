@@ -9,7 +9,7 @@
             FROM  report r,doctor d,registeredtype e,departments p
             WHERE r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=2
+            and  r.department=p.departmentId and r.state=2 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
     </select>
     <!--修改用户状态出院-->
 

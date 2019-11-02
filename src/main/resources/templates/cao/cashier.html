@@ -174,7 +174,7 @@
                         }*/
                         ,page: 1  //是否启用分页, limits: [10, 20, 30]
                         ,limits: [5, 10, 15]
-                        ,limit: 2//默认采用3
+                        ,limit: 5//默认采用3
                         ,cols: [[   //列表数据
                             {field:'reportId', title:'单据号',align:'center',width:"8%"}
                             ,{field:'reportName', title:'姓名',align:'center',width:"8%"}
@@ -204,7 +204,7 @@
                         }*/
                         ,page: 1  //是否启用分页, limits: [10, 20, 30]
                         ,limits: [5, 10, 15]
-                        ,limit: 2//默认采用3
+                        ,limit: 5//默认采用3
                         ,cols: [[   //列表    数据
                             {field:'pharmacyName', title:'药品名称',align:'center',width:"20%"}
                             ,{field:'drugstorenum', title:'库存',align:'center',width:"20%"}
@@ -239,7 +239,7 @@
                         ,title: '患者处方'
                         ,cellMinWidth:200 //设置列的最小默认宽度
                         ,page: 1  //是否启用分页, limits: [10, 20, 30]
-                        ,limit: 2//默认采用3
+                        ,limit: 5//默认采用3
                         ,cols: [[   //列表    数据
                             {field:'durgname', title:'药品名称',align:'center',width:"20%"}
                             ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
@@ -307,7 +307,7 @@
                             layer.msg("添加成功");
                             layer.close(mainIndex);
                             hua.reload();
-                            tableIns.reload();
+                            yaopin.reload();
                         })
                     }else{
                         //如果有则修改数量
@@ -317,7 +317,7 @@
                             //刷新处方表格
                             hua.reload();
                             //刷新药品表格
-                            tableIns.reload();
+                            yaopin.reload();
                         })
                     }
                 })
@@ -352,7 +352,7 @@
                         layer.msg(res);
                         //刷新数据 表格
                         hua.reload();
-                        tableIns.reload();
+                        yaopin.reload();
                     })
                 });
             }

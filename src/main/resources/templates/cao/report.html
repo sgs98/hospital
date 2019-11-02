@@ -14,15 +14,21 @@
         display: block;
         float: left;
         border: #CCCCCC solid 1px;
-        height: 330px;
+        height: 360px;
         width: 230px;
         text-align: center;
         border-radius: 12px;
         margin: 30px;
     }
     .xiang{
-        line-height: 330px;
+        line-height: 360px;
         cursor:pointer;
+    }
+    #dang{
+        height: 50px;
+        width: 500px;
+        line-height: 50px;
+        margin-left: 30px;
     }
 </style>
 <body>
@@ -44,8 +50,14 @@
             </div>
         </div>
     </div>
-</form>
 
+</form>
+<div id="dang">
+    <input type="radio" id="bang1"  name="dang" value="1" title="" >&nbsp;&nbsp;&nbsp;&nbsp;查看全部&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="radio" id="bang2" name="dang" value="2" title="" >&nbsp;&nbsp;&nbsp;&nbsp;当天挂号&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="radio" id="bang3"  name="dang" value="3" title="">&nbsp;&nbsp;&nbsp;&nbsp;预约挂号&nbsp;&nbsp;&nbsp;&nbsp;
+    <input type="hidden" id="ban" th:value="${session.ban}"/>
+</div>
     <div id="all">
         <ul class="image">
             <li class="xiang" lay-event="add"><span style="font-size: 150px">+</span></li>
@@ -75,6 +87,12 @@
                         <span th:text="${map.type}"></span>
                     </div>
                 </div>
+                    <div class="layui-form-item"style="margin-top:-10px;">
+                        <label class="layui-form-label" style="text-align: right">挂号时间:</label>
+                        <div class="layui-input-block"  style="text-align: left">
+                            <span th:text="${map.datime}"></span>
+                        </div>
+                    </div>
                 <div class="layui-form-item"style="margin-top:-10px;">
                     <label class="layui-form-label" >所属科室:</label>
                     <div class="layui-input-block"  style="text-align: left">
@@ -117,7 +135,7 @@
                 <div class="layui-input-inline">
                     <input type="text" name="age" lay-verify="required|number"   placeholder="请输入用户年龄" autocomplete="off"
                            class="layui-input">
-                    <input type="hidden" name="users" th:value="${session.yonghu}"></input>
+                    <input type="hidden" name="users" th:value="${session.yonghu}"/>
                 </div>
             </div>
             <div class="layui-inline">
@@ -179,9 +197,7 @@
 <script type="text/javascript" th:inline="none">
 
     var tableIns;
-    layui.extend({
-        dtree:'layui_ext/dist/dtree'
-    }).use([ 'jquery', 'layer', 'form', 'table' ], function() {
+    layui.use([ 'jquery', 'layer', 'form', 'table' ], function() {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
@@ -189,7 +205,24 @@
         //模糊查询
         $("#doSearch").click(function(){
             var name=$("#im").val();
-            location.href ="index?params="+name;
+           var cc= $('input[name="dang"]:checked').val();
+            //alert(cc);
+            location.href ="index?params="+name+"&cc="+cc;
+        });
+       $("input[name='dang']").click(function(){
+           var name=$("#im").val();
+           var cc= $('input[name="dang"]:checked').val();
+           location.href ="index?params="+name+"&cc="+cc;
+       })
+        $(function (){
+            var ban=$("#ban").val();
+            if(ban==1||ban==''){
+                $("#bang1").prop("checked",true);
+            }else if(ban==2){
+                $("#bang2").prop("checked",true);
+            }else{
+                $("#bang3").prop("checked",true);
+            }
         });
         //挂号类型的id
         var registeredId=null;
@@ -325,7 +358,7 @@
             if(ad==null){
                 layer.msg("请选择要就诊的医生")
             }else{
-                $.post("../cao/phone",{"phone":phone,"carid":carid},function(obj){ alert(obj);
+                $.post("../cao/phone",{"phone":phone,"carid":carid},function(obj){
                     if(obj==1){
                         layer.msg("该手机号的患者已存在");
                     }else if(obj==2){

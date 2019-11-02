@@ -9,7 +9,7 @@
             FROM  report r,doctor d,registeredtype e,departments p
             WHERE r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
     </select>
     <!--查询所有药房-->
     <select id="selware" resultType="CWarehuose">
@@ -57,24 +57,24 @@
         FROM  report r,doctor d,registeredtype e,departments p
         WHERE r.doctor=d.doctorId
         and d.registeredid=e.registeredId
-        and  r.department=p.departmentId and r.state=1
+        and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
         <if test="reportName!=null and reportName!=''">
             and r.reportName like concat('%' ,concat(#{reportName},'%'))
             or d.doctorName like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
             or e.type like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
             or p.department like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
             or r.phone like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
             or r.carid like concat('%' ,concat(#{reportName},'%')) and r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
         </if>
     </select>
 </mapper>
