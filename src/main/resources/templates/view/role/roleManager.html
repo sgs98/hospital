@@ -13,6 +13,7 @@
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
+<blockquote class="layui-elem-quote">
 <form class="layui-form" method="post" id="searchFrm">
     <div class="layui-form-item">
         <div class="layui-inline">
@@ -41,7 +42,7 @@
         </div>
     </div>
 </form>
-
+</blockquote>
 <!-- 搜索条件结束 -->
 
 <!-- 数据表格开始 -->
@@ -120,7 +121,7 @@
             , url: 'role/loadAllRole' //数据接口
             , title: '用户数据表'//数据导出来的标题
             , toolbar: "#roleToolBar"   //表格的工具条
-            , height: 'full-150'
+            , height: 'full-210'
             , cellMinWidth: 100 //设置列的最小默认宽度
             , page: 1  //是否启用分页
             , limits: [10, 20, 30]
