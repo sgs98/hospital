@@ -42,7 +42,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">住院号:</label>
             <div class="layui-input-inline">
-                <input type="text" id="shows" autocomplete="off" class="layui-input" style="width:200px" >
+                <input type="text" id="shows" lay-verify="required|number" autocomplete="off" class="layui-input" style="width:200px" >
             </div>
         </div>
         <div class="layui-inline" style="position: absolute;left: 340px;top:66px;">
@@ -191,14 +191,14 @@
                     if(data==""){
                         layer.msg("请输入正确的住院号！");
                         $("shows").select();
+                    }else{
+                        $.each(data, function (index, item) {
+                            for(var i in item){
+                                $("input[name="+i+"]").val(item[i])
+                            }
+                        });
+                        sels();
                     }
-                    $.each(data, function (index, item) {
-                        for(var i in item){
-                            $("input[name="+i+"]").val(item[i])
-                        }
-                    });
-                    //查询余额
-                    sels();
                 }
             })
             tableInss.reload({

@@ -21,6 +21,60 @@ public class Register {
     String department;
     String doctorName;
     String bedName;
+    Date endDate;
+    Double price;
+    Double prices;
+
+    @Override
+    public String toString() {
+        return "Register{" +
+                "registerid=" + registerid +
+                ", userName='" + userName + '\'' +
+                ", age=" + age +
+                ", sex='" + sex + '\'' +
+                ", diagnose='" + diagnose + '\'' +
+                ", address='" + address + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idcard='" + idcard + '\'' +
+                ", registerDate=" + registerDate +
+                ", operator='" + operator + '\'' +
+                ", money=" + money +
+                ", state=" + state +
+                ", departmentId=" + departmentId +
+                ", doctorId=" + doctorId +
+                ", bedId=" + bedId +
+                ", department='" + department + '\'' +
+                ", doctorName='" + doctorName + '\'' +
+                ", bedName='" + bedName + '\'' +
+                ", endDate=" + endDate +
+                ", price=" + price +
+                ", prices=" + prices +
+                '}';
+    }
+
+    public Double getPrices() {
+        return prices;
+    }
+
+    public void setPrices(Double prices) {
+        this.prices = prices;
+    }
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     public Integer getRegisterid() {
         return registerid;
@@ -166,27 +220,4 @@ public class Register {
         this.bedName = bedName;
     }
 
-    @Override
-    public String toString() {
-        return "Register{" +
-                "registerid=" + registerid +
-                ", userName='" + userName + '\'' +
-                ", age=" + age +
-                ", sex='" + sex + '\'' +
-                ", diagnose='" + diagnose + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                ", idcard='" + idcard + '\'' +
-                ", registerDate=" + registerDate +
-                ", operator='" + operator + '\'' +
-                ", money=" + money +
-                ", state=" + state +
-                ", departmentId=" + departmentId +
-                ", doctorId=" + doctorId +
-                ", bedId=" + bedId +
-                ", department='" + department + '\'' +
-                ", doctorName='" + doctorName + '\'' +
-                ", bedName='" + bedName + '\'' +
-                '}';
-    }
 }
