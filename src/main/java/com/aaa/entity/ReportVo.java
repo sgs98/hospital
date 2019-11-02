@@ -19,8 +19,26 @@ public class ReportVo {
     private String type;//挂号类型
     private String carid;//身份证号
     private String phone;//电话
-    private  Integer carido;
-    private Integer caridt;
+    private  Integer carido;//身份证前
+    private Integer caridt;//身份证后
+    private Integer cc;//判断日期
+    private String datime;
+
+    public String getDatime() {
+        return datime;
+    }
+
+    public void setDatime(String datime) {
+        this.datime = datime;
+    }
+
+    public Integer getCc() {
+        return cc;
+    }
+
+    public void setCc(Integer cc) {
+        this.cc = cc;
+    }
 
     public Integer getCarido() {
         return carido;
