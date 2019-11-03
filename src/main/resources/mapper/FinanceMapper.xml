@@ -53,61 +53,37 @@
 		DATE_FORMAT(ctime,"%Y%m")=concat(#{value},'12') and c.reportId=r.reportId and r.state=3
    </select>
 	<select id="zhuYuanYearFinance" resultType="java.lang.Double">
-		select
-        sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'01') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'01') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'02') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'02') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'03') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'03') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'04') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'04') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'05') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'05') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'06') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'06') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'07') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'07') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'08') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'08') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'09') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'09') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'10') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'10') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'11') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'11') and state=1
 		UNION all
-		select
-		sum(repicetotal) from hospitalprice h,register r where
-		DATE_FORMAT(htime,"%Y%m")=concat(#{value},'12') and h.registerId=r.registerid and r.state=1
+		select sum(price) from register where DATE_FORMAT(endDate,"%Y%m")=concat(#{value},'12') and state=1
 	</select>
 	<select id="reportYearBingFinance" resultType="Finance">
      select sum(repicetotal) value,DATE_FORMAT(ctime,'%Y') name from cashier c,report r where c.reportId=r.reportId and r.state=3 GROUP BY DATE_FORMAT(ctime,'%Y')
 	</select>
 	<select id="zhuYuanYearBingFinance" resultType="Finance">
-    select sum(repicetotal) value,DATE_FORMAT(htime,'%Y') name from hospitalprice h,register r where r.registerid=h.registerid and r.state=1 GROUP BY DATE_FORMAT(htime,'%Y')
+	  select sum(price) value,DATE_FORMAT(endDate,'%Y') name from register where state=1 group by DATE_FORMAT(endDate,'%Y')
 	</select>
-    <!--/*医生收入统计对比*/-->
+    <!--/*门诊医生收入统计对比*/-->
     <select id="doctorDuibi" resultType="SdoctorDuibi">
         select COUNT(DISTINCT(c.reportId)) num , sum(c.repicetotal) total,d.doctorName doctorName from report r,cashier c,doctor d where r.reportId=c.reportId and r.doctor=d.doctorId and r.state=3 and d.dstate=0
             <if test="doctorName!=null and doctorName!=''">
@@ -117,8 +93,8 @@
 	</select>
     <!--/*住院医生收入统计对比*/-->
     <select id="zDoctorDuibi" resultType="SdoctorDuibi">
-     select COUNT(DISTINCT(r.registerid)) num , sum(h.repicetotal) total,d.doctorName doctorName from register r,doctor d,hospitalprice h where h.registerid=r.registerid and r.registerid=d.registeredId and r.state=1 and d.dstate=1
-            <if test="doctorName!=null and doctorName!=''">
+		select COUNT(r.registerid) num , sum(r.price) total,d.doctorName doctorName from register r,doctor d where r.doctor=d.doctorid and r.state=1
+		   <if test="doctorName!=null and doctorName!=''">
                 and d.doctorName like concat('%',concat(#{doctorName},'%'))
             </if>
      GROUP BY d.doctorName

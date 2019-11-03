@@ -31,7 +31,7 @@ public class MenuController extends BaseController {
     public String toLogin() {
         return "view/login";
     }
-
+    //登陆   shiro登陆
     @RequestMapping("login")
     public String login(Model model, HttpServletRequest request,String loginname,String pwd) {
 
@@ -45,9 +45,11 @@ public class MenuController extends BaseController {
             //只要能通过认证就能通过了
             subject.login(token);
             User users=menuService.loginname(loginname);
+            //把user放进session
             request.getSession().setAttribute("user", users);
             model.addAttribute("loginname",users.getRealname());
             model.addAttribute("id",users.getUserid());
+            //把yonghu放进session
             request.getSession().setAttribute("yonghu", users.getRealname());
             return "view/index";//跳转首页
         } catch (UnknownAccountException e) {
@@ -60,15 +62,16 @@ public class MenuController extends BaseController {
         }
     }
     /*
-     * 加载左边导航栏
+     * 加载首页左边导航栏
      * */
     @RequestMapping("toTreeLoad")
     @ResponseBody
     public List<TreeNode> toTreeLoad(HttpServletRequest request) {
         //获取用户登陆id根据不同的用户有不停菜单
         User user = (User) request.getSession().getAttribute("user");
+        ///获取用户登陆id根据不同的用户有不停菜单
         List<Menu> list = menuService.queryMenuByUid(user.getUserid());
-
+        //创建list集合
         //把list放入nodes
         List<TreeNode> nodes = new ArrayList<>();
         for (Menu menus : list) {

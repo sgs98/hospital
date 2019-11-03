@@ -12,6 +12,9 @@ import java.util.List;
 @Controller
 @RequestMapping("main")
 public class MainController {
+    /*
+    * 查询周一到周日的排班
+    * */
     @Autowired
     private MainService mainService;
     @RequestMapping("one")
