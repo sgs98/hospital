@@ -55,8 +55,8 @@ public class PathstoreController {
     //进入药品报缺
     @RequestMapping("selectless")
     public Object selectless(Model model) {
-        Integer selcountless = storeService.selcountless();
-        model.addAttribute("selcountless",selcountless);
+     /*   Integer selcountless = storeService.selcountless();*/
+/*        model.addAttribute("selcountless",selcountless);*/
         return "drugstore/c_lackdrug";
     }
     //进入入库页面

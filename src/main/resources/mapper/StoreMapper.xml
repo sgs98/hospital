@@ -54,7 +54,7 @@ drugstorenum=#{drugstorenum},  batch=#{batch} where rugstoreId=#{rugstoreId}
     </select>
   <!--  数量不足的药品一共有多少条-->
     <select id="selcountless" resultType="Integer" >
-        SELECT count(d.rugstoreId)	from
+        SELECT count(d.rugstoreId)from
         drugstore d,upplier su,skull sk,warehuose wa,unit un,area ar,type ty  where d.supplierId=su.supplierId
         and d.skullId=sk.skullId and d.warehouseId=wa.warehouseId and d.unit=un.unitId and d.type=ty.typeId
         and d.area=ar.areaId  GROUP BY d.drugstoreName HAVING sum(d.drugstorenum)&lt;30
