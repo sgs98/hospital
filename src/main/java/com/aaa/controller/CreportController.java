@@ -8,6 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import java.util.Calendar;
 import java.util.List;
 
 @Controller
@@ -17,7 +21,12 @@ import java.util.List;
     private CreportService creportService;
     //查询所有数据
     @RequestMapping("index")
-    public Object toreport(ReportVo reportVo, Model model, String params){
+    public Object toreport(ReportVo reportVo, Model model, String params, Integer cc, HttpServletRequest request){
+        reportVo.setCc(cc);
+        HttpSession session = request.getSession();
+        //将数据存储到session中
+        session.setAttribute("ban",cc);
+        creportService.upddang();
         String reportName=params;
         reportVo.setReportName(reportName);
         List<ReportVo> sel = creportService.sel(reportVo);
@@ -41,10 +50,32 @@ import java.util.List;
     //查询医生信息
     @RequestMapping("seldoctor")
     @ResponseBody
-    public Object seldoctor(CDoctor cDoctor, Integer registeredid, Integer departmentId){
-        List<ReportVo> seldector = creportService.seldector(cDoctor);
-        System.out.println();
-        return seldector;
+    public Object seldoctor(CDoctor cDoctor){
+        Calendar calendar = Calendar.getInstance();
+        Integer data=calendar.get(Calendar.DAY_OF_WEEK)-1;//获取当前是星期几
+        if(data==1){
+            List<ReportVo> one = creportService.one(cDoctor);
+            return one;
+        }else if(data==2){
+            List<ReportVo> two = creportService.two(cDoctor);
+            return two;
+        }else if(data==3){
+            List<ReportVo> three = creportService.three(cDoctor);
+            return three;
+        }else if(data==4){
+            List<ReportVo> four = creportService.four(cDoctor);
+            return four;
+        }else if(data==5){
+            System.out.println(data);
+            List<ReportVo> five = creportService.five(cDoctor);
+            return five;
+        }else if(data==6){
+            List<ReportVo> six = creportService.six(cDoctor);
+            return six;
+        }else{
+            List<ReportVo> seven = creportService.seven(cDoctor);
+            return seven;
+        }
     }
     //根据挂号类型查找该类型的价格
     @RequestMapping("seltymo")
