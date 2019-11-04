@@ -118,10 +118,12 @@
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">操作员:</label>
+            <label class="layui-form-label">选择医保:</label>
             <div class="layui-input-inline">
-                <input type="text" name="Operator" th:value="${session.yonghu}" autocomplete="off" disabled="disabled"
-                       class="layui-input">
+                <select name="discount" id="discount" lay-verify="required" lay-filter="bedNum">
+                    <option value=""></option>
+                </select>
+                <input type="hidden" name="Operator" th:value="${session.yonghu}" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -219,6 +221,18 @@
             success: function (data) {
                 $.each(data, function (index, item) {
                     $('#departmentId').append(new Option(item.department, item.departmentId));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");//重新渲染 固定写法
+            }
+        })
+        //查询医保折扣
+        $.ajax({
+            url: '../liao/selDis',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#discount').append(new Option(item.moneytype, item.percent));// 下拉菜单里添加元素
                 });
                 layui.form.render("select");//重新渲染 固定写法
             }

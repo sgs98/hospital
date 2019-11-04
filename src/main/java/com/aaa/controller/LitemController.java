@@ -66,6 +66,7 @@ public class LitemController {
     @RequestMapping("/selItem")
     @ResponseBody
     public Object selItem(Integer page, Integer limit, Lrecord lrecord){
+        System.out.println(lrecord);
         lrecord.setState(1);
         PageHelper.startPage(page, limit);
         List<Lrecord> listAll =ldrugService.selDrugs(lrecord);

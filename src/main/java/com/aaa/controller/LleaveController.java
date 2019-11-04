@@ -50,7 +50,25 @@ public class LleaveController {
     @RequestMapping("/updLeave")
     @ResponseBody
     public Object updLeave(Register register){
-        System.out.println(register);
-        return "出院成功！";
+        int i = lleaveService.updRstate(register);
+        if(i==1){
+            int j = lleaveService.updBstate(register);
+            if(j==1){
+                return "出院成功";
+            }else{
+                return "出院失败";
+            }
+        }else{
+            return "出院成功！";
+        }
     }
+
+    //判断是否还有未取出的药品
+    @RequestMapping("/selYaos")
+    @ResponseBody
+    public Object selYaos(Register register){
+        int i = lleaveService.selYaos(register);
+        return i;
+    }
+
 }

@@ -1,9 +1,6 @@
 package com.aaa.controller;
 
-import com.aaa.entity.Bed;
-import com.aaa.entity.Departments;
-import com.aaa.entity.Doctor;
-import com.aaa.entity.Register;
+import com.aaa.entity.*;
 import com.aaa.service.LadminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -94,5 +91,14 @@ public class LadminController {
         }else{
             return "添加失败";
         }
+    }
+
+
+    //查询折扣
+    @RequestMapping("/selDis")
+    @ResponseBody
+    public Object selDis(){
+        List<Moneytype> moneytypes = ladminService.selDis();
+        return moneytypes;
     }
 }

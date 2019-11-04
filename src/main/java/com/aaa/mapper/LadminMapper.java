@@ -1,9 +1,6 @@
 package com.aaa.mapper;
 
-import com.aaa.entity.Bed;
-import com.aaa.entity.Departments;
-import com.aaa.entity.Doctor;
-import com.aaa.entity.Register;
+import com.aaa.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -17,4 +14,5 @@ public interface LadminMapper {
     int addRegister(Register register);
     List<Register> selRegister(Register register);
     int updBed(Register register);
+    List<Moneytype> selDis();
 }
