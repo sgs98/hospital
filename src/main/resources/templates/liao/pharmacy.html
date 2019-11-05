@@ -158,10 +158,6 @@
                 return false;
             }
             sel();
-            $("#show1").fadeIn(1000);
-            $("#show2").fadeIn(1000);
-            $("#show3").fadeIn(1000);
-            $("#show4").fadeIn(1000);
         });
         //失焦事件
         $("#shows").blur(function(){
@@ -191,14 +187,18 @@
                             }
                         });
                         sels();
+                        tableIns.reload({
+                            url:"../liao/selDrugs?"+params
+                        })
+                        tableInss.reload({
+                            url:"../liao/selPhar?"+params
+                        })
+                        $("#show1").fadeIn(1000);
+                        $("#show2").fadeIn(1000);
+                        $("#show3").fadeIn(1000);
+                        $("#show4").fadeIn(1000);
                     }
                 }
-            })
-            tableIns.reload({
-                url:"../liao/selDrugs?"+params
-            })
-            tableInss.reload({
-                url:"../liao/selPhar?"+params
             })
         }
         table.on("toolbar(pay)",function(obj){

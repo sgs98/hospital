@@ -55,6 +55,8 @@ public class ShiroConfig {
         filtermap.put("/layui/**", "anon");
         filtermap.put("/js/**", "anon");
         filtermap.put("/images/**", "anon");
+        filtermap.put("*.png", "anon");
+        filtermap.put("*jpg", "anon");
 
 
 

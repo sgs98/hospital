@@ -33,14 +33,16 @@
             <div class="layui-inline">
                 <label class="layui-form-label">姓名:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="userName" lay-verify="required"  placeholder="请输入姓名" autocomplete="off"
-                           class="layui-input">
+                    <input type="text" name="userName" id="userName" lay-verify="required"  placeholder="请输入姓名" autocomplete="off" class="layui-input" style="width:150px">
+                    <button type="button" class="layui-btn layui-btn-sm" style="position:absolute;margin: -38px 0px 0px 150px;display: block;height: 38px;" id="zhuan">
+                        <i class="layui-icon"></i>
+                    </button>
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">入院诊断:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="diagnose" lay-verify="required"  placeholder="请输入入院诊断" autocomplete="off"
+                    <input type="text" name="diagnose" id="diagnose" lay-verify="required"  placeholder="请输入入院诊断" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -49,7 +51,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">性别:</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="sex" value="男" checked="checked" title="男">
+                    <input type="radio" name="sex" value="男" title="男" checked>
                     <input type="radio" name="sex" value="女" title="女">
                 </div>
             </div>
@@ -66,7 +68,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">年龄:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
+                    <input type="text" name="age" id="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -98,7 +100,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">电话:</label>
             <div class="layui-input-inline">
-                <input type="text" name="phone" lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
+                <input type="text" name="phone" id="phone" lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -113,15 +115,17 @@
         <div class="layui-inline">
             <label class="layui-form-label">身份证号:</label>
             <div class="layui-input-inline">
-                <input type="text" name="idcard" lay-verify="required|identity|number"  placeholder="请输入身份证号" autocomplete="off"
+                <input type="text" name="idcard" id="idcard" lay-verify="required|identity|number"  placeholder="请输入身份证号" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
-            <label class="layui-form-label">操作员:</label>
+            <label class="layui-form-label">选择医保:</label>
             <div class="layui-input-inline">
-                <input type="text" name="Operator" th:value="${session.yonghu}" autocomplete="off" disabled="disabled"
-                       class="layui-input">
+                <select name="discount" id="discount" lay-verify="required" lay-filter="bedNum">
+                    <option value=""></option>
+                </select>
+                <input type="hidden" name="Operator" th:value="${session.yonghu}" autocomplete="off" class="layui-input">
             </div>
         </div>
     </div>
@@ -135,8 +139,13 @@
 
 </div>
 <!-- 添加和修改的弹出层结束 -->
-
-
+<!--转院开始-->
+<div id="yuan" style="display: none;">
+    <div  style="display: none;" id="ToolBars">
+        <button type="button" class="layui-btn layui-btn-sm" lay-event="sel">选择</button>
+    </div>
+    <table class="layui-hide" id="show" lay-filter="show"></table>
+</div>
 <!-- 搜索条件结束 -->
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
@@ -176,6 +185,25 @@
                 ,{field:'department', title:'科室',align:'center',width:'6%'}
                 ,{field:'doctorName', title:'医生',align:'center',width:'6%'}
                 ,{field:'bedName', title:'床位',align:'center',width:'6%'}
+            ]]
+        })
+        //门诊信息显示
+        tableInss=table.render({
+            elem: '#show'   //渲染的目标对象
+            ,url:'' //数据接口
+            ,title: '门诊信息显示'//数据导出来的标题
+            ,height:'full-200'
+            ,page: 1  //是否启用分页, limits: [10, 20, 30]
+            ,limits: [7, 20, 30]
+            ,limit: 7//默认采用3
+            ,cols: [[   //列表数据
+                {field:'userName', title:'姓名',align:'center',width:'12%'}
+                ,{field:'sex', title:'性别',align:'center',width:'10%',sort: true}
+                ,{field:'age', title:'年龄',align:'center',width:'10%',sort: true}
+                ,{field:'phone', title:'电话',align:'center',width:'16%'}
+                ,{field:'idcard', title:'身份证号',align:'center',width:'24%'}
+                ,{field:'diagnose', title:'转院原因',align:'center',width:'17%'}
+                ,{fixed: '', title:'操作', toolbar: '#ToolBars',align:'center',width:'11%'}
             ]]
         })
         //模糊查询
@@ -223,6 +251,18 @@
                 layui.form.render("select");//重新渲染 固定写法
             }
         })
+        //查询医保折扣
+        $.ajax({
+            url: '../liao/selDis',
+            dataType: 'json',
+            type: 'post',
+            success: function (data) {
+                $.each(data, function (index, item) {
+                    $('#discount').append(new Option(item.moneytype, item.percent));// 下拉菜单里添加元素
+                });
+                layui.form.render("select");//重新渲染 固定写法
+            }
+        })
             // select下拉框选中触发事件
             form.on("select(department)", function(data){
                 $("#doctorId").empty();
@@ -259,6 +299,10 @@
             });
         //保存
         form.on("submit(doSubmit)",function(obj){
+            if($("input[name='age']").val()<=0){
+                layer.msg("请输入正确年龄!");
+                $(this).select();
+            }
             //序列化表单数据
             var params=$("#dataFrm").serialize();
             $.post(url,params,function(obj){
@@ -269,6 +313,38 @@
                 tableIns.reload();
             })
         });
+        //转院
+        var mainIndexs;
+        $("#zhuan").click(function(){
+            mainIndexs=layer.open({
+                type:1,
+                title:'门诊人员',
+                content:$("#yuan"),
+                area:['800px','550px'],
+                success:function(index){
+                    tableInss.reload({
+                        url:"../liao/selDoor"
+                    })
+                }
+            });
+        });
+        //监听门诊的行时间
+        table.on('tool(show)', function(obj){
+            if(obj.event=='sel'){
+                $.each(obj.data, function (index, item) {
+                    $("#"+index).val(item);
+                    if(index=="sex"){
+                        $("input[name='sex']").each(function(){
+                            if($(this).val()==item){
+                                $(this).prop("checked",true);
+                                form.render(); //更新单选框
+                            }
+                        })
+                    }
+                });
+                layer.close(mainIndexs)
+            }
+        })
     });
 </script>
 </body>

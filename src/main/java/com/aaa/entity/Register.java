@@ -24,6 +24,7 @@ public class Register {
     Date endDate;
     Double price;
     Double prices;
+    String discount;
 
     @Override
     public String toString() {
@@ -49,7 +50,16 @@ public class Register {
                 ", endDate=" + endDate +
                 ", price=" + price +
                 ", prices=" + prices +
+                ", discount='" + discount + '\'' +
                 '}';
+    }
+
+    public String getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 
     public Double getPrices() {

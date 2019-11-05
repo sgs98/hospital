@@ -53,6 +53,18 @@
         </div>
     </div>
 </form>
+<div style="display: none;padding: 20px" id="disShow" >
+    <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this">药品详情</li>
+            <li>项目详情</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show"><table class="layui-hide" id="yao" lay-filter="yao"></table></div>
+            <div class="layui-tab-item"><table class="layui-hide" id="xiangmu" lay-filter="xiangmu"></table></div>
+        </div>
+    </div>
+</div>
 <form class="layui-form"  lay-filter="dataFrm" id="dataFrm">
     <input type="hidden" id="show" name="registerid">
     <input type="hidden" id="hidden" name="moneys" value="0">
@@ -72,7 +84,7 @@
             <td class="dataFrm_td">医生：</td>
             <td><input type="text" class="dataFrm_input" name="doctorName" readonly></td>
             <td class="dataFrm_td">已用：</td>
-            <td><input type="text" class="dataFrm_input" id="yong" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yong" name="price" readonly></td>
         </tr>
         <tr>
             <td class="dataFrm_td">年龄：</td>
@@ -80,7 +92,7 @@
             <td class="dataFrm_td">床位：</td>
             <td><input type="text" class="dataFrm_input" name="bedName" readonly></td>
             <td class="dataFrm_td">余款：</td>
-            <td><input type="text" class="dataFrm_input" id="yu" readonly></td>
+            <td><input type="text" class="dataFrm_input" id="yu" name="prices" readonly></td>
         </tr>
     </table>
 </form>
@@ -94,11 +106,12 @@
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
     var tableIns;
-    layui.use([ 'jquery', 'layer', 'form', 'table'  ], function() {
+    layui.use([ 'jquery','element', 'layer', 'form', 'table'  ], function() {
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
         var table = layui.table;
+        var element = layui.element;
         var laydate = layui.laydate;
         //渲染数据表格
         tableIns=table.render({
@@ -120,10 +133,55 @@
                 ,{field:'bedName', title:'床位',align:'center',width:"7%"}
                 ,{field:'registerDate', title:'入院日期', templet: "<div>{{layui.util.toDateString(d.registerDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:"11%",sort: true}
                 ,{field:'endDate', title:'出院日期', templet: "<div>{{layui.util.toDateString(d.endDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:"11%",sort: true}
-                ,{field:'money', title:'预交款',align:'center',width:"6%"}
+                ,{field:'money', title:'预交款',align:'center',width:"7%"}
                 ,{field:'price', title:'已用',align:'center',width:"6%"}
-                ,{field:'prices', title:'余款',align:'center',width:"6%"}
-                ,{field:'prices', title:'余款',align:'center',width:"6%"}
+                ,{field:'prices', title:'退款',align:'center',width:"6%",templet: function (d) {
+                        if (d.prices > 0){
+                            return d.prices
+                        }else{
+                            return 0;
+                        }
+                    }}
+                ,{field:'prices', title:'补缴',align:'center',width:"6%",templet: function (d) {
+                        if (d.prices < 0){
+                            return 0-d.prices
+                        }else{
+                            return 0;
+                        }
+                    }}
+            ]]
+        })
+        //药品显示
+        table1=table.render({
+            elem: '#yao'   //渲染的目标对象
+            ,url:'' //数据接口
+            ,title: '用户数据表'//数据导出来的标题
+            ,height:'full-200'
+            ,page: 1  //是否启用分页, limits: [10, 20, 30]
+            ,limits: [7, 20, 30]
+            ,limit: 7//默认采用3
+            ,cols: [[   //列表数据
+                {field:'hospitalpriceid', title:'序号',align:'center'}
+                ,{field:'durgname', title:'药品名称',align:'center'}
+                ,{field:'durgnum', title:'数量',align:'center'}
+                ,{field:'repiceprice', title:'售价',align:'center'}
+                ,{field:'repicetotal', title:'总价',align:'center'}
+            ]]
+        })
+        //项目显示
+        table2=table.render({
+            elem: '#xiangmu'   //渲染的目标对象
+            ,url:'' //数据接口
+            ,title: '用户数据表'//数据导出来的标题
+            ,height:'full-200'
+            ,page: 1  //是否启用分页, limits: [10, 20, 30]
+            ,limits: [7, 20, 30]
+            ,limit: 7//默认采用3
+            ,cols: [[   //列表数据
+                {field:'hospitalpriceid', title:'序号',align:'center',width:"20%"}
+                ,{field:'durgname', title:'项目名称',align:'center',width:"20%"}
+                ,{field:'repiceprice', title:'售价',align:'center',width:"20%"}
+                ,{field:'htime', title:'手术时间',templet: "<div>{{layui.util.toDateString(d.htime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:"40%"}
             ]]
         })
         //查询
@@ -200,38 +258,53 @@
                 $("#yu").val($("input[name='money']").val()-$("#yong").val());
             })
         }
-        //文本框的点击事件
+        //文本框的键盘事件
         $("#shows").keydown(function(){
+            $("#doSearch").show();
+            $("#doSub").hide();
+        });
+        //文本框的点击事件
+        $("#shows").click(function(){
             $("#doSearch").show();
             $("#doSub").hide();
         });
         //结算事件
         $("#doSub").click(function(){
-            //获取患者的住院号
-            var id=$("#shows").val();
-            //获取剩余钱数
-            var price=$("#yu").val();
-            //显示是否需要补缴
-            var inp="";
-            if(price<0){
-                price=price.substring(1);
-                inp="需要补缴"+price+"元！";
-            }else if(price>0){
-                inp="需要退回"+price+"元！";
-            }else{
-                inp="当前没有剩余余款！";
-            }
-            layer.confirm(inp, {
-                btn : [ '确定', '取消' ]//按钮
-            }, function(index) {
-                layer.close(index);
-                $.post("updLeave",{registerid:id},function(inp) {
-                    alert(inp);
-                })
+            var params=$("#dataFrm").serialize();
+            //判断是否还有尚未取出的药品
+            $.post("selYaos",params,function(inp) {
+              if(inp!=0){
+                  layer.msg("当前还有尚未取出的药品，请先去取药！");
+              }else{
+                  //刷新已用
+                  sels();
+                  //获取剩余钱数
+                  var price=$("#yu").val();
+                  //显示是否需要补缴
+                  var inp="";
+                  if(price<0){
+                      price=price.substring(1);
+                      inp="需要补缴"+price+"元！是否确认出院？";
+                  }else if(price>0){
+                      inp="需要退回"+price+"元！是否确认出院？";
+                  }else{
+                      inp="当前没有剩余余款！是否确认出院？";
+                  }
+                  layer.confirm(inp, {
+                      btn : [ '确定', '取消' ]//按钮
+                  }, function(index) {
+                      layer.close(index);
+                      $.post("updLeave",params,function(inp) {
+                          layer.msg(inp);
+                          location.reload();
+                      })
+                  })
+              }
             })
         });
         //监听行单击事件（单击事件为：rowDouble）
-        table.on('row(pay)', function(obj){
+        table.on('rowDouble(pay)', function(obj){
+            //获取当前行信息
             var data = obj.data;
             //标注选中样式
             obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
@@ -240,7 +313,20 @@
                 btn : [ '是', '否' ]//按钮
             }, function(index) {
                 layer.close(index);
-                alert("true");
+                mainIndex=layer.open({
+                    type:1,
+                    title:'费用详情',
+                    content:$("#disShow"),
+                    area:['800px','550px'],
+                    success:function(index){
+                        table1.reload({
+                            url:"../liao/selPhar?registerid="+data.registerid
+                        });
+                        table2.reload({
+                            url:"../liao/selItem?registerid="+data.registerid
+                        })
+                    }
+                });
             })
         });
     });

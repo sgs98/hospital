@@ -28,7 +28,7 @@
         SELECT count(*) FROM report where DATE_FORMAT(time,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and  state!=0
      </select>
     <select id="currentZhuYuan" resultType="Integer">
-         SELECT count(*) FROM register where registerDate=DATE_FORMAT(NOW(),'%Y-%m-%d') and  state=0
+         SELECT count(*) FROM register where DATE_FORMAT(registerDate,'%Y-%m-%d')=DATE_FORMAT(NOW(),'%Y-%m-%d') and  state!=0
      </select>
     <!--门诊总数-->
     <select id="Total" resultType="Integer">
@@ -36,7 +36,7 @@
      </select>
     <!--住院总数-->
     <select id="zhuyuanTotal" resultType="Integer">
-         select count(*) from register  where state=0
+         select count(*) from register  where state!=0
      </select>
 
 </mapper>

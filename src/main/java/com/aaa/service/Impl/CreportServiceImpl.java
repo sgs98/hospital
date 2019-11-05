@@ -101,4 +101,9 @@ public class CreportServiceImpl implements CreportService {
     public int upddang() {
         return creportMapper.upddang();
     }
+    //从门诊转入住院
+    @Override
+    public Integer zhuanyuan(CReport cReport) {
+        return creportMapper.zhuanyuan(cReport);
+    }
 }

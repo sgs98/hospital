@@ -17,6 +17,16 @@ public class CReport {
     private Integer state;
     private String carid;
     private String phone;
+    private String zhuan;
+
+    public String getZhuan() {
+        return zhuan;
+    }
+
+    public void setZhuan(String zhuan) {
+        this.zhuan = zhuan;
+    }
+
     public String getCarid() {
         return carid;
     }

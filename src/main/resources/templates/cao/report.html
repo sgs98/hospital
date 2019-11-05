@@ -106,8 +106,10 @@
                     </div>
                 </div>
                     <input type="hidden" th:value="${map.reportId}">
-                    <button type="button"style="width:110px;margin-top:-10px;" id="delre" class="layui-btn"><i class="layui-icon"></i>删除</button>
-
+                    <button type="button"style="width:100px;margin-top:-10px;" id="delre" class="layui-btn">删除</button>
+                    <input type="hidden" th:value="${map.reportName}">
+                    <button type="button"style="width:100px;margin-top:-10px;" id="zhuanyuan" class="layui-btn">转住院</button>
+                    <input type="hidden" th:value="${map.datime}">
                 </form>
             </li>
         </ul>
@@ -133,7 +135,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">年龄:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="age" lay-verify="required|number"   placeholder="请输入用户年龄" autocomplete="off"
+                    <input type="text" name="age" id="age" lay-verify="required|number"   placeholder="请输入用户年龄" autocomplete="off"
                            class="layui-input">
                     <input type="hidden" name="users" th:value="${session.yonghu}"/>
                 </div>
@@ -192,6 +194,25 @@
         </div>
     </form>
 </div>
+<div id="zhaunyu" style="display:none;padding-left: 20px;">
+    <div class="layui-form-item">
+        <div class="layui-inline">
+            <label class="layui-form-label">请填写病因:</label>
+            <div class="layui-input-inline">
+                <input type="hidden" name="areaId">
+                <input type="text" name="areaName" id="bingying"  lay-verify="required"   placeholder="请输入病因" autocomplete="off"
+                       class="layui-input ">
+            </div>
+        </div>
+    </div>
+
+    <div class="layui-form-item" style="text-align: center;">
+        <div class="layui-input-block" style=" margin-left:0px">
+            <input type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release"  id="zhuncheng" value="提交">
+            <button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh" >重置</button>
+        </div>
+    </div>
+</div>
 </body>
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
@@ -209,6 +230,7 @@
             //alert(cc);
             location.href ="index?params="+name+"&cc="+cc;
         });
+        //单选框选择当天的和全部的病人
        $("input[name='dang']").click(function(){
            var name=$("#im").val();
            var cc= $('input[name="dang"]:checked').val();
@@ -347,16 +369,17 @@
                 }
             });
         });
-
-
         //保存
         form.on("submit(doSubmit)",function(obj){
             var phone=$("#phon").val();
             var carid=$("#idcard").val();
+            var age=$("#age").val();
             //序列化表单数据
             var ad=$("#doctorId").val();
             if(ad==null){
                 layer.msg("请选择要就诊的医生")
+            }else if(age<=0){
+                layer.msg("请输入正确的年龄")
             }else{
                 $.post("../cao/phone",{"phone":phone,"carid":carid},function(obj){
                     if(obj==1){
@@ -376,10 +399,9 @@
                 })
 
             }
-
         });
         //删除
-        $(document).on("click","#delre",function(){
+        $(document).on("click","#zhuan",function(){
             var params=$(this).prev().val();
             layer.confirm('真的删除这个用户吗', function (index) {
                 $.post('delre',{'id':params},function(obj){
@@ -388,6 +410,43 @@
                 })
             })
         })
+        //转院
+        $(document).on("click","#zhuanyuan",function(){
+            var now = new Date();
+            var year = now.getFullYear(); //得到年份
+            var month = now.getMonth();//得到月份
+            var date = now.getDate();//得到日期
+            var params=$(this).prev().val();
+            var ids=$(this).prev().prev().prev().val();
+            var dat=$(this).next().val();//获取选中的这个时间
+            var da=year+"-"+month+"-"+date;//拼接当前时间
+            var now2 = new Date(dat);
+            var year2 = now2.getFullYear(); //得到年份
+            var month2 = now2.getMonth();//得到月份
+            var date2 = now2.getDate();//得到日期
+            var da2=year2+"-"+month2+"-"+date2;//拼接当前时间
+            if(da!=da2){
+                layer.msg("对不起您选择的不是当天的挂号")
+            }else{
+            layer.confirm('你确定要【'+params+'】转入住院部吗', function (index) {
+                mainIndex=layer.open({
+                    type:1,
+                    title:'转入住院部',
+                    content:$("#zhaunyu"),
+                    area:['400px','200px']
+                });
+
+            })
+                $("#zhuncheng").click(function(){
+                    var zh=$("#bingying").val();
+                    $.post('zhuanyuan',{'id':ids,'zhuan':zh},function(obj){
+                        layer.msg("转出成功");
+                        location.reload();
+                    })
+                })
+            }
+        })
+
     })
 
 </script>

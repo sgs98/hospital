@@ -32,4 +32,6 @@ public interface CreportService {
     Integer carid(CReport cReport);
     //把今天预约而没有来的人进行删除
     int upddang();
+    //从门诊转入住院
+    Integer zhuanyuan(CReport cReport);
 }

@@ -1,9 +1,6 @@
 package com.aaa.service;
 
-import com.aaa.entity.Bed;
-import com.aaa.entity.Departments;
-import com.aaa.entity.Doctor;
-import com.aaa.entity.Register;
+import com.aaa.entity.*;
 
 import java.util.List;
 
@@ -15,4 +12,6 @@ public interface LadminService {
     int addRegister(Register register);
     List<Register> selRegister(Register register);
     int updBed(Register register);
+    List<Moneytype> selDis();
+    List<Register> selDoor();
 }

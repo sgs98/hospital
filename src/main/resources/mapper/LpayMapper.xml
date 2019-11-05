@@ -13,6 +13,6 @@
         select p.payid,p.registerid,r.userName,p.money,p.payDate  from pay p,register r where p.registerid=#{registerid} and r.registerid=p.registerid order by p.payDate desc
     </select>
     <select id="selSurplus" parameterType="Lrecord" resultType="Lrecord">
-        select SUM(repicetotal) repicetotal from hospitalprice where registerId=#{registerid}
+        select p.price*(TO_DAYS(NOW())-TO_DAYS(r.registerDate))+ifnull(sum(h.repicetotal),0)*(1-(cast(replace(r.discount,'%','') as decimal(18,2))/100)) repicetotal from (select price from bed where bedid=(select bednum from register where registerid=#{registerid})) p,register r,hospitalprice h where r.registerid=#{registerid} and r.registerid=h.registerId
     </select>
 </mapper>
