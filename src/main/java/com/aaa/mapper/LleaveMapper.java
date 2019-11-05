@@ -9,4 +9,8 @@ import java.util.List;
 public interface LleaveMapper {
 
     List<Register> selRegisters(Register register);
+    int updRstate(Register register);
+    int updBstate(Register register);
+    int selYaos(Register register);
+
 }

@@ -1,9 +1,6 @@
 package com.aaa.controller;
 
-import com.aaa.entity.Bed;
-import com.aaa.entity.Departments;
-import com.aaa.entity.Doctor;
-import com.aaa.entity.Register;
+import com.aaa.entity.*;
 import com.aaa.service.LadminService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -94,5 +91,32 @@ public class LadminController {
         }else{
             return "添加失败";
         }
+    }
+
+
+    //查询折扣
+    @RequestMapping("/selDis")
+    @ResponseBody
+    public Object selDis(){
+        List<Moneytype> moneytypes = ladminService.selDis();
+        return moneytypes;
+    }
+
+    //查询门诊过来的患者
+    @RequestMapping("/selDoor")
+    @ResponseBody
+    public Object selDoor(Integer page, Integer limit){
+        PageHelper.startPage(page, limit);
+        List<Register> selDoor=ladminService.selDoor();
+        PageInfo pageInfo = new PageInfo(selDoor);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
     }
 }

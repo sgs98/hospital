@@ -1,9 +1,6 @@
 package com.aaa.service.Impl;
 
-import com.aaa.entity.Bed;
-import com.aaa.entity.Departments;
-import com.aaa.entity.Doctor;
-import com.aaa.entity.Register;
+import com.aaa.entity.*;
 import com.aaa.mapper.LadminMapper;
 import com.aaa.service.LadminService;
 import org.springframework.stereotype.Service;
@@ -47,5 +44,15 @@ public class LadminServiceImpl implements LadminService {
     @Override
     public int updBed(Register register) {
         return ladminMapper.updBed(register);
+    }
+
+    @Override
+    public List<Moneytype> selDis() {
+        return ladminMapper.selDis();
+    }
+
+    @Override
+    public List<Register> selDoor() {
+        return ladminMapper.selDoor();
     }
 }

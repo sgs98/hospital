@@ -13,4 +13,13 @@
             </if>
         </where>
     </select>
+    <update id="updRstate" parameterType="Register">
+        update register set state=1,endDate=NOW(),price=#{price} where registerid=#{registerid};
+    </update>
+    <update id="updBstate" parameterType="Register">
+        update bed set state=0 where bedid=(select bedNum from register where registerid=#{registerid})
+    </update>
+    <select id="selYaos" parameterType="Register" resultType="int">
+        select count(*) from hospitalprice where registerId=#{registerid} and state=0;
+    </select>
 </mapper>
