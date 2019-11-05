@@ -16,7 +16,7 @@
     <update id="updatedrugnumber" parameterType="Drugstore" >
         UPDATE drugstore set drugstorenum =(drugstorenum-#{drugstorenum}) where rugstoreId=#{rugstoreId}
     </update>
-    <!-- 从报缺减掉相应的需补给数量-->
+    <!-- 左边补给从报缺减掉相应的需补给数量-->
     <update id="upbaoquenumber" >
         update baoque set baoqueNum=(baoqueNum-#{drugstorenum}) where baoqueName=#{drugstoreName}
     </update>
@@ -56,4 +56,12 @@ delete  from drugstore where rugstoreId=#{rugstoreId}
     <select id="selbaoquecount" resultType="Integer">
     select count(*) from baoque
     </select>
+  <!--  出库时某种药品时 先看看此药是否在紧急报缺表里面，有的话出库时 报缺表的此药也要随之减少-->
+    <select id="selbaoqueName" resultType="Integer">
+        SELECT count(* )from baoque where baoqueName=#{pharmacyName}
+    </select>
+    <!-- 右边出库从报缺减掉相应的需补给数量-->
+    <update id="upbaoquenumber1" >
+        update baoque set baoqueNum=(baoqueNum-#{drugstorenum}) where baoqueName=#{pharmacyName}
+    </update>
 </mapper>

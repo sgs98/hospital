@@ -7,32 +7,32 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
 </head>
 <body>
+
 <span  style="font-size: 1.5em;margin-left: 180px;">药房报缺药品<span class="layui-badge" th:text="${selbaoquecount}"></span></span>
 
 
 
-<span  style="font-size: 1.5em;margin-left: 650px;">库房出库</span>
-<form class="layui-form" method="post" id="searchFrm" style="margin-left: 1050px;margin-top: -30px;">
+<span  style="font-size: 1.5em;margin-left: 530px;">库房出库</span>
+<form class="layui-form" method="post" id="searchFrm" style="margin-left: 970px;margin-top: -20px;">
     <div class="layui-form-item">
         <div class="layui-inline">
-            <label class="layui-form-label">药品名称:</label>
             <div class="layui-input-inline">
-                <input type="text" name="drugstoreName"  autocomplete="off" class="layui-input" >
+                <input type="text" name="drugstoreName" placeholder="药品名称" autocomplete="off" class="layui-input" >
                 <button type="button" class="layui-btn layui-btn-normal  layui-icon layui-icon-search" id="doSearch" style="margin-left: 210px;margin-top: -55px;">查询</button>
             </div>
         </div>
     </div>
-
 </form>
-<div id="dtable" style="border: 1px solid #fff;width: 500px;height:700px;">
-    <table class="layui-hide" id="userTable" lay-filter="userTable"></table></div>
+<div id="dtable" style="border: 1px solid #fff;width: 360px;height:460px;margin-top: -20px;">
+    <table class="layui-hide" id="userTable" lay-filter="userTable"  ></table>
+</div>
 <div style="display: none;" id="userToolBar">
 </div>
 <div  id="userBar" style="display: none;">
     <a class="layui-btn layui-btn-xs" lay-event="add" id="buji">补给</a>
 </div>
 
-<div id="dtable1" style="border: 1px solid #fff;width: 960px;height:700px;margin-left: 550px;margin-top: -700px;">
+<div id="dtable1" style="border: 1px solid #fff;width: 900px;height:470px;margin-left: 430px;margin-top: -460px;">
     <table class="layui-hide" id="userTable1" lay-filter="userTable1"></table></div>
 <div style="display: none;" id="userToolBar1">
 </div>
@@ -266,7 +266,9 @@
         });
 
 
-
+        $("#dtable").click(function(){
+            $("#dtable").toggle();
+        });
     });
 </script>
 

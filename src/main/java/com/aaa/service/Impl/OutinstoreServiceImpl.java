@@ -81,4 +81,16 @@ public class OutinstoreServiceImpl implements OutinstoreService {
         return om.selbaoquecount();
     }
 
+    @Override
+    public int selbaoqueName(Ypharmacy ypharmacy) {
+        return om.selbaoqueName(ypharmacy);
+    }
+
+    @Override
+    public int upbaoquenumber1(Ypharmacy ypharmacy) {
+        return om.upbaoquenumber1(ypharmacy);
+    }
+
+
+
 }

@@ -33,4 +33,9 @@ public interface OutinstoreService {
     int uppharymacy(Ypharmacy ypharmacy);
     //查询报缺表一共有几条数据
     int selbaoquecount();
+    /* 用于判断出库时某种药品时 先看看此药是否在紧急报缺表里面，有的话出库时 报缺表的此药也要随之减少*/
+    int selbaoqueName(Ypharmacy ypharmacy);
+    //修改报缺表对应的药的需求数量
+    int upbaoquenumber1(Ypharmacy ypharmacy);
+
 }
