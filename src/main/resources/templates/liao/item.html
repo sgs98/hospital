@@ -167,9 +167,6 @@
                 return false;
             }
             sel();
-            $("#show1").fadeIn(1000);
-            $("#show2").fadeIn(1000);
-            $("#show3").fadeIn(1000);
         });
         //失焦事件
         $("#shows").blur(function(){
@@ -198,11 +195,14 @@
                             }
                         });
                         sels();
+                        tableInss.reload({
+                            url:"../liao/selItem?"+params
+                        })
+                        $("#show1").fadeIn(1000);
+                        $("#show2").fadeIn(1000);
+                        $("#show3").fadeIn(1000);
                     }
                 }
-            })
-            tableInss.reload({
-                url:"../liao/selItem?"+params
             })
         }
         table.on("toolbar(pay)",function(obj){
