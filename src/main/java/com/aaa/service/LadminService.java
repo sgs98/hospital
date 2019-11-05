@@ -13,4 +13,5 @@ public interface LadminService {
     List<Register> selRegister(Register register);
     int updBed(Register register);
     List<Moneytype> selDis();
+    List<Register> selDoor();
 }

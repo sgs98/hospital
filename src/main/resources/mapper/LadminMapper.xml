@@ -35,4 +35,7 @@
     <select id="selDis" resultType="Moneytype">
         select * from moneytype
     </select>
+    <select id="selDoor" resultType="Register">
+        select reportName userName,sex,age,phone,carid idcard,zhuan diagnose from report where state=4
+    </select>
 </mapper>

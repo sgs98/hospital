@@ -101,4 +101,22 @@ public class LadminController {
         List<Moneytype> moneytypes = ladminService.selDis();
         return moneytypes;
     }
+
+    //查询门诊过来的患者
+    @RequestMapping("/selDoor")
+    @ResponseBody
+    public Object selDoor(Integer page, Integer limit){
+        PageHelper.startPage(page, limit);
+        List<Register> selDoor=ladminService.selDoor();
+        PageInfo pageInfo = new PageInfo(selDoor);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
 }

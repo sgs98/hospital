@@ -50,4 +50,9 @@ public class LadminServiceImpl implements LadminService {
     public List<Moneytype> selDis() {
         return ladminMapper.selDis();
     }
+
+    @Override
+    public List<Register> selDoor() {
+        return ladminMapper.selDoor();
+    }
 }
