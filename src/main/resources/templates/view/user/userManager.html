@@ -99,7 +99,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">身份证号:</label>
 					<div class="layui-input-inline">
-						<input type="text" name="identity"  placeholder="请输入用户身份证号" autocomplete="off"
+						<input type="number" name="identity" lay-verify="required|identity"  placeholder="请输入用户身份证号" autocomplete="off"
 							class="layui-input">
 					</div>
 				</div>
@@ -115,7 +115,7 @@
 				<div class="layui-inline">
 					<label class="layui-form-label">用户电话:</label>
 					<div class="layui-input-inline">
-						<input type="text" name="phone" lay-verify="required|phone"  placeholder="请输入用户电话" autocomplete="off"
+						<input type="number" name="phone" lay-verify="required|phone"  placeholder="请输入用户电话" autocomplete="off"
 							class="layui-input">
 					</div>
 				</div>
