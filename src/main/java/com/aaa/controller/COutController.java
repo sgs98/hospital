@@ -23,7 +23,12 @@ import java.util.Map;
 public class COutController {
     @Autowired
     private COutService cOutService;
-    //进入处方页面
+    //进入处方划价页面
+    @RequestMapping("xiang")
+    public Object xiang(Model model){
+        return  "cao/Cxiangmu";
+    }
+    //进入收费页面
     @RequestMapping("out")
     public Object look(Model model){
         return  "cao/Ctoll";
@@ -99,5 +104,4 @@ public class COutController {
         Integer guafei = cOutService.guafei(reportVo);
         return  shoufei;
     }
-
 }

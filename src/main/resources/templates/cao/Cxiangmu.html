@@ -40,6 +40,40 @@
             color: white;
             border: 0px;
             border-radius: 2px;
+            cursor: pointer;
+        }
+        #pay{
+            text-align: center;
+            font-size: 16px;
+            color: #737383;
+            margin-top: 10px;
+        }
+        .inp{
+            border: #CCCCCC solid 1px;
+            height: 35px;
+            border-radius: 3px;
+            width: 200px;
+        }
+        #tibu{
+            width: 100px;
+            background-color:rgb(1,150,136);
+            border: 0px;
+            border-radius: 3px;
+            margin-right: 20px;
+            height: 30px;
+            font-size: 14px;
+            color: white;
+            cursor: pointer;
+        }
+        #qubu{
+            width: 100px;
+            background-color:#CCCCCC;
+            border: 0px;
+            border-radius: 3px;
+            margin-left: 20px;
+            height: 30px;
+            font-size: 14px;
+            cursor: pointer;
         }
         #selinp1{
             width: 200px;
@@ -61,8 +95,8 @@
 
 <body>
 <!--头部显示信息开始-->
-    <div>
-        <form class="layui-form" method="post" id="dataFrm">
+<div>
+    <form class="layui-form" method="post" id="dataFrm">
         <table style="margin-top: 20px;margin-left: 30px;">
             <tr>
                 <td class="nam">姓名:</td>
@@ -89,9 +123,9 @@
                 <td class="valu"><input class="layui-input"  id="phone" type="text" readonly/> </td>
                 <td class="nam">挂号费:</td>
                 <td class="valu"><input class="layui-input"  id="price" type="text" readonly/> </td>
-         </table>
-         </form>
-    </div>
+        </table>
+    </form>
+</div>
 <!--头部显示信息结束-->
 
 <!--病号信息弹出层开始-->
@@ -116,11 +150,11 @@
 <!--处方页面结束-->
 <!--药品详情页面开始-->
 <div id="alldrug">
-    <table class="layui-hide" id="drugtable" lay-filter="drugtable"></table>
-    <div style="display: none;" id="adddrug">
-        <input type="text" placeholder="请输入药品名字" id="selinp" autocomplete="off" >
-        <input type="button" id="selbut" value="查询"/>
+    <div style="display: none" id="adddrug">
+        <input type="text" placeholder="请输入项目名字" id="selinp" autocomplete="off" >
+        <input type="button"  id="selbut" value="查询"/>
     </div>
+    <table class="layui-hide" id="drugtable" lay-filter="drugtable"></table>
     <div  id="choose" style="display: none;">
         <a class="layui-btn layui-btn-xs" lay-event="druedit">选择</a>
     </div>
@@ -128,7 +162,7 @@
 <!--药品详情页面结束-->
 <!--添加药品数量开始-->
 <div id="drugnum" style="text-align: center;display: none">
-    <input type="number" id="num" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量">
+    <input type="number" id="num" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量" autocomplete="off">
     <input type="hidden" id="kunum"><!--药品库存数量-->
     <input type="hidden" id="mename"><!--药品名字-->
     <input type="hidden" id="sellingPrice"><!--药品单价-->
@@ -143,7 +177,7 @@
 <script type="text/javascript" th:inline="none">
     var tableIns;
     var hua;
-    var yaopin;
+    var xinagmu;
     var people;
     layui.use([ 'jquery', 'layer', 'form', 'table' ], function() {
 
@@ -153,7 +187,6 @@
         var table = layui.table;
         //查询患者信息表
         var mainIndex;
-
         $("#sbut").click(function(){
             mainIndex=layer.open({
                 type:1,
@@ -163,15 +196,15 @@
                 success:function(index){
                     people=table.render({
                         elem: '#userTable'   //渲染的目标对象
-                        ,url:'selpreson' //数据接口
+                        ,url:'../caocc/selpreson' //数据接口
                         ,title: '用户数据表'//数据导出来的标题
                         ,cellMinWidth:200 //设置列的最小默认宽度
-                       /*,parseData:function(res){
-                            return{
-                                "code":0,//如果不用分页后台没有用分页设置code:0的话需要加上这句话
-                                data:res//要不然会报会报返回的数据类型不符合规范
-                            }
-                        }*/
+                        /*,parseData:function(res){
+                             return{
+                                 "code":0,//如果不用分页后台没有用分页设置code:0的话需要加上这句话
+                                 data:res//要不然会报会报返回的数据类型不符合规范
+                             }
+                         }*/
                         ,page: 1  //是否启用分页, limits: [10, 20, 30]
                         ,limits: [5, 10, 15]
                         ,limit: 5//默认采用3
@@ -190,11 +223,10 @@
                             ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'8%'}
                         ]]
                     })
-                    yaopin=table.render({
+                    xinagmu=table.render({
                         elem: '#drugtable'   //渲染的目标对象
-                        ,url:'seldrug' //数据接口
+                        ,url:'../caoout/selout' //数据接口
                         ,title: '药品信息'
-                        ,toolbar:"#adddrug"   //表格的工具条
                         ,cellMinWidth:200 //设置列的最小默认宽度
                         /*,parseData:function(res){
                             return{
@@ -206,15 +238,17 @@
                         ,limits: [5, 10, 15]
                         ,limit: 5//默认采用3
                         ,cols: [[   //列表    数据
-                            {field:'pharmacyName', title:'药品名称',align:'center',width:"20%"}
-                            ,{field:'drugstorenum', title:'库存',align:'center',width:"20%"}
-                            ,{field:'unitname', title:'单位',align:'center',width:"20%"}
-                            ,{field:'sellingPrice', title:'单价',align:'center',width:"20%"}
-                            ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'20%'}
+                            {field:'projectName', title:'药品名称',align:'center',width:"25%"}
+                            ,{field:'unitName', title:'单位',align:'center',width:"25%"}
+                            ,{field:'price', title:'单价',align:'center',width:"25%"}
+                            ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'25%'}
                         ]]
                     })
+
                 }
+
             });
+            $("#adddrug").fadeIn(1000);
         });
         //监听患者行工具事件
         table.on('tool(userTable)', function(obj){
@@ -228,34 +262,35 @@
                 $("#rede").val(data.department);
                 $("#redo").val(data.doctorName);
                 $("#carid").val(data.carid);
-                $("#price").val(data.price);
                 $("#phone").val(data.phone);
+                $("#price").val(data.price);
                 var perid=data.reportId;
                 //查询该用户的处方
                 layer.close(mainIndex)
-                    wareid=data.value;//获取选中的药房的id
-                    hua=table.render({
-                        elem: '#repiid'   //渲染的目标对象
-                        ,url:'selpepi?perid='+perid //数据接口
-                        ,title: '患者处方'
-                        ,cellMinWidth:200 //设置列的最小默认宽度
-                        ,page: 1  //是否启用分页, limits: [10, 20, 30]
-                        ,limit: 5//默认采用3
-                        ,cols: [[   //列表    数据
-                            {field:'durgname', title:'药品名称',align:'center',width:"20%"}
-                            ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
-                            ,{field:'repiceprice', title:'单价',align:'center',width:"20%"}
-                            ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
-                            ,{fixed: 'right', title:'操作',align:'center',width:'20%',templet:function(d){
-                                    if(d.state==1){
-                                        return '项目'
-                                    }
-                                    else{
-                                        return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delrepi">删除</a>'
-                                    }
-                                }}
-                        ]]
-                    })
+                wareid=data.value;//获取选中的药房的id
+                hua=table.render({
+                    elem: '#repiid'   //渲染的目标对象
+                    ,url:'../caocc/selpepi?perid='+perid //数据接口
+                    ,title: '患者处方'
+                    ,cellMinWidth:200 //设置列的最小默认宽度
+                    ,page: 1  //是否启用分页, limits: [10, 20, 30]
+                    ,limits: [5, 10, 15]
+                    ,limit: 5//默认采用3
+                    ,cols: [[   //列表    数据
+                        {field:'durgname', title:'药品名称',align:'center',width:"20%"}
+                        ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
+                        ,{field:'repiceprice', title:'单价',align:'center',width:"20%"}
+                        ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
+                        ,{fixed: 'right', title:'操作',align:'center',width:'20%',templet:function(d){
+                                if(d.state==0){
+                                    return '药品'
+                                }
+                                else{
+                                    return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delrepi">删除</a>'
+                                }
+                            }}
+                    ]]
+                })
             }
         });
         //监听药品表行工具事件
@@ -274,10 +309,9 @@
                 content:$("#drugnum"),
                 area:['300px','200px']
             });
-            $("#uni").text(data.unitname);//单位
-            $("#kunum").val(data.drugstorenum);//库存
-            $("#mename").val(data.pharmacyName);//药品名字
-            $("#sellingPrice").val(data.sellingPrice);//药品单价
+            $("#uni").text(data.unitName);//单位
+            $("#mename").val(data.projectName);//药品名字
+            $("#sellingPrice").val(data.price);//药品单价
         }
         //点击添加药品数量的提交按钮
         $("#addru").click(function(){
@@ -285,8 +319,6 @@
             var num=$("#num").val();
             //获取用户挂号id
             var reid=$("#reid").val();
-            //获取库存
-            var kunum=$("#kunum").val();
             //获取药品的名字
             var mename=$("#mename").val();
             //获取药品单价
@@ -295,30 +327,25 @@
             var price=num*sellingPrice
             //判断添加数量的文本框是否有值或者为0如果成立提示
             if(num==""||num==0||num<0){
-                layer.msg("请输入正确的药品的数量");
-            }else if(num>kunum){//判断输入的数量是否大于库存要是大于提示
-                layer.msg("对不起当前库存不足");
+                layer.msg("请输入正确的项目的数量");
             }else if(reid==""){//判断是否选中用户如果没有选中用户着提示
                 layer.msg("请选择患者");
             }else{
-                $.post("../caocc/selchu",{"reid":reid,"mename":mename},function(obj){
+                $.post("../caoout/selchuo",{"reid":reid,"mename":mename},function(obj){
                     //如果为零表示没有这个药则添加
                     if(obj==0){
-                        $.post("../caocc/addchu",{"reportId":reid,"durgname":mename,"durgnum":num,"repiceprice":sellingPrice,"repicetotal":price,"drugstorenum":num},function(obj){
+                        $.post("../caoout/addchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repiceprice":sellingPrice,"repicetotal":price,"drugstorenum":num},function(obj){
                             layer.msg("添加成功");
                             layer.close(mainIndex);
                             hua.reload();
-                            yaopin.reload();
                         })
                     }else{
                         //如果有则修改数量
-                        $.post("../caocc/updchu",{"reportId":reid,"durgname":mename,"durgnum":num,"repicetotal":price,"drugstorenum":num},function(obj){
+                        $.post("../caoout/updchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repicetotal":price,"drugstorenum":num},function(obj){
                             layer.msg("添加成功");
                             layer.close(mainIndex);
                             //刷新处方表格
                             hua.reload();
-                            //刷新药品表格
-                            yaopin.reload();
                         })
                     }
                 })
@@ -330,35 +357,35 @@
             layer.close(mainIndex)
             $("#num").val("");
         })
-        $(document).on('click',"#selbut",function(){
-            var durgname=$("#selinp").val()
-            yaopin.reload({
-                url:"../caocc/seldrug?durgname="+durgname
-            })
+        //监听行工具事件
+        table.on('tool(repiid)', function(obj){
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            if(layEvent === 'delrepi'){ //删除
+                layer.confirm('确定删除【'+data.durgname+'】这个项目吗', function(index){
+                    //向服务端发送删除指令
+                    $.post("delo",{cashier:data.cashier},function(res){
+                        layer.msg(res);
+                        //刷新数据 表格
+                        hua.reload();
+                    })
+                });
+            }
         });
+        //用户模糊查询
         $(document).on('click',"#selbut1",function(){
             var durgname=$("#selinp1").val()
             people.reload({
                 url:"../caocc/mohu?durgname="+durgname
             })
         });
-        //监听行工具事件
-        table.on('tool(repiid)', function(obj){
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'delrepi'){ //删除
-                layer.confirm('确定删除【'+data.durgname+'】这个药品吗', function(index){
-                    //向服务端发送删除指令
-                    $.post("del",{cashier:data.cashier,durnme:data.durgname,durnum:data.durgnum},function(res){
-                        layer.msg(res);
-                        //刷新数据 表格
-                        hua.reload();
-                        yaopin.reload();
-                    })
-                });
-            }
+        //项目模糊查询
+        $(document).on('click',"#selbut",function(){
+            var projectName=$("#selinp").val()
+            xinagmu.reload({
+                url:"../caoout/selout?projectName="+projectName
+            })
         });
-
     })
 
 </script>

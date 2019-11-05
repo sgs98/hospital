@@ -63,7 +63,9 @@
             <if test="cc==3">
                 AND DATE_FORMAT(r.time,'%Y-%m-%d') &gt; DATE_FORMAT(now(),"%Y-%m-%d")
             </if>
+
         </if>
+        ORDER BY r.reportId DESC
     </select>
     <!--查询所有的科室-->
     <select id="seldep" resultType="CDepartments">
@@ -124,7 +126,11 @@
     <select id="seven" parameterType="CDoctor" resultType="CDoctor">
     select d.doctorName doctorName,d.doctorId from doctor d, paiban p where departmentId=#{departmentId} and registeredid=#{registeredid} and d.doctorId=p.doctorId and p.seven  != '无班' and  d.dstate!=3 and d.dstate=0
     </select>
+    <!--如果今日挂的病人没有来则删除-->
     <update id="upddang">
          UPDATE report SET state = 0 WHERE DATE_FORMAT(time,'%Y-%m-%d') &lt; DATE_FORMAT(now(),"%Y-%m-%d") and state=1
     </update>
+    <update id="zhuanyuan" parameterType="CReport">
+        UPDATE report SET state =4,zhuan=#{zhuan} WHERE reportId=#{reportId}
+</update>
 </mapper>

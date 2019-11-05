@@ -19,28 +19,6 @@
             margin-top:60px;
             margin-left: 60px;
             height: 400px;
-            width: 580px;
-        }
-        #alldrug{
-            margin-top:-410px;
-            margin-left: 680px;
-            height: 400px;
-            width: 580px;
-        }
-        #selinp{
-            width: 200px;
-            height: 40px;
-            border:solid #CCCCCC 1px;
-            border-radius: 2px;
-        }
-        #selbut{
-            width: 100px;
-            height: 40px;
-            background-color:rgb(1,150,136);
-            color: white;
-            border: 0px;
-            border-radius: 2px;
-            cursor: pointer;
         }
         #pay{
             text-align: center;
@@ -147,23 +125,8 @@
 <!--处方页面开始-->
 <div id="repi">
     <table class="layui-hide" id="repiid" lay-filter="repiid"></table>
-    <div  id="delrepi" style="display: none;">
-        <a class="layui-btn layui-btn-xs" lay-event="delrepi">删除</a>
-    </div>
 </div>
 <!--处方页面结束-->
-<!--药品详情页面开始-->
-<div id="alldrug">
-    <div style="display: none" id="adddrug">
-        <input type="text" placeholder="请输入项目名字" id="selinp" autocomplete="off" >
-        <input type="button"  id="selbut" value="查询"/>
-    </div>
-    <table class="layui-hide" id="drugtable" lay-filter="drugtable"></table>
-    <div  id="choose" style="display: none;">
-        <a class="layui-btn layui-btn-xs" lay-event="druedit">选择</a>
-    </div>
-</div>
-<!--药品详情页面结束-->
 <!--添加药品数量开始-->
 <div id="drugnum" style="text-align: center;display: none">
     <input type="number" id="num" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量" autocomplete="off">
@@ -235,32 +198,8 @@
                             ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'8%'}
                         ]]
                     })
-                    xinagmu=table.render({
-                        elem: '#drugtable'   //渲染的目标对象
-                        ,url:'../caoout/selout' //数据接口
-                        ,title: '药品信息'
-                        ,cellMinWidth:200 //设置列的最小默认宽度
-                        /*,parseData:function(res){
-                            return{
-                                "code":0,//如果不用分页后台没有用分页设置code:0的话需要加上这句话
-                                data:res//要不然会报会报返回的数据类型不符合规范
-                            }
-                        }*/
-                        ,page: 1  //是否启用分页, limits: [10, 20, 30]
-                        ,limits: [5, 10, 15]
-                        ,limit: 5//默认采用3
-                        ,cols: [[   //列表    数据
-                            {field:'projectName', title:'药品名称',align:'center',width:"25%"}
-                            ,{field:'unitName', title:'单位',align:'center',width:"25%"}
-                            ,{field:'price', title:'单价',align:'center',width:"25%"}
-                            ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'25%'}
-                        ]]
-                    })
-
                 }
-
             });
-            $("#adddrug").fadeIn(1000);
         });
         //监听患者行工具事件
         table.on('tool(userTable)', function(obj){
@@ -298,90 +237,11 @@
                                     return '药品'
                                 }
                                 else{
-                                    return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delrepi">删除</a>'
+                                    return '项目'
                                 }
                             }}
                     ]]
                 })
-            }
-        });
-        //监听药品表行工具事件
-        table.on('tool(drugtable)', function(obj){
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'edit'){ //操作
-                openUpdate(data);
-            }
-        });
-        //打开药品数量页面
-        function openUpdate(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'选择数量',
-                content:$("#drugnum"),
-                area:['300px','200px']
-            });
-            $("#uni").text(data.unitName);//单位
-            $("#mename").val(data.projectName);//药品名字
-            $("#sellingPrice").val(data.price);//药品单价
-        }
-        //点击添加药品数量的提交按钮
-        $("#addru").click(function(){
-            //获取文本框的数量
-            var num=$("#num").val();
-            //获取用户挂号id
-            var reid=$("#reid").val();
-            //获取药品的名字
-            var mename=$("#mename").val();
-            //获取药品单价
-            var sellingPrice=$("#sellingPrice").val();
-            //小计
-            var price=num*sellingPrice
-            //判断添加数量的文本框是否有值或者为0如果成立提示
-            if(num==""||num==0||num<0){
-                layer.msg("请输入正确的项目的数量");
-            }else if(reid==""){//判断是否选中用户如果没有选中用户着提示
-                layer.msg("请选择患者");
-            }else{
-                $.post("../caoout/selchuo",{"reid":reid,"mename":mename},function(obj){
-                    //如果为零表示没有这个药则添加
-                    if(obj==0){
-                        $.post("../caoout/addchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repiceprice":sellingPrice,"repicetotal":price,"drugstorenum":num},function(obj){
-                            layer.msg("添加成功");
-                            layer.close(mainIndex);
-                            hua.reload();
-                        })
-                    }else{
-                        //如果有则修改数量
-                        $.post("../caoout/updchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repicetotal":price,"drugstorenum":num},function(obj){
-                            layer.msg("添加成功");
-                            layer.close(mainIndex);
-                            //刷新处方表格
-                            hua.reload();
-                        })
-                    }
-                })
-            }
-        })
-        //点击添加药品的取消按钮
-        $("#clo").click(function(){
-            //关闭弹出的页面
-            layer.close(mainIndex)
-            $("#num").val("");
-        })
-        //监听行工具事件
-        table.on('tool(repiid)', function(obj){
-            var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'delrepi'){ //删除
-                layer.confirm('确定删除【'+data.durgname+'】这个项目吗', function(index){
-                    //向服务端发送删除指令
-                    $.post("delo",{cashier:data.cashier},function(res){
-                        layer.msg(res);
-                        //刷新数据 表格
-                        hua.reload();
-                    })
-                });
             }
         });
         //打开收费页面

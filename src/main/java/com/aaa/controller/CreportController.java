@@ -102,9 +102,9 @@ import java.util.List;
     public Object delre(Integer id){
         int delre = creportService.delre(id);
         if(delre==1){
-            return  "修改成功";
+            return  "删除成功";
         }else{
-            return  "修改失败";
+            return  "删除失败";
         }
 
     }
@@ -121,12 +121,21 @@ import java.util.List;
     public Object phone(CReport cReport){
         int carid = creportService.carid(cReport);
         int phone = creportService.phone(cReport);
-        if(carid==1){
+        if(carid>=1){
             return 2;
-        }else if(phone==1){
+        }else if(phone>=1){
             return 1;
         }else{
            return 3;
         }
+    }
+    //转入住院部
+    @RequestMapping("zhuanyuan")
+    @ResponseBody
+    public Object zhuanyuan(Integer id,CReport cReport,String zhuan){
+        cReport.setReportId(id);
+        cReport.setZhuan(zhuan);
+        Integer zhuanyuan = creportService.zhuanyuan(cReport);
+        return zhuanyuan;
     }
 }
