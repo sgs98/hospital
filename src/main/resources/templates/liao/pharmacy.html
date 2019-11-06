@@ -23,12 +23,16 @@
         #add{
             margin: 0px;
         }
-        #addPay{
-            width:200px;
-            font-size: 16px;
-            width: 200px;
-            height: 30px;
-            margin-right: 20px;
+        #show1,#show3,#show4{
+            float: left;
+        }
+        .tu{
+            position: absolute;
+            margin: 7% 0px 0px 5%;
+        }
+        .tu1{
+            position: absolute;
+            margin: 15% 0px 0px 5%;
         }
     </style>
 </head>
@@ -91,17 +95,15 @@
 </div>
 <div  style="display: none;" id="ToolBars"></div>
 <!--药品显示-->
-<div style="display: none;width: 40%; margin:0px 0px 0px 50px" id="show4">
+<div style="display: none;width: 40%;" id="show4">
     <table class="layui-hide" id="pay" lay-filter="pay"></table>
 </div>
 <!--图标显示-->
-<div style="display: none; position: absolute; margin: -280px 0px 0px 650px;" id="show1">
-    <i class="layui-icon" data-icon="&#xe65b;">&#xe65b;</i>
+<div style="display: none;width:10%" id="show1">
+    <i class="layui-icon tu" data-icon="&#xe65b;">&#xe65b;</i><br/>
+    <i class="layui-icon tu1" data-icon="&#xe65a;">&#xe65a;</i>
 </div>
-<div style="display: none; position: absolute; margin: -180px 0px 0px 650px;" id="show2">
-    <i class="layui-icon" data-icon="&#xe65a;">&#xe65a;</i>
-</div>
-<div style="display: none; width:40%; margin: -392px 0px 0px 740px;" id="show3">
+<div style="display: none; width:40%;" id="show3">
     <table class="layui-hide" id="pays" lay-filter="pays"></table>
 </div>
 <!-- 数据表格结束 -->
@@ -165,7 +167,6 @@
             $("#show").val($(this).val());
             $("#hidden").val("");
             $("#show1").fadeOut(1);
-            $("#show2").fadeOut(1);
             $("#show3").fadeOut(1);
             $("#show4").fadeOut(1);
         });
@@ -194,7 +195,6 @@
                             url:"../liao/selPhar?"+params
                         })
                         $("#show1").fadeIn(1000);
-                        $("#show2").fadeIn(1000);
                         $("#show3").fadeIn(1000);
                         $("#show4").fadeIn(1000);
                     }
