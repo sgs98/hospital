@@ -16,4 +16,6 @@ public interface LadminMapper {
     int updBed(Register register);
     List<Moneytype> selDis();
     List<Register> selDoor();
+    int updZ(Register register);
+    int updKe(Register register);
 }

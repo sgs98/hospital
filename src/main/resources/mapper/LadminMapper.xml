@@ -27,6 +27,9 @@
              <if test="registerid!=null and registerid!=''">
                 and r.registerid=#{registerid}
              </if>
+             <if test="idcard!=null and idcard!=''">
+                 and r.idcard=#{idcard}
+             </if>
          </where>
     </select>
     <update id="updBed" parameterType="Register">
@@ -36,6 +39,13 @@
         select * from moneytype
     </select>
     <select id="selDoor" resultType="Register">
-        select reportName userName,sex,age,phone,carid idcard,zhuan diagnose from report where state=4
+        select reportid,reportName userName,sex,age,phone,carid idcard,zhuan diagnose from report where state=4
     </select>
+    <update id="updZ" parameterType="Register">
+        UPDATE report SET state =5 WHERE reportid=#{reportid}
+    </update>
+    <!--转科室-->
+    <update id="updKe" parameterType="Register">
+        update register set price=(select (1-(cast(replace(b.discount,'%','') as decimal(18,2))/100))*a.price*(TO_DAYS(NOW())-TO_DAYS(ifnull(b.zhuan,b.registerDate)))+IFNULL(b.price,0) price from (select price from bed where bedid=(select bedNum from register where registerid=#{registerid}))a,(select * from register where registerid=#{registerid}) b),zhuan=NOW(),department=#{departmentId},doctor=#{doctorId},bedNum=#{bedId} where registerid=#{registerid}
+    </update>
 </mapper>

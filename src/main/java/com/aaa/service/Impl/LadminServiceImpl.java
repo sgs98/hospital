@@ -55,4 +55,14 @@ public class LadminServiceImpl implements LadminService {
     public List<Register> selDoor() {
         return ladminMapper.selDoor();
     }
+
+    @Override
+    public int updZ(Register register) {
+        return ladminMapper.updZ(register);
+    }
+
+    @Override
+    public int updKe(Register register) {
+        return ladminMapper.updKe(register);
+    }
 }
