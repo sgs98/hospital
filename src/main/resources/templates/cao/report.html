@@ -40,7 +40,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">用户信息:</label>
             <div class="layui-input-inline">
-                <input type="text" name="reportName" id="im" placeholder="请输入你要查询的值"  autocomplete="off" class="layui-input">
+                <input type="text" name="reportName" id="im" placeholder="请输入你要查询的信息"  autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-inline">
@@ -401,13 +401,19 @@
             }
         });
         //删除
-        $(document).on("click","#zhuan",function(){
+        $(document).on("click","#delre",function(){
             var params=$(this).prev().val();
-            layer.confirm('真的删除这个用户吗', function (index) {
-                $.post('delre',{'id':params},function(obj){
-                    layer.msg(obj);
-                    location.reload();
-                })
+           $.post("../caoout/selch",{reportId:params},function(res) {
+                if (res == 0) {
+                    layer.confirm('真的删除这个用户吗', function (index) {
+                        $.post('delre',{'id':params},function(obj){
+                            layer.msg(obj);
+                            location.reload();
+                        })
+                    })
+                }else{
+                    layer.msg("该患者已经就诊请缴费后进行操作");
+                }
             })
         })
         //转院
@@ -428,21 +434,28 @@
             if(da!=da2){
                 layer.msg("对不起您选择的不是当天的挂号")
             }else{
-            layer.confirm('你确定要【'+params+'】转入住院部吗', function (index) {
-                mainIndex=layer.open({
-                    type:1,
-                    title:'转入住院部',
-                    content:$("#zhaunyu"),
-                    area:['400px','200px']
-                });
 
-            })
-                $("#zhuncheng").click(function(){
-                    var zh=$("#bingying").val();
-                    $.post('zhuanyuan',{'id':ids,'zhuan':zh},function(obj){
-                        layer.msg("转出成功");
-                        location.reload();
-                    })
+                $.post("../caoout/selch",{reportId:ids},function(res) {
+                    if (res == 0) {
+                        layer.confirm('你确定要【'+params+'】转入住院部吗', function (index) {
+                            mainIndex=layer.open({
+                                type:1,
+                                title:'转入住院部',
+                                content:$("#zhaunyu"),
+                                area:['400px','200px']
+                            });
+
+                        })
+                        $("#zhuncheng").click(function(){
+                            var zh=$("#bingying").val();
+                            $.post('zhuanyuan',{'id':ids,'zhuan':zh},function(obj){
+                                layer.msg("转出成功");
+                                location.reload();
+                            })
+                        })
+                    }else{
+                        layer.msg("该患者已经就诊请缴费后进行操作");
+                    }
                 })
             }
         })
