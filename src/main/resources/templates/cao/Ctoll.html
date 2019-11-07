@@ -276,13 +276,14 @@
         }
         //提交收费
         $("#tibu").click(function(){
+            var r=$("#monee").val();
            var z= $("#moneee").val();
             var reid=$("#reid").val();//获取用户id
             var price=$("#price").val();//获取挂号费
-           if(z>=0){
+           if(z>=0 && r!=''){
                layer.msg("缴费成功");
                //修改用户状态变成已缴费
-               $.post("../caoout/shoufei",{reportId:reid,price:price},function(res) {
+              $.post("../caoout/shoufei",{reportId:reid,price:price},function(res) {
                    //5秒后跳转也面
                    setTimeout(function(){
                        location.href="../caoout/out";
