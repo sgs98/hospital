@@ -4,11 +4,13 @@ import com.aaa.entity.Register;
 import com.aaa.mapper.LleaveMapper;
 import com.aaa.service.LleaveService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 
 @Service
+@Transactional
 public class LleaveServiceImpl implements LleaveService {
 
     @Resource
