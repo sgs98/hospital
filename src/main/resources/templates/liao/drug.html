@@ -283,6 +283,28 @@
             layer.close(mainIndex)
             $("#durgnum").val("");
         })
+        //防止重复提交
+        var isclick= true;
+        function click() {
+            if (isclick) {
+                isclick = false;
+                var params=$("#frm").serialize();
+                $.post("addDrug",params,function(res){
+                    layer.msg(res);
+                    //关闭弹出层
+                    layer.close(mainIndex)
+                    //查询余额
+                    sels();
+                    //刷新数据 表格
+                    tableIns.reload();
+                    tableInss.reload();
+                })
+                    //定时器
+                    setTimeout(function () {
+                        isclick = true;
+                    }, 1000);
+            }
+        }
         //提交按钮事件验证
         $("#sub").click(function(){
             //获取药品的及时信息
@@ -304,17 +326,7 @@
                     layer.msg("对不起，药品数量不足！");
                     return false;
                 }
-                var params=$("#frm").serialize();
-                $.post("addDrug",params,function(res){
-                    layer.msg(res);
-                    //关闭弹出层
-                    layer.close(mainIndex)
-                    //查询余额
-                    sels();
-                    //刷新数据 表格
-                    tableIns.reload();
-                    tableInss.reload();
-                })
+                click();
             })
         });
         //监听药品行

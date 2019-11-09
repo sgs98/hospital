@@ -34,8 +34,11 @@ public class LadminController {
     @RequestMapping("/selRegister")
     @ResponseBody
     public Object selRegister(Integer page, Integer limit,Register register){
+        //分页查询
         PageHelper.startPage(page, limit);
+        //查询未出院的患者信息
         List<Register> selreg=ladminService.selRegister(register);
+        //把查到的信息放入分页插件中
         PageInfo pageInfo = new PageInfo(selreg);
         Map<String, Object> tableData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
@@ -45,6 +48,7 @@ public class LadminController {
         tableData.put("count", pageInfo.getTotal());
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo.getList());
+        //把数据返回到layui中
         return tableData;
     }
 
@@ -52,8 +56,11 @@ public class LadminController {
     @RequestMapping("/selDepartment")
     @ResponseBody
     public Object selDepartment(){
+        //new一个实体类
         Departments departments=new Departments();
+        //查询所有科室
         List<Departments> Departments= ladminService.selDepartment(departments);
+        //把查到的科室返回前台下拉框中
         return Departments;
     }
 
@@ -61,9 +68,13 @@ public class LadminController {
     @RequestMapping("/selDoctor")
     @ResponseBody
     public Object selDoctor(Integer departmentId){
+        //new一个实体类
         Doctor doctor=new Doctor();
+        //把获取过来的科室编号放入实体类中
         doctor.setDepartmentId(departmentId);
+        //根据科室查询旗下所有医生
         List<Doctor> doctors = ladminService.selDoctor(doctor);
+        //把查到的医生返回前台下拉框中
         return doctors;
     }
 

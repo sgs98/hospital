@@ -377,20 +377,32 @@
                 })
             });
         //保存
-        form.on("submit(doSubmit)",function(obj){
-            if($("input[name='age']").val()<=0){
-                layer.msg("请输入正确年龄!");
-                $(this).select();
+
+        var isclick= true;
+        function click() {
+            if (isclick) {
+                isclick = false;
+                if ($("input[name='age']").val() <= 0) {
+                    layer.msg("请输入正确年龄!");
+                    $(this).select();
+                }
+                //序列化表单数据
+                var params = $("#dataFrm").serialize();
+                $.post(url, params, function (obj) {
+                    layer.msg(obj);
+                    //关闭弹出层
+                    layer.close(mainIndex)
+                    //刷新数据 表格
+                    tableIns.reload();
+                    //定时器
+                    setTimeout(function () {
+                        isclick = true;
+                    }, 500);
+                })
             }
-            //序列化表单数据
-            var params=$("#dataFrm").serialize();
-            $.post(url,params,function(obj){
-                layer.msg(obj);
-                //关闭弹出层
-                layer.close(mainIndex)
-                //刷新数据 表格
-                tableIns.reload();
-            })
+        }
+        form.on("submit(doSubmit)",function(obj){
+            click();
         });
         //转院
         var mainIndexs;
@@ -473,6 +485,15 @@
                 tableIns.reload();
             })
         });
+        /*function scienceClick(el, fn) {
+            el.timer = null;
+            el.addEventListener('click', function() {
+                clearTimeout(this.timer);
+                this.timer = setTimeout(function() {
+                    fn && fn();
+                }, 300);
+            }, false);
+        }*/
     });
 </script>
 </body>
