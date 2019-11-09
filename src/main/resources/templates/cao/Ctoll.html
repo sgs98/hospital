@@ -113,7 +113,7 @@
 <!--病号信息弹出层开始-->
 <div style="display: none;padding-top: 20px" id="peopleimgeDiv" >
     <div id="adddrug1">
-        <input type="text" placeholder="请输入药品名字" id="selinp1" autocomplete="off" >
+        <input type="text" placeholder="请输入你要查询的信息" id="selinp1" autocomplete="off" >
         <input type="button" id="selbut1" value="查询"/>
     </div>
     <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
@@ -276,13 +276,14 @@
         }
         //提交收费
         $("#tibu").click(function(){
+            var r=$("#monee").val();
            var z= $("#moneee").val();
             var reid=$("#reid").val();//获取用户id
             var price=$("#price").val();//获取挂号费
-           if(z>=0){
+           if(z>=0 && r!=''){
                layer.msg("缴费成功");
                //修改用户状态变成已缴费
-               $.post("../caoout/shoufei",{reportId:reid,price:price},function(res) {
+              $.post("../caoout/shoufei",{reportId:reid,price:price},function(res) {
                    //5秒后跳转也面
                    setTimeout(function(){
                        location.href="../caoout/out";
