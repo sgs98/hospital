@@ -17,7 +17,7 @@
                 <div class="layui-form-item">
 
                     <div class="layui-inline">
-                        <label class="layui-form-label">选择年份:</label>
+                        <label class="layui-form-label">选择时间:</label>
                         <div class="layui-input-inline">
                             <input type="text" class="layui-input" id="year" readonly="readonly" placeholder="yyyy">
                         </div>
@@ -78,7 +78,7 @@
                 option = null;
                 option = {
                     title : {
-                        text: '门诊部年度统计',
+                        text: '门诊当天统计',
                         subtext: '真实有效',
                         x:'center'
                     },
@@ -93,7 +93,7 @@
                     },
                     series : [
                         {
-                            name: '年份',
+                            name: '',
                             type: 'pie',
                             radius : '55%',
                             center: ['50%', '60%'],
