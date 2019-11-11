@@ -322,7 +322,7 @@
                     layer.msg("请输入正确的药品数量！");
                     return false;
                 }
-                if(num>nums){
+                if(Number(num)>Number(nums)){
                     layer.msg("对不起，药品数量不足！");
                     return false;
                 }
