@@ -211,5 +211,11 @@ public class SysController {
         return "view/finance/doctorDuibi";
     }
 
-
+    /*
+     * 跳转加载current.html
+     * */
+    @RequestMapping("toCurrent")
+    public String toCurrenti() {
+        return "view/finance/current";
+    }
 }
