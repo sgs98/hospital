@@ -30,6 +30,17 @@
             height: 30px;
             margin-right: 20px;
         }
+        #show1,#show3,#ding{
+            float: left;
+        }
+        .tu{
+            position: absolute;
+            margin: 7% 0px 0px 5%;
+        }
+        .tu1{
+            position: absolute;
+            margin: 15% 0px 0px 5%;
+        }
     </style>
 </head>
 <body>
@@ -91,25 +102,23 @@
     <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">查询</button>
 </div>
 <div  style="display: none;" id="ToolBars"></div>
-<!--药品行操作-->
+<!--项目行操作-->
 <div  id="userBar" style="display: none;">
     <a class="layui-btn layui-btn-xs" lay-event="edit">选择</a>
 </div>
 <div  id="userBars" style="display: none;">
     <a class="layui-btn layui-btn-xs" lay-event="del">移除</a>
 </div>
-<!--药品显示-->
-<div style="display: block;width: 50%;">
+<!--项目显示-->
+<div style="display: block;width: 43%;" id="ding">
     <table class="layui-hide" id="pay" lay-filter="pay"></table>
 </div>
 <!--图标显示-->
-<div style="display: none; position: absolute; margin: -280px 0px 0px 700px;" id="show1">
-    <i class="layui-icon" data-icon="&#xe65b;">&#xe65b;</i>
+<div style="display: none;width:10%" id="show1">
+    <i class="layui-icon tu" data-icon="&#xe65b;">&#xe65b;</i><br/>
+    <i class="layui-icon tu1" data-icon="&#xe65a;">&#xe65a;</i>
 </div>
-<div style="display: none; position: absolute; margin: -180px 0px 0px 700px;" id="show2">
-    <i class="layui-icon" data-icon="&#xe65a;">&#xe65a;</i>
-</div>
-<div style="display: none; width:44%; margin: -392px 0px 0px 740px;" id="show3">
+<div style="display: none; width:44%;" id="show3">
     <table class="layui-hide" id="pays" lay-filter="pays"></table>
 </div>
 <!-- 数据表格结束 -->
@@ -133,12 +142,11 @@
             ,limits: [7, 20, 30]
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
-                {field:'inoutpatientId', title:'序号',align:'center',width:'10%'}
-                ,{field:'projectName', title:'项目名称',align:'center',width:'24.5%'}
-                ,{field:'unitName', title:'计量单位',align:'center',width:'15%'}
-                ,{field:'price', title:'售价',align:'center',width:'13%'}
-                ,{field:'projectNames', title:'分类',align:'center',width:'25%'}
-                ,{fixed: '', title:'操作', toolbar: '#userBar',align:'center',width:'13%'}
+                {field:'projectName', title:'项目名称',align:'center',width:'23%'}
+                ,{field:'unitName', title:'计量单位',align:'center',width:'17%'}
+                ,{field:'price', title:'售价',align:'center',width:'15%'}
+                ,{field:'projectNames', title:'分类',align:'center',width:'29%'}
+                ,{fixed: '', title:'操作', toolbar: '#userBar',align:'center',width:'15%'}
             ]]
         })
         //渲染数据表格
@@ -174,7 +182,6 @@
             $("#show").val($(this).val());
             $("#hidden").val("");
             $("#show1").fadeOut(1);
-            $("#show2").fadeOut(1);
             $("#show3").fadeOut(1);
         });
         function sel(){
@@ -199,7 +206,6 @@
                             url:"../liao/selItem?"+params
                         })
                         $("#show1").fadeIn(1000);
-                        $("#show2").fadeIn(1000);
                         $("#show3").fadeIn(1000);
                     }
                 }

@@ -30,6 +30,17 @@
             height: 30px;
             margin-right: 20px;
         }
+        #show1,#show3,#ding{
+            float: left;
+        }
+        .tu{
+            position: absolute;
+            margin: 7% 0px 0px 5%;
+        }
+        .tu1{
+            position: absolute;
+            margin: 15% 0px 0px 5%;
+        }
     </style>
 </head>
 <body>
@@ -114,17 +125,15 @@
 </div>
 <!--添加界面结束-->
 <!--药品显示-->
-<div style="display: block;width: 40%; margin:0px 0px 0px 50px">
+<div style="display: block;width: 40%;" id="ding">
     <table class="layui-hide" id="pay" lay-filter="pay"></table>
 </div>
 <!--图标显示-->
-<div style="display: none; position: absolute; margin: -280px 0px 0px 650px;" id="show1">
-    <i class="layui-icon" data-icon="&#xe65b;">&#xe65b;</i>
+<div style="display: none;width:10%" id="show1">
+    <i class="layui-icon tu" data-icon="&#xe65b;">&#xe65b;</i><br/>
+    <i class="layui-icon tu1" data-icon="&#xe65a;">&#xe65a;</i>
 </div>
-<div style="display: none; position: absolute; margin: -180px 0px 0px 650px;" id="show2">
-    <i class="layui-icon" data-icon="&#xe65a;">&#xe65a;</i>
-</div>
-<div style="display: none; width:40%; margin: -392px 0px 0px 740px;" id="show3">
+<div style="display: none; width:40%;" id="show3">
     <table class="layui-hide" id="pays" lay-filter="pays"></table>
 </div>
 <!-- 数据表格结束 -->
@@ -190,7 +199,6 @@
             $("#show").val($(this).val());
             $("#hidden").val("");
             $("#show1").fadeOut(1);
-            $("#show2").fadeOut(1);
             $("#show3").fadeOut(1);
         });
         function sel(){
@@ -215,7 +223,6 @@
                             url:"../liao/selDrugs?"+params
                         })
                         $("#show1").fadeIn(1000);
-                        $("#show2").fadeIn(1000);
                         $("#show3").fadeIn(1000);
                     }
                 }
@@ -276,6 +283,28 @@
             layer.close(mainIndex)
             $("#durgnum").val("");
         })
+        //防止重复提交
+        var isclick= true;
+        function click() {
+            if (isclick) {
+                isclick = false;
+                var params=$("#frm").serialize();
+                $.post("addDrug",params,function(res){
+                    layer.msg(res);
+                    //关闭弹出层
+                    layer.close(mainIndex)
+                    //查询余额
+                    sels();
+                    //刷新数据 表格
+                    tableIns.reload();
+                    tableInss.reload();
+                })
+                    //定时器
+                    setTimeout(function () {
+                        isclick = true;
+                    }, 1000);
+            }
+        }
         //提交按钮事件验证
         $("#sub").click(function(){
             //获取药品的及时信息
@@ -293,21 +322,11 @@
                     layer.msg("请输入正确的药品数量！");
                     return false;
                 }
-                if(num>nums){
+                if(Number(num)>Number(nums)){
                     layer.msg("对不起，药品数量不足！");
                     return false;
                 }
-                var params=$("#frm").serialize();
-                $.post("addDrug",params,function(res){
-                    layer.msg(res);
-                    //关闭弹出层
-                    layer.close(mainIndex)
-                    //查询余额
-                    sels();
-                    //刷新数据 表格
-                    tableIns.reload();
-                    tableInss.reload();
-                })
+                click();
             })
         });
         //监听药品行

@@ -4,7 +4,7 @@
 
 <mapper namespace="com.aaa.mapper.MenuMapper">
     <select id="loginname" resultType="User">
-        select*from sys_user where loginname=#{loginname}
+        select*from sys_user where loginname=#{loginname} and available=1
     </select>
 
     <!-- 加载左侧导航 查询所有可用菜单-->
@@ -49,9 +49,9 @@
     <!-- 根据用户ID查询菜单 -->
     <select id="queryMenuByUid" resultType="menu">
 		select distinct t1.* from
-		sys_menu t1 inner join sys_role_menu t2 inner join sys_role_user t3
-		on(t1.id=t2.mid and t2.rid=t3.rid)
-		where t3.uid=#{uid} and t1.available=1
+		sys_menu t1 inner join sys_role_menu t2 inner join sys_role_user t3 inner join sys_role t4
+		on(t1.id=t2.mid and t2.rid=t3.rid and t2.rid=t4.roleid)
+		where t3.uid=#{uid} and t1.available=1 and t4.available=1
 	</select>
 
 </mapper>

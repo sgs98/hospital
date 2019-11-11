@@ -25,6 +25,8 @@ public class Register {
     Double price;
     Double prices;
     String discount;
+    Date zhuan;
+    Integer reportid;
 
     @Override
     public String toString() {
@@ -51,7 +53,25 @@ public class Register {
                 ", price=" + price +
                 ", prices=" + prices +
                 ", discount='" + discount + '\'' +
+                ", zhuan=" + zhuan +
+                ", reportid=" + reportid +
                 '}';
+    }
+
+    public Integer getReportid() {
+        return reportid;
+    }
+
+    public void setReportid(Integer reportid) {
+        this.reportid = reportid;
+    }
+
+    public Date getZhuan() {
+        return zhuan;
+    }
+
+    public void setZhuan(Date zhuan) {
+        this.zhuan = zhuan;
     }
 
     public String getDiscount() {
@@ -163,7 +183,7 @@ public class Register {
     }
 
     public void setOperator(String operator) {
-        operator = operator;
+        this.operator = operator;
     }
 
     public Double getMoney() {
