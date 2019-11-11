@@ -3,6 +3,7 @@ package com.aaa.controller;
 import com.aaa.entity.DataGridView;
 import com.aaa.entity.Finance;
 import com.aaa.entity.SdoctorDuibi;
+import com.aaa.entity.currentFinance;
 import com.aaa.service.FinanceService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -94,5 +95,11 @@ public class FinanceController {
         tableData.put("data", pageInfo.getList());
         return tableData;
     }
-
+    /*门诊当天收入*/
+    @ResponseBody
+    @RequestMapping("currentFinance")
+    public Object currentFinance(String current){
+        List<currentFinance> currentFinances = financeService.currentFinance(current);
+        return currentFinances;
+    }
 }

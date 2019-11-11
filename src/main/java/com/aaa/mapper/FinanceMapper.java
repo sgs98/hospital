@@ -2,6 +2,7 @@ package com.aaa.mapper;
 
 import com.aaa.entity.Finance;
 import com.aaa.entity.SdoctorDuibi;
+import com.aaa.entity.currentFinance;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -20,5 +21,8 @@ public interface FinanceMapper {
    List<SdoctorDuibi> doctorDuibi(SdoctorDuibi sdoctorDuibi);
    /*住院部医生收入统计对比*/
    List<SdoctorDuibi> zDoctorDuibi(SdoctorDuibi sdoctorDuibi);
+   /*门诊当天*/
+   List<currentFinance> currentFinance(String current);
+
 
 }
