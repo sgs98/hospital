@@ -296,7 +296,7 @@
             //判断添加数量的文本框是否有值或者为0如果成立提示
             if(num==""||num==0||num<0){
                 layer.msg("请输入正确的药品的数量");
-            }else if(num>kunum){//判断输入的数量是否大于库存要是大于提示
+            }else if(Number(num)>Number(kunum)){//判断输入的数量是否大于库存要是大于提示
                 layer.msg("对不起当前库存不足");
             }else if(reid==""){//判断是否选中用户如果没有选中用户着提示
                 layer.msg("请选择患者");
