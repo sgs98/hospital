@@ -110,19 +110,19 @@ public class LdrugController {
         //查询是否添加过该药品
         lrecord.setState(0);
         int rel = 0;
-        int gt = 0;
+        //查询是否添加过但未取出该药品
         List<Lrecord> lrecords = ldrugService.selDrugs(lrecord);
         for (int i = 0; i < lrecords.size(); i++) {
             if (lrecords.get(i).getDurgname().equals(lrecord.getDurgname())) {
                 rel = 1;
-                gt = i;
                 break;
             }
-            ;
         }
         if (rel == 1) {
+            //修改患者药品数量
             int j = ldrugService.updDrug(lrecord);
             if (j == 1) {
+                //减少药品数量
                 int o = ldrugService.updNum(lrecord);
                 if (o == 1) {
                     return "添加成功";
@@ -133,13 +133,16 @@ public class LdrugController {
                 return "添加失败";
             }
         } else {
+            //计算总价
             Double qian = lrecord.getRepiceprice();
             Integer shu = lrecord.getDurgnum();
             Double sum = qian * shu;
             lrecord.setRepicetotal(sum);
             lrecord.setState(0);
+            //添加药品
             int i = ldrugService.addDrug(lrecord);
             if (i == 1) {
+                //减少药品数量
                 int j = ldrugService.updNum(lrecord);
                 if (j == 1) {
                     return "添加成功";
