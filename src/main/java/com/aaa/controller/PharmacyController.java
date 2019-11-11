@@ -19,7 +19,6 @@ import java.util.Map;
 public class PharmacyController {
     @Autowired
     private   PharmacyService pharmacyService;
-
     //查询药品仓库
     @RequestMapping("selectpharmacy")
     @ResponseBody
@@ -42,12 +41,12 @@ public class PharmacyController {
     @RequestMapping("addbaoque")
     @ResponseBody
     public Integer addbaoque( Baoque baoque) {
-        Integer selbaoqueName = pharmacyService.selbaoqueName(baoque);
+        Integer selbaoqueName = pharmacyService.selbaoqueName(baoque);//查询报缺单是否已经有此条药品
         if(selbaoqueName==0){
-            int addbaoque =pharmacyService.addbaoque(baoque);
+            int addbaoque =pharmacyService.addbaoque(baoque);//添加药品
             return addbaoque;
         }else {
-            int upbaoquenum = pharmacyService.upbaoquenum(baoque);
+            int upbaoquenum = pharmacyService.upbaoquenum(baoque);//修改药品数量
             return upbaoquenum;
         }
 

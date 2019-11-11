@@ -163,7 +163,7 @@
     </form>
 </div>
 <!--templet: "<div>{{layui.util.toDateString(d.produceDate, 'yyyy-MM-dd')}}</div>",-->
-<!-- 添加和修改的弹出层结束 -->
+
 <!-- 数据表格开始 -->
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
 <div style="display: none;" id="userToolBar">
@@ -197,19 +197,19 @@
             ,limits: [10, 20, 30]
             ,limit: 10//默认采用3
             ,cols: [[   //列表数据
-                {field:'rugstoreId', title:'ID',align:'center',width:"100"}
+                {field:'rugstoreId', title:'ID',align:'center',width:"100",sort:true}
                 ,{field:'warehouseName', title:'库房',align:'center',width:"100"}
                 ,{field:'drugstoreName', title:'名称',align:'center',width:"100"}
+                ,{field:'drugstorenum', title:'数量',align:'center',width:"100"}
                 ,{field:'supplierName', title:'供货商',align:'center',width:"100"}
                 ,{field:'skullName', title:'经办人',align:'center',width:"100"}
                 ,{field:'unitName', title:'单位',align:'center',width:"100"}
                 ,{field:'tradePrice', title:'批发价',align:'center',width:"100"}
                 ,{field:'sellingPrice', title:'售价',align:'center',width:"100"}
                 ,{field:'areaName', title:'产地',align:'center',width:"100"}
-     ,{field:'produceDate', title:'生产日期',align:'center',width:"100"}
-      ,{field:'validDate', title:'有效日期',align:'center',width:"100"}
+                ,{field:'produceDate', title:'生产日期',align:'center',width:"100"}
+                ,{field:'validDate', title:'有效日期',align:'center',width:"100"}
                 ,{field:'batch', title:'批号',align:'center',width:"100"}
-                ,{field:'drugstorenum', title:'数量',align:'center',width:"100"}
                 ,{field:'typeName', title:'类型',align:'center',width:"100"}
                 ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'120'}
             ]]
@@ -315,7 +315,6 @@
                     // 下拉菜单里添加元素
                     $('#supplierId').append(new Option( item.supplierName,item.supplierIdid));
                 });
-
                 layui.form.render("select");//重新渲染 固定写法
             }
         });
@@ -328,11 +327,8 @@
             if(layEvent === 'edit') { //编辑
                 layer.confirm('确定编辑【' + data.drugstoreName + '】这个药品吗', function (index) {
                     //向服务端发送删除指令
-
                     openUpdate(data);
-
-
-//关闭警告框
+                    //关闭警告框
                     layer.closeAll('dialog');
                 });
             }

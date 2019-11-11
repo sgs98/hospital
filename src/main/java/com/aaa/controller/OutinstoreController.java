@@ -18,15 +18,15 @@ import java.util.Map;
 @Controller
 @RequestMapping("chuku")
 public class OutinstoreController extends BasetimeController{
+    //自动装配
     @Autowired
     private OutinstoreService outinstoreService;
     //查询报缺表
     @RequestMapping("selbaoquedan")
     @ResponseBody
     public Object selbaoquedan(Baoque baoque, Integer page, Integer limit) {
-
         PageHelper.startPage(page, limit);
-        List<Baoque> drugstores =outinstoreService.selbaoquedan(baoque);
+        List<Baoque> drugstores =outinstoreService.selbaoquedan(baoque);//查询遍历报缺单数据
         PageInfo pageInfo = new PageInfo(drugstores);
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
@@ -38,13 +38,12 @@ public class OutinstoreController extends BasetimeController{
         drugstoresData.put("data", pageInfo.getList());
         return drugstoresData;
     }
-    //查询报缺表
+    //查询报缺表数据查询对应的 仓库数据
     @RequestMapping("selbaoquedrugname")
     @ResponseBody
     public Object selbaoquedrugname(Drugstore drugstore, Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
-        List<Drugstore> drugstores =outinstoreService.selbaoquedrugname(drugstore);
-        System.out.println(drugstores);
+        List<Drugstore> drugstores =outinstoreService.selbaoquedrugname(drugstore);//根据名字查询仓库药品
         PageInfo pageInfo = new PageInfo(drugstores);
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式

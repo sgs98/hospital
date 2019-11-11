@@ -74,9 +74,7 @@ public class StoreController {
     @RequestMapping("selupplier")
     @ResponseBody
     public Object selupplier(Upplier upplier, Model model) {
-
         List<Upplier> selupplier = storeService.selupplier(upplier);
-        /*model.addAttribute("name","测试用例");*/
         return selupplier;
     }
 
@@ -91,7 +89,7 @@ public class StoreController {
             return "修改失败";
         }
     }
-
+//供货商
     @RequestMapping("bpisselupplier")
     public Object bpisselupplier(Upplier upplier, Model model) {
 
@@ -149,7 +147,7 @@ public class StoreController {
     @ResponseBody
     public Object selectlackdrug(Drugstore drugstore, Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
-        List<Drugstore> drugstores = storeService.selectlackdrug(drugstore);
+        List<Drugstore> drugstores = storeService.selectlackdrug(drugstore);//查询药品数量不足的药
         PageInfo pageInfo = new PageInfo(drugstores);
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
@@ -166,7 +164,7 @@ public class StoreController {
     @ResponseBody
     public Object selcaigou(Caigou caigou, Integer page, Integer limit) {
         PageHelper.startPage(page, limit);
-        List<Caigou> caigous = storeService.selcaigou(caigou);
+        List<Caigou> caigous = storeService.selcaigou(caigou);//查询遍历采购表
         PageInfo pageInfo = new PageInfo(caigous);
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
@@ -183,13 +181,13 @@ public class StoreController {
     @RequestMapping("addcaigou")
     @ResponseBody
     public Integer addcaigou(Caigou caigou) {
-        int selcaigouname = storeService.selcaigouname(caigou);
+        int selcaigouname = storeService.selcaigouname(caigou);//查询采购单是是否已经存在此条数据
         if(selcaigouname==0){
-            int seldrugname =storeService.addcaigou(caigou);
+            int seldrugname =storeService.addcaigou(caigou);//添加
             return seldrugname;
 
         }else {
-            int upcaigounumber = storeService.upcaigounumber(caigou);
+            int upcaigounumber = storeService.upcaigounumber(caigou);//修改
             return upcaigounumber;
         }
 
@@ -198,8 +196,7 @@ public class StoreController {
     @RequestMapping("delcaigou")
     @ResponseBody
     public Integer delcaigou(Integer caigouid) {
-
-        int seldrugname =storeService.delcaigou(caigouid);
+        int seldrugname =storeService.delcaigou(caigouid);//删除此条采购数据
         return seldrugname;
     }
     //查询过期的药都有哪些
@@ -223,7 +220,7 @@ public class StoreController {
     @RequestMapping("delguoqidurg")
     @ResponseBody
     public Integer delguoqidurg(Integer rugstoreId) {
-        int delguoqidurg = storeService.delguoqidurg(rugstoreId);
+        int delguoqidurg = storeService.delguoqidurg(rugstoreId);//删除此条数据
         return delguoqidurg;
     }
 

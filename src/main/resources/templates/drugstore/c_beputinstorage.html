@@ -31,19 +31,19 @@
 
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">供货单位:</label>
+                <label class="layui-form-label"  style="width:100px; ">供货单位:</label>
                 <div class="layui-input-inline">
                     <input type="text"  id="text_upplier"  class="layui-input"   readonly>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">库房名:</label>
+                <label class="layui-form-label"  style="width:100px; ">库房名:</label>
                 <div class="layui-input-inline">
                     <input type="text"  id="text_warehuose" class="layui-input"  readonly>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">经办人:</label>
+                <label class="layui-form-label"  style="width:100px; ">经办人:</label>
                 <div class="layui-input-inline">
                     <input type="text" id="text_skull"  class="layui-input" readonly>
                 </div>
@@ -52,7 +52,7 @@
 
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">药品名称:</label>
+                <label class="layui-form-label"  style="width:100px; ">药品名称:</label>
                 <div class="layui-input-inline">
                     <input type="text" id="drugstoreName" name="drugstoreName"  class="layui-input">
                     <button type="button"  id="seldrugdty" class="layui-btn layui-btn-sm" style="margin-left: 150px;margin-top: -65px;">
@@ -61,53 +61,53 @@
             </div>
 
             <div class="layui-inline">
-                <label class="layui-form-label">当前库存:</label>
+                <label class="layui-form-label"  style="width:100px; ">当前库存:</label>
                 <div class="layui-input-inline">
-                    <input type="text" id="dqkucun"  class="layui-input" th:text="${drugnumber}">
+                    <input type="text" readonly id="dqkucun"  class="layui-input" th:text="${drugnumber}" autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">入库数量:</label>
+                <label class="layui-form-label"  style="width:100px; ">入库数量:</label>
                 <div class="layui-input-inline">
-                    <input type="text"id="drugstorenum" name="drugstorenum"  class="layui-input">
+                    <input type="text"id="drugstorenum" name="drugstorenum"  class="layui-input" autocomplete="off">
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">批发价:</label>
+                <label class="layui-form-label"  style="width:100px; ">批发价:</label>
                 <div class="layui-input-inline">
-                    <input type="text"id="tradePrice" name="tradePrice"  class="layui-input">
+                    <input type="text"id="tradePrice" name="tradePrice"  class="layui-input" autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">销售价:</label>
+                <label class="layui-form-label"  style="width:100px; ">销售价:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="sellingPrice"  id="sellingPrice"  class="layui-input">
+                    <input type="text" name="sellingPrice"  id="sellingPrice"  class="layui-input" autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">入库批号:</label>
+                <label class="layui-form-label"  style="width:100px; ">入库批号:</label>
                 <div class="layui-input-inline">
                     <input type="text"  id="batch"  name="batch"  class="layui-input" readonly>
                 </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline">
-                <label class="layui-form-label">生产日期:</label>
+            <div class="layui-inline" style="width: 350px;">
+                <label class="layui-form-label" style="width:100px; ">生产日期:</label>
                 <div class="layui-input-inline">
                     <input type="date" id="produceDate" name="produceDate"  class="layui-input">
                 </div>
             </div>
-            <div class="layui-inline">
-                <label class="layui-form-label">有效日期:</label>
+            <div class="layui-inline" style="margin-left: 59px;">
+                <label class="layui-form-label"  style="width:100px;">有效日期:</label>
                 <div class="layui-input-inline">
                     <input type="date"  id="validDate"  name="validDate"  class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label"></label>
+                <label class="layui-form-label"  style="width:100px; "></label>
                 <div class="layui-input-inline">
                     <button type="button"  id="beginrk"   class="layui-btn  layui-icon "><i class="layui-icon">&#xe608;</i> 准备入库</button>
                     <button type="button" id="tianjia"  style="margin-top: -60px;margin-left: 135px;" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" lay-filter="doSubmit" lay-submit="">添加</button>
@@ -184,44 +184,8 @@
         var url;
         var mainIndex;
         //保存
-/*
-//添加药品入库
-$('#tianjia').click(function() {
-    var shuliang=$("#drugstorenum").val();
-    var shengri=$("#produceDate").val();
-    var youri=$("#validDate").val();
-    if(shuliang==""){
-        alert("数量不可为空");
-        return false;
-    }if(shengri==""){
-        alert("输入正确的生产日期");
-        return false;
-    }if(youri==""){
-        alert("输入正确的有效日期");
-        return false;
-    }
-    else {
-        var params = $("#form_drug").serialize();
-        $.ajax({
-            url: '../seldrugstore/adddrugs',
-            data: params,
-            dataType: 'JSON',
-            type: 'post',
-            success: function (data) {
-                if (data >= 1)
-                    alert('成功');
-                //清空文本框
-                $("#drugstoreName").val("");
-                $("#drugstorenum").val("");
-                $("#tradePrice").val("");
-                $("#produceDate").val("");
-                $("#validDate").val("");
-                $("#dqkucun").val("");
-            }
-        });
-    }
-});
-*/
+
+
 //点击准备入库
         $('#beginrk').click(function(e){
             //获取系统当前时间
@@ -254,6 +218,7 @@ $('#tianjia').click(function() {
                 $("#text_skull").val(selectskull);
                 var selectwarhuose = $("#warhuose_select option:selected").text();
                 $("#text_warehuose").val(selectwarhuose);
+
                 $('#tianjia').click(function() {
                     var shuliang=$("#drugstorenum").val();
                     var shengri=$("#produceDate").val();
@@ -261,30 +226,34 @@ $('#tianjia').click(function() {
                     if(shuliang==""){
                         alert("数量不可为空");
                         return false;
-                    }if(shengri==""){
+                    } if(shengri==""){
                         alert("输入正确的生产日期");
                         return false;
-                    }if(youri==""){
+                    }  if(youri==""){
                         alert("输入正确的有效日期");
                         return false;
                     }
                     else {
+                        alert("ssss")
                         var params = $("#form_drug").serialize();
-                        $.ajax({
+                 $.ajax({
                             url: '../seldrugstore/adddrugs',
                             data: params,
                             dataType: 'JSON',
                             type: 'post',
                             success: function (data) {
-                                if (data >= 1)
-                                    alert('成功');
-                                //清空文本框
-                                $("#drugstoreName").val("");
-                                $("#drugstorenum").val("");
-                                $("#tradePrice").val("");
-                                $("#produceDate").val("");
-                                $("#validDate").val("");
-                                $("#dqkucun").val("");
+                                if (data >= 1){
+                                    //清空文本框
+                                    $("#drugstoreName").val("");
+                                    $("#drugstorenum").val("");
+                                    $("#tradePrice").val("");
+                                    $("#produceDate").val("");
+                                    $("#validDate").val("");
+                                    $("#dqkucun").val("");
+                                    layer.msg("添加成功");
+                                }else{
+                                    layer.msg("添加失败");
+                                }
                             }
                         });
                     }
@@ -309,7 +278,6 @@ $('#tianjia').click(function() {
                   dr.unitId=un.unitId and dr.areaId=ar.areaId and dr.typeId=ty.typeId;*/
                 {field:'drugId', title:'序号',align:'center',width:"13%"}
                 ,{field:'drugName', title:'名称',align:'center',width:"13%"}
-              /*  ,{field:'unitId', title:'单位号',align:'center',width:"100"}*/
                 ,{field:'unitName', title:'单位',align:'center',width:"13%"}
                 ,{field:'sellingPrice', title:'售价',align:'center',width:"13%"}
                 ,{field:'typeName', title:'类型',align:'center',width:"13%"}

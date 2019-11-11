@@ -33,11 +33,11 @@ delete  from drugstore where rugstoreId=#{rugstoreId}
     </delete>
    <!-- 查询报缺表的数据是否有补给完毕的-->
     <select id="selbaoquenamenum" resultType="Integer">
-        SELECT count(*) from baoque where baoqueNum &lt;1
+        SELECT count(*) from baoque where baoqueNum &lt;1 ;
     </select>
     <!-- 查询报缺表的数据是否有补给完毕的   查询有则删除此条报缺-->
     <delete id="delbaoquenamenum">
-        delete  from baoque where  baoqueNum &lt;1
+        delete  from baoque where  baoqueNum &lt;1;
     </delete>
 <!--    添加到药房-->
     <insert id="addpharmacy" parameterType="Ypharmacy">

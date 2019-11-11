@@ -68,11 +68,11 @@
                     //向服务端发送删除指令
                     $.post("../seldrugstore/delguoqidurg",{rugstoreId:data.rugstoreId},function(res){
                    if(res==1){
-                       alert("成功");
+                       layer.msg("成功");
                        //刷新数据 表格
                        tableIns.reload();
                    }else{
-                       alert("失败");
+                       layer.msg("失败");
                    }
 
                     })

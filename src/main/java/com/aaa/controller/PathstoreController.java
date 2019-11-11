@@ -55,14 +55,12 @@ public class PathstoreController {
     //进入药品报缺
     @RequestMapping("selectless")
     public Object selectless(Model model) {
-     /*   Integer selcountless = storeService.selcountless();*/
-/*        model.addAttribute("selcountless",selcountless);*/
         return "drugstore/c_lackdrug";
     }
     //进入入库页面
     @RequestMapping("beputinstorage")
     public Object beputinstorage(Upplier upplier, Warehuose warehuose, Skull skull, Model model){
-
+        //查询供货商，经办人，库房
         List<Upplier> selupp = storeService.selupplier(upplier);
         List<Skull> selsku = storeService.selskull(skull);
         List<Warehuose> selwar = storeService.selwarehuose(warehuose);
@@ -70,7 +68,6 @@ public class PathstoreController {
         model.addAttribute("selsku",selsku);
         model.addAttribute("selwar",selwar);
         System.out.print(warehuose.getSupplierName());
-
         return "drugstore/c_beputinstorage";
     }
 
