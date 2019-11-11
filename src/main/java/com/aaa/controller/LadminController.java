@@ -84,6 +84,7 @@ public class LadminController {
     public Object selBed(Integer departmentId){
         Bed bed= new Bed();
         bed.setDepartmentId(departmentId);
+        //查询没有人入住的床位
         bed.setState(0);
         List<Bed> beds = ladminService.selBed(bed);
         return beds;
@@ -95,15 +96,21 @@ public class LadminController {
     public Object addRegister(Register register,HttpServletRequest request){
         Register register1=new Register();
         register1.setIdcard(register.getIdcard());
+        //把患者的身份证号查询一下看看是否已经办理入住
         List<Register> registers = ladminService.selRegister(register1);
         if(registers.size()==0){
+            //如果是门诊转过来的用户删除门诊患者信息
             if(register.getReportid()!=0){
                 ladminService.updZ(register);
             }
+            //获取管理人员姓名
             String yonghu = (String)request.getSession().getAttribute("yonghu");
             register.setOperator(yonghu);
+            //添加患者信息
             int i = ladminService.addRegister(register);
-            if(i==1){int j = ladminService.updBed(register);
+            if(i==1){
+                //修改床位状态
+                int j = ladminService.updBed(register);
                 if(j==1){
                     return "添加成功";
                 }else{
