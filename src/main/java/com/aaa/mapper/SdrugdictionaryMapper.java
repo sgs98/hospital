@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 @Mapper
 public interface SdrugdictionaryMapper {
+    //药品字典的增删改查
     List<SdrugdictionaryMapper> findAllSdrugdictionary(Sdrugdictionary sdrugdictionary);
     int addSdrugdictionary(Sdrugdictionary sdrugdictionary);
     int editSdrugdictionary(Sdrugdictionary sdrugdictionary);
