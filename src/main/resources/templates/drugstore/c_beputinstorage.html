@@ -226,15 +226,14 @@
                     if(shuliang==""){
                         alert("数量不可为空");
                         return false;
-                    } if(shengri==""){
+                    }else if(shengri==""){
                         alert("输入正确的生产日期");
                         return false;
-                    }  if(youri==""){
+                    }  else if(youri==""){
                         alert("输入正确的有效日期");
                         return false;
                     }
                     else {
-                        alert("ssss")
                         var params = $("#form_drug").serialize();
                  $.ajax({
                             url: '../seldrugstore/adddrugs',

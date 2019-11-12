@@ -127,11 +127,11 @@
                     $.post("../seldrugstore/delcaigou",{caigouid:data.caigouid},function(res){
                         if(res==1){
                             layer.closeAll('dialog');
-                            layer.msg("添加成功");
+                            layer.msg("删除成功");
                             //刷新数据 表格
                             tableIns.reload();
                         }else{
-                            layer.msg("添加失败");
+                            layer.msg("删除失败");
                         }
 
                     })
