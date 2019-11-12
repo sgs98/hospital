@@ -81,18 +81,23 @@ public class UserController {
     @RequestMapping("addUser")
     @ResponseBody
     public Object addUser(User user){
-        //加盐
-        String salt = UserCredentialsMatcher.generateSalt(6);
-        //MD5加密迭代两次
-        user.setPwd(UserCredentialsMatcher.encryptPassword("md5", "123456", salt, 2));
-        user.setType(2);
-        user.setSalt(salt);
-        System.out.println(salt);
-        int i = userService.addUser(user);
-        if(i>0){
-            return "添加成功";
-        }else{
-            return "添加失败";
+        int i1 = userService.checkUser(user);
+        if(i1==1){
+            return "当前登陆名已存在";
+        }else {
+            //加盐
+            String salt = UserCredentialsMatcher.generateSalt(6);
+            //MD5加密迭代两次
+            user.setPwd(UserCredentialsMatcher.encryptPassword("md5", "123456", salt, 2));
+            user.setType(2);
+            user.setSalt(salt);
+            System.out.println(salt);
+            int i = userService.addUser(user);
+            if (i > 0) {
+                return "添加成功";
+            } else {
+                return "添加失败";
+            }
         }
     }
     /*

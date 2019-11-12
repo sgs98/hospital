@@ -115,5 +115,10 @@ public class UserServiceImpl implements UserService {
         return userMapper.editPwd(user);
     }
 
+    @Override
+    public int checkUser(User user) {
+        return userMapper.checkUser(user);
+    }
+
 
 }

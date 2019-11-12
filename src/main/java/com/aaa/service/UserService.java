@@ -29,4 +29,6 @@ public interface UserService {
     int editLogin(User user);
     //修改密码
     int editPwd(User user);
+    //检查唯一
+    int checkUser(User user);
 }
