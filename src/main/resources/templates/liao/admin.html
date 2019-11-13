@@ -251,7 +251,7 @@
                 ,{field:'address', title:'地址',align:'center',width:'10%'}
                 ,{field:'phone', title:'电话',align:'center',width:'11%'}
                 ,{field:'idcard', title:'身份证号',align:'center',width:'15%'}
-                ,{field:'registerDate', title:'入院日期', templet: "<div>{{layui.util.toDateString(d.registerDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:'13%',sort: true}
+                ,{field:'registerDate', title:'入院日期',align:'center',width:'13%',sort: true}
                 ,{field:'department', title:'科室',align:'center',width:'6%'}
                 ,{field:'doctorName', title:'医生',align:'center',width:'6%'}
                 ,{field:'bedName', title:'床位',align:'center',width:'7%'}
@@ -485,15 +485,6 @@
                 tableIns.reload();
             })
         });
-        /*function scienceClick(el, fn) {
-            el.timer = null;
-            el.addEventListener('click', function() {
-                clearTimeout(this.timer);
-                this.timer = setTimeout(function() {
-                    fn && fn();
-                }, 300);
-            }, false);
-        }*/
     });
 </script>
 </body>

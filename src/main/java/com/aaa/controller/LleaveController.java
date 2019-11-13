@@ -71,4 +71,14 @@ public class LleaveController {
         return i;
     }
 
+    //出院个人详情
+    @RequestMapping("/selregis")
+    @ResponseBody
+    public Object selregis(Integer registerid){
+        Register register=new Register();
+        register.setRegisterid(registerid);
+        List<Register> registers = lleaveService.selRegisters(register);
+        return registers;
+    }
+
 }

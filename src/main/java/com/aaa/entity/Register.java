@@ -1,5 +1,7 @@
 package com.aaa.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class Register {
@@ -11,6 +13,7 @@ public class Register {
     String address;
     String phone;
     String idcard;
+    @JsonFormat(pattern = "yyyy年MM月dd日",timezone = "GMT+8" )
     Date registerDate;
     String operator;
     Double money;
@@ -21,12 +24,14 @@ public class Register {
     String department;
     String doctorName;
     String bedName;
+    @JsonFormat(pattern = "yyyy年MM月dd日",timezone = "GMT+8" )
     Date endDate;
     Double price;
     Double prices;
     String discount;
     Date zhuan;
     Integer reportid;
+    Integer day;
 
     @Override
     public String toString() {
@@ -55,7 +60,16 @@ public class Register {
                 ", discount='" + discount + '\'' +
                 ", zhuan=" + zhuan +
                 ", reportid=" + reportid +
+                ", day=" + day +
                 '}';
+    }
+
+    public Integer getDay() {
+        return day;
+    }
+
+    public void setDay(Integer day) {
+        this.day = day;
     }
 
     public Integer getReportid() {
