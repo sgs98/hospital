@@ -107,7 +107,9 @@ public class MenuController extends BaseController {
     @RequestMapping("loadMenuMangerLeftTreeJson")
     @ResponseBody
     public DataGridView loadMenuMangerLeftTreeJson(Menu menu) {
+        //查询所有菜单那
         List<Menu> list = menuService.queryMenuAllList(menu);
+        //将查询的菜单循环放入TreeNode
         List<TreeNode> nodes = new ArrayList<>();
         for (Menu menus : list) {
             Integer id = menus.getId();
