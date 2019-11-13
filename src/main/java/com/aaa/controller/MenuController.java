@@ -86,10 +86,12 @@ public class MenuController extends BaseController {
         }
         //组装菜单
         List<TreeNode> treeNodes = new ArrayList<>();
+        //n1.getPid() == 1 为父级菜单
         for (TreeNode n1 : nodes) {
             if (n1.getPid() == 1) {
                 treeNodes.add(n1);
             }
+            //将n2放入n1的子级中   id为子级
             for (TreeNode n2 : nodes) {
                 if (n2.getPid() == n1.getId()) {
                     n1.getChildren().add(n2);
@@ -105,7 +107,9 @@ public class MenuController extends BaseController {
     @RequestMapping("loadMenuMangerLeftTreeJson")
     @ResponseBody
     public DataGridView loadMenuMangerLeftTreeJson(Menu menu) {
+        //查询所有菜单那
         List<Menu> list = menuService.queryMenuAllList(menu);
+        //将查询的菜单循环放入TreeNode
         List<TreeNode> nodes = new ArrayList<>();
         for (Menu menus : list) {
             Integer id = menus.getId();

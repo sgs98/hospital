@@ -38,5 +38,7 @@ public interface UserMapper {
     List<User> updateLogin(User user);
     int editLogin(User user);
     int editPwd(User user);
+    //检查唯一
+    int checkUser(User user);
 
 }

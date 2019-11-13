@@ -55,6 +55,7 @@ public class RoleServiceImpl implements RoleService {
         List<Menu> allmenus = menuMapper.loadAvailableMenu();
         //按照角色id查询菜单
         List<Menu> roleMenu=menuMapper.queryMenuByRoleId(roleid);
+        //如果roleMenu菜单的id与allmenus菜单的id相等那么可以查询该角色已有的菜单 复选框为true 1为选中
         List<TreeNode> data=new ArrayList<>();
         for(Menu m1:allmenus){
             String checkArr="0";

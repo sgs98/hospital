@@ -60,9 +60,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public DataGridView queryUserRole(Integer userid) {
+        //按照用户id查询角色
         Integer uid=userid;
+        //先查询所有角色
         List<Role> allRole = userMapper.queryAllRole();
+        //按照用户id查询角色
         List<Role> userRole = userMapper.queryRoleById(uid);
+        //如果allRole角色的id与userRole角色的id相等那么可以查询该用户已有的角色 复选框为true
         List<Map<String,Object>> data=new ArrayList<>();
         for (Role r1 : allRole) {
             Boolean LAY_CHECKED = false;
@@ -109,6 +113,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public int editPwd(User user) {
         return userMapper.editPwd(user);
+    }
+
+    @Override
+    public int checkUser(User user) {
+        return userMapper.checkUser(user);
     }
 
 

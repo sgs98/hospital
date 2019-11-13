@@ -23,6 +23,10 @@
             </if>
         </where>
     </select>
+    <!--唯一-->
+    <select id="checkUser" resultType="int">
+        select count(*) from sys_user where loginname=#{loginname}
+    </select>
     <update id="updateUser" parameterType="user">
         update sys_user set
         realname=#{realname},loginname=#{loginname},address=#{address},phone=#{phone},identity=#{identity},sex=#{sex},available=#{available},position=#{position}
