@@ -434,17 +434,45 @@
             if(da!=da2){
                 layer.msg("对不起您选择的不是当天的挂号")
             }else{
-
+                //查询该用户处方上是否有药品
                 $.post("../caoout/selch",{reportId:ids},function(res) {
                     if (res == 0) {
-                        layer.confirm('你确定要【'+params+'】转入住院部吗', function (index) {
-                            mainIndex=layer.open({
-                                type:1,
-                                title:'转入住院部',
-                                content:$("#zhaunyu"),
-                                area:['400px','200px']
-                            });
+                        //判断该用户是否有缴费未做的项目
+                        $.post("../caocc/seljiao",{"reid":ids},function(res) {
+                            if (res > 0) {
+                                layer.msg("你还有未缴费的项目请缴费后在进行该操作")
+                            } else {
+                                $.post("../caocc/selwei", {"reid": ids}, function (res) {
+                                    if (res == 1) {
+                                        layer.confirm('你确定要【' + params + '】转入住院部吗', function (index) {
+                                            $.post("../caocc/selbing", {"reid": ids}, function (obj) {
+                                                $("#bingying").val(obj);
+                                            });
+                                            mainIndex = layer.open({
+                                                type: 1,
+                                                title: '转入住院部',
+                                                content: $("#zhaunyu"),
+                                                area: ['400px', '200px']
+                                            });
+                                        })
+                                    } else {
+                                        layer.confirm("你有项目未做是否继续操作", function () {
+                                            layer.confirm('你确定要【' + params + '】转入住院部吗', function (index) {
+                                                $.post("../caocc/selbing", {"reid": ids}, function (obj) {
+                                                    $("#bingying").val(obj);
+                                                });
+                                                mainIndex = layer.open({
+                                                    type: 1,
+                                                    title: '转入住院部',
+                                                    content: $("#zhaunyu"),
+                                                    area: ['400px', '200px']
+                                                });
+                                            })
+                                        })
+                                    }
 
+                                })
+                            }
                         })
                         $("#zhuncheng").click(function(){
                             var zh=$("#bingying").val();

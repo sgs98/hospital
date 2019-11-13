@@ -23,6 +23,15 @@ public class ReportVo {
     private Integer caridt;//身份证后
     private Integer cc;//判断日期
     private String datime;
+    private  String zhuan;
+
+    public String getZhuan() {
+        return zhuan;
+    }
+
+    public void setZhuan(String zhuan) {
+        this.zhuan = zhuan;
+    }
 
     public String getDatime() {
         return datime;

@@ -130,6 +130,7 @@
     <update id="upddang">
          UPDATE report SET state = 0 WHERE DATE_FORMAT(time,'%Y-%m-%d') &lt; DATE_FORMAT(now(),"%Y-%m-%d") and state=1
     </update>
+    <!--转入住院-->
     <update id="zhuanyuan" parameterType="CReport">
         UPDATE report SET state =4,zhuan=#{zhuan} WHERE reportId=#{reportId}
 </update>

@@ -1,9 +1,6 @@
 package com.aaa.mapper;
 
-import com.aaa.entity.CCashier;
-import com.aaa.entity.CPharmacy;
-import com.aaa.entity.CWarehuose;
-import com.aaa.entity.ReportVo;
+import com.aaa.entity.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -32,4 +29,20 @@ public interface CCashierMapper {
     Integer adddrunum(CPharmacy cPharmacy);
     //模糊查询
     List<ReportVo> mohu(ReportVo reportVo);
+    //修改用户的病例
+    Integer addbing(CReport cReport);
+    //查询用户有没有病例
+    String selbing(Integer rid);
+    //查询用户做项目的结果
+    String lookbing(Integer reid);
+    //查询该用户是否还有未交钱的项目
+    int seljiao(Integer reid);
+    //查看该用户有几个已经做过的项目
+    Integer selyi(Integer reid);
+    //查询该用户有几个已经交过钱的项目
+    Integer selgong(Integer reid);
+    //查询用户所有的处方
+    List<CCashier> selall(Integer perid);
+    //查询用户项目的处方
+    List<CCashier> selximu(Integer perid);
 }

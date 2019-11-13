@@ -7,6 +7,15 @@ public class Coutpatienttype {
     private Integer bigprojectId;//项目分类
     private double price;//价格
     private String unitName;//单位
+    private Integer  ostate;//项目状态
+
+    public Integer getOstate() {
+        return ostate;
+    }
+
+    public void setOstate(Integer ostate) {
+        this.ostate = ostate;
+    }
 
     public String getUnitName() {
         return unitName;
