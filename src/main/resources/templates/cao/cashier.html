@@ -75,11 +75,12 @@
                 <td class="valu"><input id="resex" class="layui-input" type="text" readonly/> </td>
                 <td class="nam">年龄:</td>
                 <td class="valu"><input id="age" class="layui-input" type="text" readonly/> </td>
-                <td rowspan="3" class="sbb">
+                <td rowspan="2" class="sbb">
                     <input id="sbut" type="button" class="layui-btn layui-icon-add-circle-fine" value="开始划价">
                 </td>
             </tr>
-            <tr style="height: 20px"></tr>
+            <tr style="height: 10px"></tr>
+            <tr style="height: 10px"></tr>
             <tr>
                 <td class="nam">科室:</td>
                 <td class="valu"><input class="layui-input" id="rede" type="text" readonly/> </td>
@@ -89,6 +90,9 @@
                 <td class="valu"><input class="layui-input"  id="phone" type="text" readonly/> </td>
                 <td class="nam">挂号费:</td>
                 <td class="valu"><input class="layui-input"  id="price" type="text" readonly/> </td>
+                <td rowspan="2" class="sbb">
+                    <input id="bingyin" type="button" class="layui-btn layui-icon-add-circle-fine" value="填写病因">
+                </td>
          </table>
          </form>
     </div>
@@ -137,6 +141,22 @@
     <button type="button" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh layui-icon-delete" id="clo" >取消</button>
 </div>
 <!--添加药品数量结束-->
+<!--填写病因页面开始-->
+<div style="display: none;padding-top: 20px" id="bingye" >
+    <div style="height: 30px;width: 100px;margin-left:30px;line-height: 30px;">填写用户病因:</div>
+    <textarea id="bingyi" style="width: 600px;margin-left: 30px;height: 300px;" required lay-verify="required" placeholder="请输入症状病因" class="layui-textarea"></textarea>
+    <div style="height: 100px;width: 600px;margin-left:30px;text-align: center;line-height: 100px;">
+        <input type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" id="addbing" style="height:40px;width: 100px;" value="提交">
+        <input type="button" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh layui-icon-delete" id="qu" style="height:40px;width: 100px;" value="取消" >
+    </div>
+</div>
+<!--填写病因页面结束-->
+<!--查看病因页面开始-->
+<div style="display: none;padding-top: 20px" id="bingzhaung" >
+    <div style="height: 30px;width: 100px;margin-left:30px;line-height: 30px;">查看用户病况:</div>
+    <textarea id="bingzh" readonly style="width: 600px;margin-left: 30px;height: 300px;" required lay-verify="required" placeholder="请输入症状病因" class="layui-textarea"></textarea>
+</div>
+<!--查看病因页面结束-->
 </body>
 <script th:src="@{/layui/layui.js}"></script>
 
@@ -145,8 +165,8 @@
     var hua;
     var yaopin;
     var people;
+    var bingying;
     layui.use([ 'jquery', 'layer', 'form', 'table' ], function() {
-
         var $ = layui.jquery;
         var layer = layui.layer;
         var form = layui.form;
@@ -236,7 +256,7 @@
                     wareid=data.value;//获取选中的药房的id
                     hua=table.render({
                         elem: '#repiid'   //渲染的目标对象
-                        ,url:'selpepi?perid='+perid //数据接口
+                        ,url:'../caocc/selall?perid='+perid //数据接口
                         ,title: '患者处方'
                         ,cellMinWidth:200 //设置列的最小默认宽度
                         ,page: 1  //是否启用分页, limits: [10, 20, 30]
@@ -248,7 +268,15 @@
                             ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
                             ,{fixed: 'right', title:'操作',align:'center',width:'20%',templet:function(d){
                                     if(d.state==1){
-                                        return '项目'
+                                        if(d.ostate==0){
+                                            return '项目'
+                                        }else if(d.mstate==0){
+                                            return '<font color=blue>未缴费</font>'
+                                        }else if(d.jie==null||d.jie==''){
+                                            return '<font color=red>未检查</font>'
+                                        }else{
+                                            return'<a class="layui-btn layui-btn-xs" lay-event="look">查看</a>'
+                                        }
                                     }
                                     else{
                                         return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delrepi">删除</a>'
@@ -268,16 +296,29 @@
         });
         //打开药品数量页面
         function openUpdate(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'选择数量',
-                content:$("#drugnum"),
-                area:['300px','200px']
+            //获取用户挂号id
+            var reid=$("#reid").val();
+            if(reid==''){
+                layer.msg("请选择患者");
+            }else{
+                //进入查询患者的有没有写病因
+            $.post("../caocc/selbing",{"reid":reid},function(obj){
+                if(obj==''){
+                    layer.msg("请先填写病因");
+                }else{
+                    mainIndex=layer.open({
+                        type:1,
+                        title:'选择数量',
+                        content:$("#drugnum"),
+                        area:['300px','200px']
+                    });
+                }
             });
             $("#uni").text(data.unitname);//单位
             $("#kunum").val(data.drugstorenum);//库存
             $("#mename").val(data.pharmacyName);//药品名字
             $("#sellingPrice").val(data.sellingPrice);//药品单价
+            }
         }
         //点击添加药品数量的提交按钮
         $("#addru").click(function(){
@@ -356,9 +397,56 @@
                         yaopin.reload();
                     })
                 });
+            }else if(layEvent === 'look'){
+                lookbig(data);
             }
         });
-
+        function lookbig(data) {
+            bingying=layer.open({
+                type:1,
+                title:'填写症状',
+                content:$("#bingzhaung"),
+                area:['700px','500px']
+            });
+            $.post("../caocc/lookbing",{"reid":data.cashier},function(obj) {
+                $("#bingzh").val(obj);
+            })
+            }
+        //点击添加病因按钮打开添加病因页面
+        $("#bingyin").click(function(){
+            var reid=$("#reid").val();
+            if(reid==''){
+                layer.msg("请先选择患者");
+            }else{
+                $.post("../caocc/selbing",{"reid":reid},function(obj){
+                        bingying=layer.open({
+                            type:1,
+                            title:'填写病因',
+                            content:$("#bingye"),
+                            area:['700px','500px']
+                        });
+                    $("#bingyi").val(obj);
+                });
+            }
+        })
+        //点击病因提交按钮
+        $("#addbing").click(function(){
+            var reid=$("#reid").val();
+            var bing=$("#bingyi").val();
+            $.post("../caocc/addbing",{"reid":reid,"bing":bing},function(obj){
+                if(obj>0){
+                    layer.msg("添加成功");
+                    layer.close(bingying);
+                }else{
+                    layer.msg("添加失败");
+                }
+            });
+        })
+        //点击病因取消按钮
+        $("#qu").click(function(){
+            $("#bingyi").val("");
+            layer.close(bingying)
+        })
     })
 
 </script>

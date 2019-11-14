@@ -4,12 +4,15 @@
 
 <mapper namespace="com.aaa.mapper.LleaveMapper">
     <select id="selRegisters" parameterType="Register" resultType="Register">
-        select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.operator,r.endDate,r.price,(r.money-r.price) prices
+        select r.registerid,TO_DAYS(r.endDate)-TO_DAYS(registerDate) day,r.diagnose,r.discount,r.userName,r.age,r.sex,d.department department,r.money,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.operator,r.endDate,r.price,(r.money-r.price) prices
         from register r,departments d,doctor c,bed b
         <where>
-            r.state=1 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId
+            r.state=1 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId order by r.endDate desc
             <if test="userName!=null and userName!=''">
                 and r.userName like concat('%',concat(#{userName},'%'))
+            </if>
+            <if test="registerid!='' and registerid!=null">
+                and r.registerid=#{registerid}
             </if>
         </where>
     </select>

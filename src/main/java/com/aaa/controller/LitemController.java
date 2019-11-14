@@ -66,7 +66,6 @@ public class LitemController {
     @RequestMapping("/selItem")
     @ResponseBody
     public Object selItem(Integer page, Integer limit, Lrecord lrecord){
-        System.out.println(lrecord);
         lrecord.setState(1);
         PageHelper.startPage(page, limit);
         List<Lrecord> listAll =ldrugService.selDrugs(lrecord);
@@ -88,7 +87,6 @@ public class LitemController {
     public Object delItem(Integer hospitalpriceid){
         Lrecord lrecord=new Lrecord();
         lrecord.setHospitalpriceid(hospitalpriceid);
-        System.out.println(lrecord);
         int i = ldrugService.delDrug(lrecord);
         if (i == 1) {
             return "移除成功";

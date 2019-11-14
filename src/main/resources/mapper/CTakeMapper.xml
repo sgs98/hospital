@@ -18,7 +18,7 @@
     </update>
     <!--查看出院的患者-->
     <select id="selhuan" parameterType="ReportVo" resultType="ReportVo">
-        SELECT r.reportId,r.reportName,r.sex,r.age,p.department,r.phone,r.carid,d.doctorName,r.price,e.type,r.time,r.users,r.state,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
+        SELECT r.reportId,r.reportName,r.sex,r.age,p.department,r.phone,r.carid,d.doctorName,r.price,e.type,r.time,r.users,r.state,r.zhuan,e.registeredid dregisteredid,d.doctorid ddoctorid,p.departmentId ddepartmentid
         FROM  report r,doctor d,registeredtype e,departments p
         WHERE r.doctor=d.doctorId
         and d.registeredid=e.registeredId
