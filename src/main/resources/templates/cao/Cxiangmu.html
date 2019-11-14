@@ -279,11 +279,14 @@
                     ,limits: [5, 10, 15]
                     ,limit: 5//默认采用3
                     ,cols: [[   //列表    数据
-                        {field:'durgname', title:'药品名称',align:'center',width:"20%"}
-                        ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
-                        ,{field:'repiceprice', title:'单价',align:'center',width:"20%"}
-                        ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
-                        ,{fixed: 'right', title:'操作',align:'center',width:'20%',templet:function(d){
+                        {field:'durgname', title:'项目名称',align:'center',width:"20%"}
+                        ,{field:'durgnum', title:'数量',align:'center',width:"15%"}
+                        ,{field:'repiceprice', title:'单价',align:'center',width:"15%"}
+                        ,{field:'repicetotal', title:'小计',align:'center',width:"15%"}
+                        ,{field:'ostate', title:'受否检查',align:'center',width:"20%",templet:function(w){
+                                return w.ostate==0?'<font color="blue">非检查</font>':'<font color="red">需检查</font>'
+                            }}
+                        ,{fixed: 'right', title:'操作',align:'center',width:'15%',templet:function(d){
                                 if(d.state==0){
                                     return '药品'
                                 }else if(d.mstate==1){

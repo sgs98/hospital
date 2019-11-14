@@ -38,6 +38,7 @@
 <!--患者详细信息开始-->
 <div style="display: none;padding-top: 20px" id="peopleimgeDiv" >
     <table class="layui-hide" id="hu" lay-filter="userTable"></table>
+    <div style="float: right;margin-right: 30px;font-size: 16px;">总费用：<span style="color: red" id="zong"></span>元</div>
 </div>
 <!--患者详细信息结束-->
 <script th:src="@{/layui/layui.js}"></script>
@@ -120,6 +121,10 @@
                             }
                         }}
                 ]]
+            })
+            //查询该用户总费用
+            $.post("../caotake/zong",{"reid":data.reportId},function(obj){
+                $("#zong").text(obj)
             })
         }
         //监听行工具事件

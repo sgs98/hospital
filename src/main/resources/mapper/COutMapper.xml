@@ -12,9 +12,9 @@
     </select>
     <!--查询该用户上有没有该项目-->
     <select id="selchuo" resultType="Integer" parameterType="CCashier">
-        SELECT * FROM cashier WHERE reportId=#{reportId} AND durgname=#{durgname}
+        SELECT * FROM cashier WHERE reportId=#{reportId} AND durgname=#{durgname} ORDER BY cashier DESC
     </select>
-    <!--添加处方药品-->
+    <!--添加处方项目-->
     <insert id="addchuo" parameterType="CCashier">
         INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state,ctime,ostate,mstate)
         VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},1,NOW(),#{ostate},0)

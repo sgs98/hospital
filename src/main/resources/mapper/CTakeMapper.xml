@@ -12,7 +12,6 @@
             and  r.department=p.departmentId and r.state=2 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
     </select>
     <!--修改用户状态出院-->
-
     <update id="chuku" parameterType="ReportVo">
         UPDATE report set state=3 WHERE reportId=#{reportId}
     </update>
@@ -41,5 +40,10 @@
             and d.registeredid=e.registeredId
             and  r.department=p.departmentId and r.state=3
         </if>
+        ORDER BY r.reportid DESC
+    </select>
+    <!--查询用户的总账单价格-->
+    <select id="zong" resultType="int" parameterType="Integer">
+        select sum(repicetotal) from  cashier where  reportId=#{reid}
     </select>
 </mapper>
