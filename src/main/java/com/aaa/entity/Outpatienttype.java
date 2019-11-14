@@ -11,6 +11,7 @@ public class Outpatienttype {
     private Integer unit;
     private Integer unitId;
     private String unitName;
+    private Integer ostate;
 
     public String getPprojectName() {
         return pprojectName;
@@ -83,5 +84,13 @@ public class Outpatienttype {
 
     public void setUnit(Integer unit) {
         this.unit = unit;
+    }
+
+    public Integer getOstate() {
+        return ostate;
+    }
+
+    public void setOstate(Integer ostate) {
+        this.ostate = ostate;
     }
 }

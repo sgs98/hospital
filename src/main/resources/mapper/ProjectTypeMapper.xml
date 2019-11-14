@@ -10,7 +10,7 @@
          <if test="projectName!=null and projectName!=''">
              projectName like concat('%',concat(#{projectName},'%'))
          </if>
-     </where> order by projectId asc
+     </where> order by projectId desc
  </select>
     <insert id="addProjecttype" parameterType="projecttype">
         insert into projecttype(projectName)values(#{projectName})
@@ -29,7 +29,7 @@
             <if test="moneytype!=null and moneytype!=''">
                 moneytype like concat('%',concat(#{moneytype},'%'))
             </if>
-        </where> order by moneyId asc
+        </where> order by moneyId desc
     </select>
     <insert id="addMoneytype" parameterType="Moneytype">
         insert into Moneytype(moneytype,percent)values(#{moneytype},#{percent})
@@ -46,17 +46,17 @@
      <!--收费比例增删改查结束-->
     <!--门诊收费项目增删改查开始-->
     <select id="findAllOutpatienttype" resultType="Outpatienttype">
-        SELECT o.outpatientId,p.projectName pprojectName,o.projectName projectName,p.projectId projectId,u.unitName,u.unitId unitId ,o.price from outpatienttype o,unit u, projecttype p where o.unit=u.unitId and p.projectId=o.bigprojectId
+        SELECT o.ostate, o.outpatientId,p.projectName pprojectName,o.projectName projectName,p.projectId projectId,u.unitName,u.unitId unitId ,o.price from outpatienttype o,unit u, projecttype p where o.unit=u.unitId and p.projectId=o.bigprojectId
 
         <if test="projectName!=null and projectName!=''">
               and  o.projectName like concat('%',concat(#{projectName},'%'))
-            </if> order by o.outpatientId asc
+            </if> order by o.outpatientId desc
     </select>
    <insert id="addOutpatienttype" parameterType="Outpatienttype">
-       insert into Outpatienttype(projectName, unit, bigprojectId, price) values (#{projectName}, #{unit}, #{bigprojectId}, #{price})
+       insert into Outpatienttype(projectName, unit, bigprojectId, price,ostate) values (#{projectName}, #{unit}, #{bigprojectId}, #{price},#{ostate})
    </insert>
     <update id="editOutpatienttype" parameterType="Outpatienttype">
-        update Outpatienttype set price=#{price},unit=#{unit},bigprojectId=#{bigprojectId} where outpatientId=#{outpatientId}
+        update Outpatienttype set price=#{price},unit=#{unit},bigprojectId=#{bigprojectId},ostate=#{ostate} where outpatientId=#{outpatientId}
     </update>
     <delete id="deleteOutpatienttype" parameterType="Integer">
         delete from Outpatienttype where outpatientId=#{outpatientId}
@@ -70,7 +70,7 @@
         SELECT i.inoutpatientId,p.projectName pprojectName,i.projectName projectName,p.projectId projectId,u.unitName,u.unitId unitId ,i.price from inoutpatienttype i,unit u, projecttype p where i.unit=u.unitId and p.projectId=i.bigprojectId
             <if test="projectName!=null and projectName!=''">
                 and  i.projectName like concat('%',concat(#{projectName},'%'))
-            </if> order by i.inoutpatientId asc
+            </if> order by i.inoutpatientId desc
     </select>
     <insert id="addInoutpatienttype" parameterType="Inoutpatienttype">
         insert into Inoutpatienttype(projectName,price,unit,bigprojectId)values(#{projectName},#{price},#{unit},#{bigprojectId})
@@ -90,7 +90,7 @@
         select*from bed b,departments d where b.departmentId=d.departmentId
             <if test="bedname!=null and bedname!=''">
                 and bedname like concat('%',concat(#{bedname},'%'))
-            </if> order by b.bedId asc
+            </if> order by b.bedId desc
     </select>
     <insert id="addBed" parameterType="Bed">
         insert into Bed(bedname,price,state,departmentId)values(#{bedname},#{price},0,#{departmentId})
