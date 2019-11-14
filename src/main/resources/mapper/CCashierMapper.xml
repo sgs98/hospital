@@ -9,7 +9,7 @@
             FROM  report r,doctor d,registeredtype e,departments p
             WHERE r.doctor=d.doctorId
             and d.registeredid=e.registeredId
-            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d")
+            and  r.department=p.departmentId and r.state=1 AND DATE_FORMAT(r.time,'%Y-%m-%d')=DATE_FORMAT(now(),"%Y-%m-%d") ORDER BY r.reportid DESC
     </select>
     <!--查询所有药房-->
     <select id="selware" resultType="CWarehuose">
@@ -35,7 +35,7 @@
     <update id="updchu" parameterType="CCashier">
         UPDATE cashier SET durgnum = durgnum+#{durgnum},repicetotal=repicetotal+#{repicetotal} WHERE durgname = #{durgname}
     </update>
-    <!--查询该用户的处方-->
+    <!--查询该用户的药品处方-->
     <select id="selpepi" resultType="CCashier" parameterType="Integer">
         select * from cashier where reportId=#{perid} and state =0
     </select>
