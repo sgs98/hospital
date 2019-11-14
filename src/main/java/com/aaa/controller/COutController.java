@@ -63,7 +63,11 @@ public class COutController {
     //添加处方药品
     @RequestMapping("addchuo")
     @ResponseBody
-    public Object addchuo(CCashier cCashier,CPharmacy cPharmacy){
+    public Object addchuo(CCashier cCashier,Integer ostate){
+        System.out.println(123);
+        System.out.println(ostate);
+        cCashier.setOstate(ostate);
+        System.out.println(cCashier.getOstate());
         //向处方添加药品
         Integer addchuo = cOutService.addchuo(cCashier);
         return addchuo;

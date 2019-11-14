@@ -13,4 +13,6 @@ public interface CTakeMapper {
     Integer chuku(ReportVo reportVo);
     //查看所有交过费出院的患者
     List<ReportVo> selhuan(ReportVo reportVo);
+    //查询该用户的总价钱
+    int zong(Integer reid);
 }

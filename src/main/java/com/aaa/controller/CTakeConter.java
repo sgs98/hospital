@@ -4,6 +4,7 @@ import com.aaa.entity.ReportVo;
 import com.aaa.service.CTakeService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.sun.corba.se.spi.ior.ObjectKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -68,5 +69,12 @@ public class CTakeConter {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo.getList());
         return tableData;
+    }
+    //查看该用户的总价格
+    @RequestMapping("zong")
+    @ResponseBody
+    public Object zong(Integer reid){
+        int zong = cTakeService.zong(reid);
+        return zong;
     }
 }

@@ -1,9 +1,6 @@
 package com.aaa.controller;
 
-import com.aaa.entity.CCashier;
-import com.aaa.entity.CPharmacy;
-import com.aaa.entity.CWarehuose;
-import com.aaa.entity.ReportVo;
+import com.aaa.entity.*;
 import com.aaa.service.CCashierService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -11,9 +8,11 @@ import org.apache.ibatis.annotations.Select;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -147,5 +146,83 @@ public class CCashierController {
         //将分页后的数据返回（每页要显示的数据）
         tableData.put("data", pageInfo.getList());
         return tableData;
+    }
+    //添加用户病因
+    @RequestMapping("addbing")
+    @ResponseBody
+    public Object addbing(Integer reid, String bing, CReport cReport){
+        cReport.setZhuan(bing);
+        cReport.setReportId(reid);
+        Integer addbing = cCashierService.addbing(cReport);
+        return addbing;
+    }
+    //查询用户有没有填写病因
+    @RequestMapping("selbing")
+    @ResponseBody
+    public Object selbing(Integer reid){
+        String selbing = cCashierService.selbing(reid);
+        return selbing;
+    }
+    //查看用户的检查结果
+    @RequestMapping("lookbing")
+    @ResponseBody
+    public Object lookbing(Integer reid){
+        String lookbing = cCashierService.lookbing(reid);
+        return lookbing;
+    }
+    //查看该用户是否还有未交钱的项目
+    @RequestMapping("seljiao")
+    @ResponseBody()
+    public Object seljiao(Integer reid){
+        int seljiao = cCashierService.seljiao(reid);
+        return seljiao;
+    }
+    //查询该用户所有的处方
+    @RequestMapping("selall")
+    @ResponseBody
+    public Object selall(Integer perid,Integer page, Integer limit){
+        List<CCashier> selall = cCashierService.selall(perid);
+        PageHelper.startPage(page, limit);
+        PageInfo pageInfo = new PageInfo(selall);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式，如果后台没有加上这句话的话需要在前台页面手动设置
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
+    //查询用户所有的项目处方
+    @RequestMapping("selximu")
+    @ResponseBody
+    public Object selximu(Integer perid,Integer page, Integer limit){
+        List<CCashier> selximu = cCashierService.selximu(perid);
+        PageHelper.startPage(page, limit);
+        PageInfo pageInfo = new PageInfo(selximu);
+        Map<String, Object> tableData = new HashMap<String, Object>();
+        //这是layui要求返回的json数据格式，如果后台没有加上这句话的话需要在前台页面手动设置
+        tableData.put("code", 0);
+        tableData.put("msg", "");
+        //将全部数据的条数作为count传给前台（一共多少条）
+        tableData.put("count", pageInfo.getTotal());
+        //将分页后的数据返回（每页要显示的数据）
+        tableData.put("data", pageInfo.getList());
+        return tableData;
+    }
+    //查看该用户是否有缴费未做的项目
+    @RequestMapping("selwei")
+    @ResponseBody
+    public Object selwei(Integer reid){
+        //查询该用户有几个做过的项目
+        Integer selyi = cCashierService.selyi(reid);
+        //查询该用户有几个缴费的项目
+        Integer selgong = cCashierService.selgong(reid);
+        if(selyi==selgong){
+            return 1;
+        }else {
+            return 0;
+        }
     }
 }
