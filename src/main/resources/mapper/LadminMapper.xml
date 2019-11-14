@@ -25,7 +25,7 @@
         select r.registerid,r.userName,r.age,r.sex,d.department department,r.money,r.department departmentId,r.doctor doctorId,r.bedNum bedId,c.doctorName doctorName,r.address,r.phone,r.idcard,r.registerDate,b.bedname bedName,r.operator,r.discount
         from register r,departments d,doctor c,bed b
          <where>
-             r.state=0 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId order by r.registerDate desc
+             r.state=0 and r.department=d.departmentId and r.doctor=c.doctorId and r.bedNum=b.bedId
              <if test="userName!=null and userName!=''">
                 and r.userName like concat('%',concat(#{userName},'%'))
              </if>
@@ -35,6 +35,7 @@
              <if test="idcard!=null and idcard!=''">
                  and r.idcard=#{idcard}
              </if>
+             order by r.registerDate desc
          </where>
     </select>
     <!--修改床位-->
