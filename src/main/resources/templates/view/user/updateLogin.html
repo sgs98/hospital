@@ -155,14 +155,18 @@
       }
       $.post("user/editPwd",{loginname:loginname,pwd:pwd,pwd1:pwd1},function(obj){
           if(obj==1){
-              layer.msg("修改成功");
-              $("#jpwd").val("");
-              $("#pwd1").val("");
-              $("#pwd2").val("");
-              layer.close(op);
+              setTimeout(function(){
+                  window.parent.location.href="../sel/toLogin";//#设定跳转的链接地址
+              },3000)
+
+              layer.msg("修改成功",{
+                  time:3000 //取消自动关闭
+              });  // 显示倒计时
+
+              //layer.close(op);
               return false;
           }else{
-              layer.msg("密码错误");
+              layer.msg("旧密码错误");
               return false;
           }
 

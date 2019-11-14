@@ -140,6 +140,13 @@
                                 </select>
                             </div>
                         </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">是否检查:</label>
+                            <div class="layui-input-inline">
+                                <input type="radio" name="ostate" value="1" title="检查项">
+                                <input type="radio" name="ostate" value="0" title="无">
+                            </div>
+                        </div>
                     </div>
                     <div class="layui-form-item">
                     <div class="layui-form-item" style="text-align: center;">
@@ -757,7 +764,10 @@
                 ,{field:'projectName', title:'收费项',align:'center',width:"20%"}
                 ,{field:'pprojectName', title:'项目大类',align:'center',width:"20%"}
                 ,{field:'price', title:'价格',align:'center',width:"10%"}
-                ,{field:'unitName', title:'单位',align:'center',width:"19%"}
+                ,{field:'unitName', title:'单位',align:'center',width:"10%"}
+                ,{field:'ostate', title:'是否检查',align:'center',width:"10%",templet:function(d){
+                        return d.ostate=='1'?'<font color=blue>检查项</font>':'<font color=red>无</font>';
+                    }}
                 ,{fixed: 'right', title:'操作', toolbar: '#outpatienttype',align:'center',width:'20%'}
             ]]
         })

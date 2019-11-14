@@ -9,7 +9,7 @@
          <if test="department!=null and department!=''">
             and department like concat('%',concat(#{department},'%'))
          </if>
-     </where>
+     </where> order by departmentid desc
  </select>
     <insert id="addDepartment" parameterType="departments">
         insert into departments(department)values(#{department})
