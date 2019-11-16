@@ -1,9 +1,6 @@
 package com.aaa.service.Impl;
 
-import com.aaa.entity.CCashier;
-import com.aaa.entity.CPharmacy;
-import com.aaa.entity.CWarehuose;
-import com.aaa.entity.ReportVo;
+import com.aaa.entity.*;
 import com.aaa.mapper.CCashierMapper;
 import com.aaa.service.CCashierService;
 import org.springframework.stereotype.Service;
@@ -72,5 +69,45 @@ public class CCashierServiceImpl implements CCashierService {
     @Override
     public List<ReportVo> mohu(ReportVo reportVo) {
         return cCashierMapper.mohu(reportVo);
+    }
+    //修改用户的病例
+    @Override
+    public Integer addbing(CReport cReport) {
+        return cCashierMapper.addbing(cReport);
+    }
+    //查询用户有没有病例
+    @Override
+    public String selbing(Integer rid) {
+        return cCashierMapper.selbing(rid);
+    }
+    //查询用户做项目的结果
+    @Override
+    public String lookbing(Integer reid) {
+        return cCashierMapper.lookbing(reid);
+    }
+    //查询该用户是否还有未交钱的项目
+    @Override
+    public int seljiao(Integer reid) {
+        return cCashierMapper.seljiao(reid);
+    }
+    //查看该用户有几个已经做过的项目
+    @Override
+    public Integer selyi(Integer reid) {
+        return cCashierMapper.selyi(reid);
+    };
+    //查询该用户有几个已经交过钱的项目
+    @Override
+    public Integer selgong(Integer reid) {
+        return cCashierMapper.selgong(reid);
+    }
+    //查询用户所有的处方
+    @Override
+    public List<CCashier> selall(Integer perid) {
+        return cCashierMapper.selall(perid);
+    }
+    //查询用户项目的处方
+    @Override
+    public List<CCashier> selximu(Integer perid) {
+        return cCashierMapper.selximu(perid);
     }
 }

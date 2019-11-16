@@ -49,8 +49,10 @@ public class ShiroConfig {
         //toLogin/login界面可以未认证直接访问
 
 
-        filtermap.put("/sel/toLogin", "anon");
         filtermap.put("/sel/login", "anon");
+        filtermap.put("index.html", "anon");
+
+
         filtermap.put("/css/**", "anon");
         filtermap.put("/layui/**", "anon");
         filtermap.put("/js/**", "anon");

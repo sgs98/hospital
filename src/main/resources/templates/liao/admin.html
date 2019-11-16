@@ -69,7 +69,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">年龄:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="age" id="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
+                    <input type="number" name="age" id="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -101,7 +101,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">电话:</label>
             <div class="layui-input-inline">
-                <input type="text" name="phone" id="phone" lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
+                <input type="number" name="phone" id="phone" lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -116,7 +116,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">身份证号:</label>
             <div class="layui-input-inline">
-                <input type="text" name="idcard" id="idcard" lay-verify="required|identity|number"  placeholder="请输入身份证号" autocomplete="off"
+                <input type="text" name="idcard" id="idcard" lay-verify="required|identity"  placeholder="请输入身份证号" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -251,7 +251,7 @@
                 ,{field:'address', title:'地址',align:'center',width:'10%'}
                 ,{field:'phone', title:'电话',align:'center',width:'11%'}
                 ,{field:'idcard', title:'身份证号',align:'center',width:'15%'}
-                ,{field:'registerDate', title:'入院日期', templet: "<div>{{layui.util.toDateString(d.registerDate, 'yyyy年MM月dd日')}}</div>",align:'center',width:'13%',sort: true}
+                ,{field:'registerDate', title:'入院日期',align:'center',width:'13%',sort: true}
                 ,{field:'department', title:'科室',align:'center',width:'6%'}
                 ,{field:'doctorName', title:'医生',align:'center',width:'6%'}
                 ,{field:'bedName', title:'床位',align:'center',width:'7%'}
@@ -485,15 +485,6 @@
                 tableIns.reload();
             })
         });
-        /*function scienceClick(el, fn) {
-            el.timer = null;
-            el.addEventListener('click', function() {
-                clearTimeout(this.timer);
-                this.timer = setTimeout(function() {
-                    fn && fn();
-                }, 300);
-            }, false);
-        }*/
     });
 </script>
 </body>

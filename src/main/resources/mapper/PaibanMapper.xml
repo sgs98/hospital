@@ -9,7 +9,7 @@ select d.doctorId doctorId,d.doctorName  doctorName, p.one one,p.two two,p.three
    <if test="doctorName!=null and doctorName!=''">
     doctorName like concat('%' ,concat(#{doctorName},'%'))
    </if>
-  </where>
+  </where> order by d.doctorId desc
  </select>
  <update id="editPaiban" parameterType="paiban">
   update paiban set one=#{one},two=#{two},three=#{three},four=#{four},five=#{five},six=#{six},seven=#{seven} where doctorId=#{doctorId}

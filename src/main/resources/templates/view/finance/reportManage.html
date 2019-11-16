@@ -57,6 +57,9 @@
                 year=new Date().getFullYear();
             }
             $.post("finance/reportYearFinance",{year:year},function(data){
+
+                   //alert(data);
+
                 var dom = document.getElementById("container");
                 var myChart = echarts.init(dom);
                 var app = {};

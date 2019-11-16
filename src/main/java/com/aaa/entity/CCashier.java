@@ -8,6 +8,33 @@ public class CCashier {
     private double repiceprice;//价格
     private double repicetotal;//小计
     private Integer state;//状态
+    private Integer  ostate;//项目状态
+    private String jie;
+    private Integer mstate;
+
+    public Integer getMstate() {
+        return mstate;
+    }
+
+    public void setMstate(Integer mstate) {
+        this.mstate = mstate;
+    }
+
+    public String getJie() {
+        return jie;
+    }
+
+    public void setJie(String jie) {
+        this.jie = jie;
+    }
+
+    public Integer getOstate() {
+        return ostate;
+    }
+
+    public void setOstate(Integer ostate) {
+        this.ostate = ostate;
+    }
 
     public int getCashier() {
         return cashier;

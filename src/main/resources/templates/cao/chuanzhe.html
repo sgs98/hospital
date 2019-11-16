@@ -38,6 +38,7 @@
 <!--患者详细信息开始-->
 <div style="display: none;padding-top: 20px" id="peopleimgeDiv" >
     <table class="layui-hide" id="hu" lay-filter="userTable"></table>
+    <div style="float: right;margin-right: 30px;font-size: 16px;">总费用：<span style="color: red" id="zong"></span>元</div>
 </div>
 <!--患者详细信息结束-->
 <script th:src="@{/layui/layui.js}"></script>
@@ -60,18 +61,19 @@
             ,limits: [5, 10, 15]
             ,limit: 5//默认采用3
             ,cols: [[   //列表数据
-                {field:'reportId', title:'单据号',align:'center',width:"8%"}
+                {field:'reportId', title:'单据号',align:'center',width:"6%"}
                 ,{field:'reportName', title:'姓名',align:'center',width:"8%"}
-                ,{field:'phone', title:'电话',align:'center',width:"8%"}
-                ,{field:'carid', title:'身份证号',align:'center',width:"8%"}
+                ,{field:'phone', title:'电话',align:'center',width:"9%"}
+                ,{field:'carid', title:'身份证号',align:'center',width:"9%"}
                 ,{field:'sex', title:'性别',align:'center',width:"8%"}
-                ,{field:'age', title:'年龄',align:'center',width:"8%"}
+                ,{field:'age', title:'年龄',align:'center',width:"5%"}
                 ,{field:'department', title:'科室',align:'center',width:"8%"}
                 ,{field:'doctorName', title:'医生',align:'center',width:"8%"}
                 ,{field:'type', title:'挂号类别',align:'center',width:"8%"}
+                ,{field:'zhuan', title:'病况',align:'center',width:"8%"}
                 ,{field:'time', title:'挂号时间',align:'center',width:"8%"}
-                ,{field:'price', title:'挂号费',align:'center',width:"8%"}
-                ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'8%'}
+                ,{field:'price', title:'挂号费',align:'center',width:"6%"}
+                ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'6%'}
             ]]
         })
         //模糊查询
@@ -93,7 +95,7 @@
             });
             hua=table.render({
                 elem: '#hu'   //渲染的目标对象
-                ,url:'../caocc/selpepi?perid='+data.reportId //数据接口
+                ,url:'../caocc/selall?perid='+data.reportId //数据接口
                 ,title: '患者信息'
                 ,cellMinWidth:200 //设置列的最小默认宽度
                 ,page: 1  //是否启用分页, limits: [10, 20, 30]
@@ -104,15 +106,25 @@
                     ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
                     ,{field:'repiceprice', title:'单价',align:'center',width:"20%"}
                     ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
-                    ,{fixed: 'right', title:'类别',align:'center',width:'20%',templet:function(d){
-                            if(d.state==0){
-                                return '药品'
+                    ,{fixed: 'right', title:'类别/结果',align:'center',width:'20%',templet:function(d){
+                            if(d.state==1){
+                                if(d.ostate==0){
+                                    return '<font color="#ff4500">项目</font>'
+                                }else if(d.jie==null||d.jie==''){
+                                    return '<font color=red>未检查</font>'
+                                }else{
+                                    return d.jie
+                                }
                             }
                             else{
-                                return '项目'
+                                return '<font color="blue">药品</font>'
                             }
                         }}
                 ]]
+            })
+            //查询该用户总费用
+            $.post("../caotake/zong",{"reid":data.reportId},function(obj){
+                $("#zong").text(obj)
             })
         }
         //监听行工具事件

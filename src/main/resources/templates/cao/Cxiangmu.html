@@ -162,10 +162,11 @@
 <!--药品详情页面结束-->
 <!--添加药品数量开始-->
 <div id="drugnum" style="text-align: center;display: none">
-    <input type="number" id="num" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量" autocomplete="off">
+    <input type="number" id="num" style="height: 25px;width:200px;margin-top: 15px;" placeholder="请输入数量" value="1" readonly autocomplete="off">
     <input type="hidden" id="kunum"><!--药品库存数量-->
     <input type="hidden" id="mename"><!--药品名字-->
     <input type="hidden" id="sellingPrice"><!--药品单价-->
+    <input type="hidden" id="ostate"><!--项目状态-->
     <span id="uni"></span><br/><br/><br/><br/>
     <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" id="addru">提交</button>
     <button type="button" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh layui-icon-delete" id="clo" >取消</button>
@@ -243,6 +244,7 @@
                             ,{field:'price', title:'单价',align:'center',width:"25%"}
                             ,{fixed: 'right', title:'操作', toolbar: '#userBar',align:'center',width:'25%'}
                         ]]
+
                     })
 
                 }
@@ -270,22 +272,26 @@
                 wareid=data.value;//获取选中的药房的id
                 hua=table.render({
                     elem: '#repiid'   //渲染的目标对象
-                    ,url:'../caocc/selpepi?perid='+perid //数据接口
+                    ,url:'../caocc/selximu?perid='+perid //数据接口
                     ,title: '患者处方'
                     ,cellMinWidth:200 //设置列的最小默认宽度
                     ,page: 1  //是否启用分页, limits: [10, 20, 30]
                     ,limits: [5, 10, 15]
                     ,limit: 5//默认采用3
                     ,cols: [[   //列表    数据
-                        {field:'durgname', title:'药品名称',align:'center',width:"20%"}
-                        ,{field:'durgnum', title:'数量',align:'center',width:"20%"}
-                        ,{field:'repiceprice', title:'单价',align:'center',width:"20%"}
-                        ,{field:'repicetotal', title:'小计',align:'center',width:"20%"}
-                        ,{fixed: 'right', title:'操作',align:'center',width:'20%',templet:function(d){
+                        {field:'durgname', title:'项目名称',align:'center',width:"20%"}
+                        ,{field:'durgnum', title:'数量',align:'center',width:"15%"}
+                        ,{field:'repiceprice', title:'单价',align:'center',width:"15%"}
+                        ,{field:'repicetotal', title:'小计',align:'center',width:"15%"}
+                        ,{field:'ostate', title:'受否检查',align:'center',width:"20%",templet:function(w){
+                                return w.ostate==0?'<font color="blue">非检查</font>':'<font color="red">需检查</font>'
+                            }}
+                        ,{fixed: 'right', title:'操作',align:'center',width:'15%',templet:function(d){
                                 if(d.state==0){
                                     return '药品'
-                                }
-                                else{
+                                }else if(d.mstate==1){
+                                    return '<font color="blue">已缴费</font>'
+                                }else {
                                     return '<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="delrepi">删除</a>'
                                 }
                             }}
@@ -303,15 +309,27 @@
         });
         //打开药品数量页面
         function openUpdate(data){
-            mainIndex=layer.open({
-                type:1,
-                title:'选择数量',
-                content:$("#drugnum"),
-                area:['300px','200px']
-            });
-            $("#uni").text(data.unitName);//单位
-            $("#mename").val(data.projectName);//药品名字
-            $("#sellingPrice").val(data.price);//药品单价
+            var reid=$("#reid").val();
+            if(reid==''){
+                layer.msg("请选择患者");
+            }else {
+                $.post("../caocc/selbing", {"reid": reid}, function (obj) {
+                    if (obj == '') {
+                        layer.msg("请先填写病因");
+                    } else {
+                        mainIndex = layer.open({
+                            type: 1,
+                            title: '选择数量',
+                            content: $("#drugnum"),
+                            area: ['300px', '200px']
+                        });
+                        $("#uni").text(data.unitName);//单位
+                        $("#mename").val(data.projectName);//药品名字
+                        $("#sellingPrice").val(data.price);//药品单价
+                        $("#ostate").val(data.ostate);//项目状态证明要不要检查
+                    }
+                })
+            }
         }
         //点击添加药品数量的提交按钮
         $("#addru").click(function(){
@@ -323,6 +341,7 @@
             var mename=$("#mename").val();
             //获取药品单价
             var sellingPrice=$("#sellingPrice").val();
+            var ostate=$("#ostate").val();
             //小计
             var price=num*sellingPrice
             //判断添加数量的文本框是否有值或者为0如果成立提示
@@ -331,23 +350,10 @@
             }else if(reid==""){//判断是否选中用户如果没有选中用户着提示
                 layer.msg("请选择患者");
             }else{
-                $.post("../caoout/selchuo",{"reid":reid,"mename":mename},function(obj){
-                    //如果为零表示没有这个药则添加
-                    if(obj==0){
-                        $.post("../caoout/addchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repiceprice":sellingPrice,"repicetotal":price,"drugstorenum":num},function(obj){
-                            layer.msg("添加成功");
-                            layer.close(mainIndex);
-                            hua.reload();
-                        })
-                    }else{
-                        //如果有则修改数量
-                        $.post("../caoout/updchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repicetotal":price,"drugstorenum":num},function(obj){
-                            layer.msg("添加成功");
-                            layer.close(mainIndex);
-                            //刷新处方表格
-                            hua.reload();
-                        })
-                    }
+                $.post("../caoout/addchuo",{"reportId":reid,"durgname":mename,"durgnum":num,"repiceprice":sellingPrice,"repicetotal":price,"drugstorenum":num,"ostate":ostate},function(obj){
+                    layer.msg("添加成功");
+                    layer.close(mainIndex);
+                    hua.reload();
                 })
             }
         })

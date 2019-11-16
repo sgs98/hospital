@@ -12,12 +12,12 @@
     </select>
     <!--查询该用户上有没有该项目-->
     <select id="selchuo" resultType="Integer" parameterType="CCashier">
-        SELECT * FROM cashier WHERE reportId=#{reportId} AND durgname=#{durgname}
+        SELECT * FROM cashier WHERE reportId=#{reportId} AND durgname=#{durgname} ORDER BY cashier DESC
     </select>
-    <!--添加处方药品-->
+    <!--添加处方项目-->
     <insert id="addchuo" parameterType="CCashier">
-        INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state,ctime)
-        VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},1,NOW())
+        INSERT INTO cashier (reportId,durgname,durgnum,repiceprice,repicetotal,state,ctime,ostate,mstate)
+        VALUES (#{reportId},#{durgname},#{durgnum},#{repiceprice},#{repicetotal},1,NOW(),#{ostate},0)
     </insert>
     <!--修改处方表上的信息-->
     <update id="updchuo" parameterType="CCashier">
@@ -29,7 +29,7 @@
     </delete>
     <!--查询该用户的处方总价-->
     <select id="selch" parameterType="CCashier" resultType="Double">
-      SELECT SUM(repicetotal) FROM cashier WHERE reportId=#{reportId}
+      SELECT SUM(repicetotal) FROM cashier WHERE reportId=#{reportId} and state=0
     </select>
     <!--修改患者信息-->
     <update id="shoufei" parameterType="ReportVo">

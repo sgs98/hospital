@@ -28,4 +28,9 @@ public class CTakeServiceImpl implements CTakeService {
     public List<ReportVo> selhuan(ReportVo reportVo) {
         return cTakeMapper.selhuan(reportVo);
     }
+    //查询该用户的总价钱
+    @Override
+    public int zong(Integer reid) {
+        return cTakeMapper.zong(reid);
+    }
 }

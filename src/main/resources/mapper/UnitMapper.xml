@@ -9,7 +9,7 @@
          <if test="unitName!=null and unitName!=''">
              unitName like concat('%',concat(#{unitName},'%'))
          </if>
-     </where>
+     </where> order by unitid desc
  </select>
     <insert id="addUnit" parameterType="Unit">
         insert into Unit(unitName)values(#{unitName})

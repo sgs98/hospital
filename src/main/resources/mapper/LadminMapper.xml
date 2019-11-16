@@ -35,6 +35,7 @@
              <if test="idcard!=null and idcard!=''">
                  and r.idcard=#{idcard}
              </if>
+             order by r.registerDate desc
          </where>
     </select>
     <!--修改床位-->

@@ -30,13 +30,16 @@
         line-height: 50px;
         margin-left: 30px;
     }
+    .layui-form-item{
+        height: 30px;
+    }
 </style>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
 <form class="layui-form" id="sel">
-    <div class="layui-form-item">
+    <div class="layui-form-item" style="height: 50px;">
         <div class="layui-inline">
             <label class="layui-form-label">用户信息:</label>
             <div class="layui-input-inline">
@@ -63,6 +66,12 @@
             <li class="xiang" lay-event="add"><span style="font-size: 150px">+</span></li>
             <li th:each="map:${report}" style="line-height: 40px;">
                 <form class="layui-form"  lay-filter="reall" id="reall" name="reall">
+                <div class="layui-form-item">
+                    <label class="layui-form-label"  style="text-align: right">就诊号:</label>
+                    <div class="layui-input-block" style="text-align: left">
+                        <span th:text="${map.reportId}"></span>
+                    </div>
+                </div>
                 <div class="layui-form-item">
                     <label class="layui-form-label"  style="text-align: right">患者姓名:</label>
                         <div class="layui-input-block" style="text-align: left">
@@ -434,17 +443,45 @@
             if(da!=da2){
                 layer.msg("对不起您选择的不是当天的挂号")
             }else{
-
+                //查询该用户处方上是否有药品
                 $.post("../caoout/selch",{reportId:ids},function(res) {
                     if (res == 0) {
-                        layer.confirm('你确定要【'+params+'】转入住院部吗', function (index) {
-                            mainIndex=layer.open({
-                                type:1,
-                                title:'转入住院部',
-                                content:$("#zhaunyu"),
-                                area:['400px','200px']
-                            });
+                        //判断该用户是否有缴费未做的项目
+                        $.post("../caocc/seljiao",{"reid":ids},function(res) {
+                            if (res > 0) {
+                                layer.msg("你还有未缴费的项目请缴费后在进行该操作")
+                            } else {
+                                $.post("../caocc/selwei", {"reid": ids}, function (res) {
+                                    if (res == 1) {
+                                        layer.confirm('你确定要【' + params + '】转入住院部吗', function (index) {
+                                            $.post("../caocc/selbing", {"reid": ids}, function (obj) {
+                                                $("#bingying").val(obj);
+                                            });
+                                            mainIndex = layer.open({
+                                                type: 1,
+                                                title: '转入住院部',
+                                                content: $("#zhaunyu"),
+                                                area: ['400px', '200px']
+                                            });
+                                        })
+                                    } else {
+                                        layer.confirm("你有项目未做是否继续操作", function () {
+                                            layer.confirm('你确定要【' + params + '】转入住院部吗', function (index) {
+                                                $.post("../caocc/selbing", {"reid": ids}, function (obj) {
+                                                    $("#bingying").val(obj);
+                                                });
+                                                mainIndex = layer.open({
+                                                    type: 1,
+                                                    title: '转入住院部',
+                                                    content: $("#zhaunyu"),
+                                                    area: ['400px', '200px']
+                                                });
+                                            })
+                                        })
+                                    }
 
+                                })
+                            }
                         })
                         $("#zhuncheng").click(function(){
                             var zh=$("#bingying").val();
