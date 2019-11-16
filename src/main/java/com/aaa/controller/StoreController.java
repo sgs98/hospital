@@ -2,6 +2,7 @@ package com.aaa.controller;
 
 import com.aaa.entity.*;
 import com.aaa.service.PutinService;
+import com.aaa.service.RecordService;
 import com.aaa.service.StoreService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -22,7 +23,8 @@ public class StoreController {
     private StoreService storeService;
     @Autowired
     private PutinService putinService;
-
+    @Autowired
+    private RecordService rs;
 //查询药品仓库
     @RequestMapping("selectdrugstore")
     @ResponseBody
@@ -119,20 +121,24 @@ public class StoreController {
 //添加一条药品入库
     @RequestMapping("adddrugs")
     @ResponseBody
-    public Integer adddrugs(Drugstore drugstore) {
+    public Integer adddrugs(Drugstore drugstore,Record record) {
         System.out.print("查询方法");
         int seldrugname = putinService.seldrugname(drugstore);
-        System.out.print(seldrugname+"yyyyyyyyyyyyyyyyyy");
         if(seldrugname==1){
             System.out.print("进入修改方法");
             int updrugnumber = putinService.updrugnumber(drugstore);
+            System.out.print("添加记录表");
+            int addjilu = rs.addjilu(record);//添加一条记录
             return updrugnumber;
         }else {
 
             System.out.print("进入添加方法");
             int adddrugstore = putinService.adddrugstore(drugstore);
+            System.out.print("添加记录表");
+            int addjilu = rs.addjilu(record);//添加一条记录
             return adddrugstore;
         }
+
     }
     //查询选中的药品的库存数量
     @RequestMapping("selnumber")
@@ -219,8 +225,14 @@ public class StoreController {
     //删除过期的药
     @RequestMapping("delguoqidurg")
     @ResponseBody
-    public Integer delguoqidurg(Integer rugstoreId) {
+    public Integer delguoqidurg(Integer rugstoreId,Record record) {
+        System.out.print("进入删除");
         int delguoqidurg = storeService.delguoqidurg(rugstoreId);//删除此条数据
+        if(delguoqidurg==1){//如果删除此条 则添加到记录表
+
+            System.out.print("添加记录表");
+            int addjilu = rs.addjilu(record);
+        }
         return delguoqidurg;
     }
 

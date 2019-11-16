@@ -70,5 +70,11 @@ public class PathstoreController {
         System.out.print(warehuose.getSupplierName());
         return "drugstore/c_beputinstorage";
     }
+//进入操作记录页面
+    @RequestMapping("record")
+    public  Object record(){
 
+
+        return "drugstore/c_record";
+    }
 }
