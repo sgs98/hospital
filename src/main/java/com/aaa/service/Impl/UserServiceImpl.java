@@ -44,11 +44,12 @@ public class UserServiceImpl implements UserService {
 
         return userMapper.addUser(user);
     }
-
+    //删除用户
     @Override
     public void deleteUser(Integer userid) {
-
+        //根据id删除用户
         userMapper.deleteUserById(userid);
+        //根据id删除该用户所拥有的角色   中间表
         userMapper.deleteRoleUser(userid);
 
     }
