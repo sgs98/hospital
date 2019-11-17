@@ -14,14 +14,14 @@
         display: block;
         float: left;
         border: #CCCCCC solid 1px;
-        height: 360px;
+        height: 400px;
         width: 230px;
         text-align: center;
         border-radius: 12px;
         margin: 30px;
     }
     .xiang{
-        line-height: 360px;
+        line-height: 400px;
         cursor:pointer;
     }
     #dang{
@@ -30,16 +30,13 @@
         line-height: 50px;
         margin-left: 30px;
     }
-    .layui-form-item{
-        height: 30px;
-    }
 </style>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
     <legend>查询条件</legend>
 </fieldset>
 <form class="layui-form" id="sel">
-    <div class="layui-form-item" style="height: 50px;">
+    <div class="layui-form-item">
         <div class="layui-inline">
             <label class="layui-form-label">用户信息:</label>
             <div class="layui-input-inline">
@@ -66,13 +63,13 @@
             <li class="xiang" lay-event="add"><span style="font-size: 150px">+</span></li>
             <li th:each="map:${report}" style="line-height: 40px;">
                 <form class="layui-form"  lay-filter="reall" id="reall" name="reall">
-                <div class="layui-form-item">
+                <div class="layui-form-item" style="height: 30px;line-height: 30px;">
                     <label class="layui-form-label"  style="text-align: right">就诊号:</label>
                     <div class="layui-input-block" style="text-align: left">
                         <span th:text="${map.reportId}"></span>
                     </div>
                 </div>
-                <div class="layui-form-item">
+                <div class="layui-form-item" style="margin-top: -5px;">
                     <label class="layui-form-label"  style="text-align: right">患者姓名:</label>
                         <div class="layui-input-block" style="text-align: left">
                         <span th:text="${map.reportName}"></span>
