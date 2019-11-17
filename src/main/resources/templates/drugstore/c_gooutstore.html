@@ -8,6 +8,7 @@
 </head>
 <body>
 <!--选择补给哪个药  需要补给的数量传过来用于判断-->
+<input id="jingbanren" type="hidden" th:value="${session.yonghu}">
 <input type="hidden" id="bqnum">
 <span  style="font-size: 1.5em;margin-left: 180px;">药房报缺药品<span class="layui-badge" th:text="${selbaoquecount}"></span></span>
 
@@ -118,10 +119,13 @@
                         layer.msg("数量不足");
                     } else  if(value>bujinum){//如果输入的数量大于需要报缺的数量 出个提示
                         layer.confirm('确定超出补给吗', function (index) {
+                            var jbr= $("#jingbanren").val();
                             $.post("../chuku/updatedrugnumber", {
                                 rugstoreId: data.rugstoreId,
                                 drugstorenum: value,
-                                drugstoreName: data.drugstoreName
+                                drugstoreName: data.drugstoreName,
+                                jiluname:data.drugstoreName,jilutype:"紧急补给药房",jilupeople:jbr,
+                                jilupihao:data.batch,jilunumber:value
                             }, function (res) {
                                 if (res == 1) {
                                     layer.msg("出库成功");
@@ -142,10 +146,13 @@
                     }
 
                     else {
+                        var jbr= $("#jingbanren").val();
                         $.post("../chuku/updatedrugnumber", {
                             rugstoreId: data.rugstoreId,
                             drugstorenum: value,
-                            drugstoreName: data.drugstoreName
+                            drugstoreName: data.drugstoreName,
+                            jiluname:data.drugstoreName,jilutype:"紧急补给药房",jilupeople:jbr,
+                            jilupihao:data.batch,jilunumber:value
                         }, function (res) {
                             if (res == 1) {
                                 layer.msg("出库成功");
@@ -251,83 +258,51 @@
                 var d2=a2+"-"+b2+"-"+c2;
 
                 var durnum=data.drugstorenum;
-                layer.prompt({
-                    formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
-                    value: '', //初始时的值，默认空字符
-                    maxlength: 140, //可输入文本的最大长度，默认500
-                }, function(value, index, elem){
-                    if(value>durnum){
-                        layer.msg("数量不足")
-                    }else {
-                        //向服务端发送删除指令
-                        $.post("../chuku/addpharmacy", {
+                layer.confirm('确定添加【' + data.drugstoreName + '】这个药品吗', function (index) {
+                    layer.prompt({
+                        formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                        value: '', //初始时的值，默认空字符
+                        maxlength: 140, //可输入文本的最大长度，默认500
+                    }, function (value, index, elem) {
+                        if (value > durnum) {
+                            layer.msg("数量不足")
+                        } else {
+                            var jbr = $("#jingbanren").val();
+                            //向服务端发送删除指令
+                            $.post("../chuku/addpharmacy", {
 
-                            rugstoreId: data.rugstoreId,
-                            warehouseId: data.warehouseId,
-                            pharmacyName: data.drugstoreName,
-                            drugstoreId: data.warehouseId,
-                            drugstorenum: value,
-                            skullId: data.skullId,
-                            unit: data.unitId,
-                            sellingPrice: data.sellingPrice,
-                            area: data.areaId,
-                            produceDate: d1,
-                            validDate: d2,
-                            skullbatch: data.batch,
-                            type: data.typeId
-                        }, function (res) {
-                            if (res == 1) {
-                                layer.msg("出库成功");
-                                //刷新数据 表格
-                                tableIns.reload();
-                                location.reload();
-                            } else {
-                                layer.msg("出库失败");
-                                tableIns.reload();
-                                location.reload();
-                            }
+                                rugstoreId: data.rugstoreId,
+                                warehouseId: data.warehouseId,
+                                pharmacyName: data.drugstoreName,
+                                drugstoreId: data.warehouseId,
+                                drugstorenum: value,
+                                skullId: data.skullId,
+                                unit: data.unitId,
+                                sellingPrice: data.sellingPrice,
+                                area: data.areaId,
+                                produceDate: d1,
+                                validDate: d2,
+                                skullbatch: data.batch,
+                                type: data.typeId,
+                                jiluname: data.drugstoreName, jilutype: "正常出库", jilupeople: jbr,
+                                jilupihao: data.batch, jilunumber: value
+                            }, function (res) {
+                                if (res == 1) {
+                                    layer.msg("出库成功");
+                                    //刷新数据 表格
+                                    tableIns.reload();
+                                    location.reload();
+                                } else {
+                                    layer.msg("出库失败");
+                                    tableIns.reload();
+                                    location.reload();
+                                }
 
-                        });
-                    }
-                })
-                   /* var num=prompt("发出"+data.batch+"批次"+data.drugstoreName+"数量");
-                        layer.closeAll('dialog');
-                    var durnum=data.drugstorenum;
-                    //向服务端发送删除指令
-                    if(num>durnum){
-                        layer.msg("数量不足")
-                    }else {
-                        //向服务端发送删除指令
-                        $.post("../chuku/addpharmacy", {
+                            });
+                        }
+                    })
 
-                            rugstoreId: data.rugstoreId,
-                            warehouseId: data.warehouseId,
-                            pharmacyName: data.drugstoreName,
-                            drugstoreId: data.warehouseId,
-                            drugstorenum: num,
-                            skullId: data.skullId,
-                            unit: data.unitId,
-                            sellingPrice: data.sellingPrice,
-                            area: data.areaId,
-                            produceDate: d1,
-                            validDate: d2,
-                            skullbatch: data.batch,
-                            type: data.typeId
-                        }, function (res) {
-                            if (res == 1) {
-                                layer.msg("出库成功");
-                                //刷新数据 表格
-                                tableIns.reload();
-                                location.reload();
-                            } else {
-                                layer.msg("出库失败");
-                                tableIns.reload();
-                                location.reload();
-                            }
-
-                        });
-                    }*/
-
+                });
             }
 
         });

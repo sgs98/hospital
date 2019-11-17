@@ -32,24 +32,7 @@ public class Drugstore {
     private  String unitName;
     private  String areaName;
     private  String typeName;
-  /*  private  Integer supplierIdid;
-    private  Integer skullIdid;
 
-    public Integer getSupplierIdid() {
-        return supplierIdid;
-    }
-
-    public void setSupplierIdid(Integer supplierIdid) {
-        this.supplierIdid = supplierIdid;
-    }
-
-    public Integer getSkullIdid() {
-        return skullIdid;
-    }
-
-    public void setSkullIdid(Integer skullIdid) {
-        this.skullIdid = skullIdid;
-    }*/
 // 查詢起的别名 对应 type表 typeId
 
     private Integer typeId;

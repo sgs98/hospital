@@ -7,6 +7,7 @@
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
 </head>
 <body>
+<input id="jingbanren" type="hidden" th:value="${session.yonghu}">
 <span style="font-family: 新宋体;font-size: 1.3em;margin-left: 500px;" > 一共有<span th:text="${selcountlessnum}" style="font-size: 1.5em;color: red;"></span>批药品过期请及时处理</span>
 
 <table class="layui-hide" id="userTable" lay-filter="userTable"></table>
@@ -14,7 +15,7 @@
 
 </div>
 <div  id="userBar" style="display: none;">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">已处理</a>
 </div>
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
@@ -64,9 +65,13 @@
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if(layEvent === 'del'){ //删除
+               var jbr= $("#jingbanren").val();
                 layer.confirm('真的删除【'+data.drugstoreName+'】这个药品吗', function(index){
                     //向服务端发送删除指令
-                    $.post("../seldrugstore/delguoqidurg",{rugstoreId:data.rugstoreId},function(res){
+                    $.post("../seldrugstore/delguoqidurg",{rugstoreId:data.rugstoreId,
+                        jiluname:data.drugstoreName,jilutype:"销毁过期药品",jilupeople:jbr,
+                        jilupihao:data.batch,jilunumber:data.drugstorenum
+                    },function(res){
                    if(res==1){
                        layer.msg("成功");
                        //刷新数据 表格
