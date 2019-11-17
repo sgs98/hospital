@@ -10,6 +10,7 @@
         <if test="drugName!=null and drugName!=''">
             and dr.drugName like concat('%' ,concat(#{drugName},'%'))
         </if>
+        ORDER BY dr.drugId desc
     </select>
 
     <insert id="adddrugstore" parameterType="Drugstore">

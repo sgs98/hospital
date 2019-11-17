@@ -12,6 +12,7 @@
         <if test="drugstoreName!=null and drugstoreName!=''">
         and d.drugstoreName like concat('%' ,concat(#{drugstoreName},'%'))
         </if>
+        ORDER BY d.rugstoreId desc
     </select>
   <!--  药品类型-->
     <select id="seltype" resultType="Type">

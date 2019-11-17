@@ -5,7 +5,7 @@
 <mapper namespace="com.aaa.mapper.OutinstoreMapper">
 
 <select id="selbaoquedan" resultType="Baoque">
-    SELECT * from baoque
+    SELECT * from baoque  ORDER BY baoqueid desc
 
 </select>
    <!-- 根据需要补给的药名 查询仓库表-->

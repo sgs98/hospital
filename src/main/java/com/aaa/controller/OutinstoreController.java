@@ -111,6 +111,7 @@ public class OutinstoreController extends BasetimeController{
             }
         }
         if(selpharymacyname==0){//药房没有此药 则添加此药数据进药房
+            System.out.print("添加药品");
           updatedrugnumber = outinstoreService.updatedrugnumber(drugstore);//修改库房数量
 
             int addjilu = rs.addjilu(record);//添加一条记录
