@@ -11,7 +11,7 @@
    <if test="pharmacyName!=null and pharmacyName!=''">
           and p.pharmacyName like concat('%' ,concat(#{pharmacyName},'%'))
       </if>
-        ORDER BY p.drugstorenum ASC
+        ORDER BY p.pharmacyId desc
 
     </select>
     <insert id="addbaoque" parameterType="Baoque" >

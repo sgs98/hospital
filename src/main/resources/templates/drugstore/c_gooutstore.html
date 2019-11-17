@@ -245,17 +245,8 @@
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if(layEvent === 'add'){
              var sheng=data.produceDate;
-                var you=data.validDate;
-               var date1=new Date(sheng);
-               var date2=new Date(you);
-                var a1=date1.getFullYear();
-                var b1=date1.getMonth();
-                var c1=date1.getDay();
-                var d1=a1+"-"+b1+"-"+c1;
-                var a2=date2.getFullYear();
-                var b2=date2.getMonth();
-                var c2=date2.getDay();
-                var d2=a2+"-"+b2+"-"+c2;
+             var you=data.validDate;
+
 
                 var durnum=data.drugstorenum;
                 layer.confirm('确定添加【' + data.drugstoreName + '】这个药品吗', function (index) {
@@ -280,8 +271,8 @@
                                 unit: data.unitId,
                                 sellingPrice: data.sellingPrice,
                                 area: data.areaId,
-                                produceDate: d1,
-                                validDate: d2,
+                                produceDate: sheng,
+                                validDate: you,
                                 skullbatch: data.batch,
                                 type: data.typeId,
                                 jiluname: data.drugstoreName, jilutype: "正常出库", jilupeople: jbr,

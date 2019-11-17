@@ -195,7 +195,10 @@
             var year = date.getFullYear();
             var month = date.getMonth()+1;
             var day = date.getDate();
-        $("#batch").val(year+""+month+""+day);
+            var d=(year+"-"+month+"-"+day);
+
+
+        $("#batch").val(year+""+month+""+day);//批号
            /* alert(year+""+month+""+day);*/
             mainIndex=layer.open({
                 content: $("#type-content"),
@@ -221,9 +224,11 @@
                 var selectwarhuose = $("#warhuose_select option:selected").text();
                 $("#text_warehuose").val(selectwarhuose);
 
+
                 $('#tianjia').click(function() {
                     var dateAStr=$("input[name=produceDate]").val();//获取生产日期文本框内容
                     var produceDate=new Date(dateAStr);//获取时间 Date 对象用于处理日期和时间
+
                     var dateAT=produceDate.getTime();//时间戳转化为日期类型
                     var dateBStr=$("input[name=validDate]").val();//获取有效日期文本框内容
                     var validDate=new Date(dateBStr);
@@ -234,7 +239,9 @@
                     var tradePrice=$("#tradePrice").val();
                     var dgsename=$("#drugstoreName").val();
                     var shengri=$("#produceDate").val();
+
                     var youri=$("#validDate").val();
+
                     var shuliang=$("#drugstorenum").val();
                     var jilunamez=$("#drugstoreName").val();
                     var jilupihao= $("#batch").val();
@@ -258,12 +265,22 @@
 
                         layer.msg("请输入批发价");
                         return false;
+                    }else if(shengri>d||shengri==d){
+                        layer.msg("生产日期不能大于或等于今天");
+                        return false;
+
+                    }else if(youri<d||youri==d){
+                        layer.msg("有效日期不能小于或等于今天");
+                        return false;
+
                     }
                     else {
                         var params = $("#form_drug").serialize();
 
                  $.ajax({
-
+                 /*    produceDate
+                     validDate
+                     "&produceDate="+shengri+"&validDate="+youri*/
                             url: '../seldrugstore/adddrugs',
                             data: params+"&jiluname="+jilunamez+"&jilutype="+"常规入库"+"&jilupeople="+jbr+
                                 "&jilupihao="+jilupihao+"&jilunumber="+shuliang,

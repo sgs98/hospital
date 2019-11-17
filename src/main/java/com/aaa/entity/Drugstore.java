@@ -2,7 +2,7 @@ package com.aaa.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import java.sql.Date;
+import java.util.Date;
 
 
 public class Drugstore {
@@ -18,8 +18,25 @@ public class Drugstore {
     private  Integer area;
     private  Integer type ;
 
-    private Date produceDate;
-    private Date  validDate;
+    private String produceDate;
+    private String  validDate;
+
+    public String getProduceDate() {
+        return produceDate;
+    }
+
+    public void setProduceDate(String produceDate) {
+        this.produceDate = produceDate;
+    }
+
+    public String getValidDate() {
+        return validDate;
+    }
+
+    public void setValidDate(String validDate) {
+        this.validDate = validDate;
+    }
+
     private  Integer  drugstorenum	;
     private  String batch	;
 
@@ -145,7 +162,7 @@ public class Drugstore {
  public void setType(Integer type) {
         this.type = type;
     }
-    @JsonFormat(pattern="yyyy-MM-dd ",timezone = "GMT+8")
+ /*   @JsonFormat(pattern="yyyy-MM-dd ",timezone = "GMT+8")
     public Date getProduceDate() {
         return produceDate;
     }
@@ -160,7 +177,7 @@ public class Drugstore {
 
     public void setValidDate(Date validDate) {
         this.validDate = validDate;
-    }
+    }*/
 
     public Integer getDrugstorenum() {
         return drugstorenum;

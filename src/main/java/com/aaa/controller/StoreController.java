@@ -123,22 +123,25 @@ public class StoreController {
     @ResponseBody
     public Integer adddrugs(Drugstore drugstore,Record record) {
         System.out.print("查询方法");
+        Integer updrugnumber=0;
+        Integer adddrugstore=0;
         int seldrugname = putinService.seldrugname(drugstore);
+        System.out.println(seldrugname+"yyyyyyyyyyyyyyyyyyyyyyyy");
         if(seldrugname==1){
             System.out.print("进入修改方法");
-            int updrugnumber = putinService.updrugnumber(drugstore);
-            System.out.print("添加记录表");
+            updrugnumber = putinService.updrugnumber(drugstore);
+            System.out.print("添加记录表0");
             int addjilu = rs.addjilu(record);//添加一条记录
-            return updrugnumber;
-        }else {
 
-            System.out.print("进入添加方法");
-            int adddrugstore = putinService.adddrugstore(drugstore);
-            System.out.print("添加记录表");
-            int addjilu = rs.addjilu(record);//添加一条记录
-            return adddrugstore;
         }
+        if (seldrugname!=1){
+            System.out.print("进入添加方法");
+            adddrugstore = putinService.adddrugstore(drugstore);
+            System.out.print("添加记录表1");
+            int addjilu = rs.addjilu(record);//添加一条记录
 
+        }
+        return adddrugstore+updrugnumber;
     }
     //查询选中的药品的库存数量
     @RequestMapping("selnumber")
