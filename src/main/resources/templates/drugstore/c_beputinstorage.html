@@ -25,7 +25,7 @@
     <!--<input type="hidden"   >  -->
 <input type="hidden"  id="supplierId"  name ="supplierId"    ><!--供货商supplierId-->
 <input type="hidden"  id="skullId"  name ="skullId"   ><!--经办人skullId-->
-<input type="hidden"  id="warehouseId"  name ="warehouseId"   ><!--仓库warehouseId-->
+<input type="text"  id="warehouseId"  name ="warehouseId"   ><!--仓库warehouseId-->
     <input type="hidden"  id="unit"  name ="unit"   ><!--计量单位unit-->
     <input type="hidden"  id="area"  name ="area"   ><!--产地area-->
     <input type="hidden"  id="type"  name ="type"   ><!--药品类型area-->
@@ -278,9 +278,7 @@
                         var params = $("#form_drug").serialize();
 
                  $.ajax({
-                 /*    produceDate
-                     validDate
-                     "&produceDate="+shengri+"&validDate="+youri*/
+
                             url: '../seldrugstore/adddrugs',
                             data: params+"&jiluname="+jilunamez+"&jilutype="+"常规入库"+"&jilupeople="+jbr+
                                 "&jilupihao="+jilupihao+"&jilunumber="+shuliang,
