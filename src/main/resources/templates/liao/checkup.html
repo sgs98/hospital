@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>缴费</title>
+    <title>全身检查</title>
     <link rel="stylesheet" th:href="@{/layui/css/layui.css}" media="all"/>
     <style>
         #dataFrm{
@@ -22,13 +22,6 @@
         }
         #add{
             margin: 0px;
-        }
-        #addPay{
-            width:200px;
-            font-size: 16px;
-            width: 150px;
-            height: 30px;
-            margin-right: 20px;
         }
     </style>
 </head>
@@ -82,10 +75,20 @@
         </tr>
     </table>
 </form>
+<!--检查结果-->
+<div id="disShow" style="text-align: center;display: none">
+    <center>
+    <form class="layui-form" method="post" id="frm">
+        <textarea name="content" lay-verify="required" id="content" style="display: block;width: 250px;height: 150px;margin-top: 20px"></textarea>
+        <input type="hidden" name="registerid" id="rid"><!--患者住院号-->
+        <span id="uni"></span><br/><br/>
+        <button type="button" class="layui-btn layui-btn-normal layui-btn-sm layui-icon layui-icon-release" id="sub">提交</button>
+    </form>
+    </center>
+</div>
 <!-- 数据表格开始 -->
 <div  style="display: none;" id="ToolBar">
-    <input type="text" name="pay" id="addPay" lay-verify="required|number" autocomplete="off" lay-event="addPay" placeholder="请输入预交金额" class="pay" >
-    <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">预交</button>
+    <button type="button" class="layui-btn layui-btn-sm" lay-event="add" id="add">检查</button>
 </div>
 <table class="layui-hide" id="pay" lay-filter="pay"></table>
 <!-- 数据表格结束 -->
@@ -101,7 +104,7 @@
         //渲染数据表格
         tableIns=table.render({
             elem: '#pay'   //渲染的目标对象
-            ,url:'../liao/selPays' //数据接口
+            ,url:'' //数据接口
             ,title: '用户数据表'//数据导出来的标题
             ,toolbar:"#ToolBar"   //表格的工具条
             ,height:'full-200'
@@ -109,10 +112,10 @@
             ,limits: [7, 20, 30]
             ,limit: 7//默认采用3
             ,cols: [[   //列表数据
-                {field:'registerid', title:'住院号',align:'center',width:'25%'}
+                {field:'cid', title:'检查序号',align:'center',width:'25%'}
                 ,{field:'userName', title:'姓名',align:'center',width:'25%'}
-                ,{field:'money', title:'预交金额',align:'center',width:'25%'}
-                ,{field:'payDate', title:'交款时间',templet: "<div>{{layui.util.toDateString(d.payDate, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'25%'}
+                ,{field:'content', title:'检查结果',align:'center',width:'25%'}
+                ,{field:'ctime', title:'检查时间',templet: "<div>{{layui.util.toDateString(d.ctime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'25%'}
             ]]
         })
         //查询
@@ -121,19 +124,15 @@
                 layer.msg("请输入住院号！");
                 $("#shows").select();
                 return false;
-            }else{
-                $("#hidden").val(0);
-                sel();
             }
+            $("#hidden").val(0);
+            sel();
         });
         //失焦事件
         $("#shows").blur(function(){
             $("#dataFrm")[0].reset();
             $("#show").val($(this).val());
             $("#hidden").val(0);
-            tableIns.reload({
-                url:"../liao/selPays"
-            })
         });
         function sel(){
             var params=$("#dataFrm").serialize();
@@ -155,24 +154,13 @@
                         sels();
                         var params=$("#dataFrm").serialize();
                         tableIns.reload({
-                            url:"../liao/selPays?"+params
+                            url:"../liao/selCheckup?"+params
                         })
                     }
                 }
             })
         }
         table.on("toolbar(pay)",function(obj){
-            if(obj.event=='addPay'){
-                $("#hidden").val(0);
-                if($("#shows").val()==""){
-                    layer.msg("请输入住院号！");
-                    $("#shows").select();
-                    return false;
-                }
-                $(this).blur(function(){
-                    $("#hidden").val($(this).val());
-                });
-            }
             if(obj.event=='add') {
                 if($("#shows").val()==""){
                     layer.msg("请输入住院号！");
@@ -183,19 +171,50 @@
                     layer.msg("请点击查询！");
                     return false;
                 }
-                if($("#hidden").val()==""){
-                    layer.msg("请输入预交金额！");
-                    return false;
-                }
-                if($("#hidden").val()==0){
-                    layer.msg("请重新输入预交金额！");
-                    return false;
-                }
-                sel();
-                $("#hidden").val(0);
-                tableIns.reload();
+                layer.confirm("确定做全身检查吗？200元", {
+                    btn : [ '确定', '取消' ]//按钮
+                }, function(index) {
+                    layer.close(index);
+                    var inp=layer.msg('正在检查', {icon: 16, shade: 0.3, time:0});
+                    setTimeout(function () {
+                        layer.close(inp);
+                        mainIndex=layer.open({
+                            type:1,
+                            title:'请输入检查结果',
+                            content:$("#disShow"),
+                            closeBtn :0,//不显示关闭按钮
+                            area:['400px','300px'],
+                            success:function(index){
+                                $("#rid").val($("#shows").val());
+                            }
+                        });
+                    }, 3000);
+                })
             }
         })
+        $("#sub").click(function(){
+            if($("#content").val()==""&&$("#content").val()==null){
+                layer.msg("请输入检查结果！");
+                return false;
+            }
+            click();
+        })
+        //防止重复提交
+        var isclick= true;
+        function click() {
+            if (isclick) {
+                isclick = false;
+                var params=$("#frm").serialize();
+                $.post("addCheckup",params,function(inp) {
+                    layer.close(mainIndex);
+                    sel();
+                })
+                //定时器
+                setTimeout(function () {
+                    isclick = true;
+                }, 1000);
+            }
+        }
         function sels(){
             var params=$("#dataFrm").serialize();
             //查询余额

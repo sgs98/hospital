@@ -34,16 +34,16 @@
                 <label class="layui-form-label">姓名:</label>
                 <div class="layui-input-inline">
                     <input type="hidden" name="reportid" id="reportid" value="0">
-                    <input type="text" name="userName" id="userName" lay-verify="required"  placeholder="请输入姓名" autocomplete="off" class="layui-input" style="width:150px">
+                    <input type="text" name="userName" id="userName" lay-verify="required" readonly  placeholder="请输入姓名" autocomplete="off" class="layui-input" style="width:150px">
                     <button type="button" class="layui-btn layui-btn-sm" style="position:absolute;margin: -38px 0px 0px 150px;display: block;height: 38px;" id="zhuan">
                         <i class="layui-icon"></i>
                     </button>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">入院诊断:</label>
+                <label class="layui-form-label">门诊诊断:</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="diagnose" id="diagnose" lay-verify="required"  placeholder="请输入入院诊断" autocomplete="off"
+                    <input type="text" name="diagnose" id="diagnose" lay-verify="required" readonly  placeholder="请输入入院诊断" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -69,7 +69,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label">年龄:</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="age" id="age" lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
+                    <input type="number" name="age" id="age" readonly lay-verify="required"  placeholder="请输入年龄" autocomplete="off"
                            class="layui-input">
                 </div>
             </div>
@@ -101,7 +101,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">电话:</label>
             <div class="layui-input-inline">
-                <input type="number" name="phone" id="phone" lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
+                <input type="number" name="phone" id="phone" readonly lay-verify="required|phone|number"  placeholder="请输入电话" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
@@ -116,7 +116,7 @@
         <div class="layui-inline">
             <label class="layui-form-label">身份证号:</label>
             <div class="layui-input-inline">
-                <input type="text" name="idcard" id="idcard" lay-verify="required|identity"  placeholder="请输入身份证号" autocomplete="off"
+                <input type="text" name="idcard" id="idcard" readonly lay-verify="required|identity"  placeholder="请输入身份证号" autocomplete="off"
                        class="layui-input">
             </div>
         </div>
