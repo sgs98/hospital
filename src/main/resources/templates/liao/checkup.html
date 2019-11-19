@@ -207,6 +207,7 @@
                 var params=$("#frm").serialize();
                 $.post("addCheckup",params,function(inp) {
                     layer.close(mainIndex);
+                    $("#content").val("");
                     sel();
                 })
                 //定时器
