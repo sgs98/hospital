@@ -51,12 +51,19 @@ public class UserController {
     @RequestMapping("updateUser")
     @ResponseBody
     public Object updateUser(User user){
-        int i = userService.updateUser(user);
-        if(i>0){
-            return "修改成功";
+        int i1 = userService.checkUser(user);
+        if(i1==1) {
+            return "当前登陆名已存在";
         }else{
-            return "修改失败";
+            int i = userService.updateUser(user);
+            if(i>0){
+                return "修改成功";
+            }else{
+                return "修改失败";
+            }
         }
+
+
     }
     /*
      * 删除用户
