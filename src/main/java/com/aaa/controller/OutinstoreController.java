@@ -62,7 +62,7 @@ public class OutinstoreController extends BasetimeController{
     //减库存数量
     @RequestMapping("updatedrugnumber")
     @ResponseBody
-    public Integer updatedrugnumber(Drugstore drugstore, Record record) {
+    public Integer updatedrugnumber(Ypharmacy ypharmacy,Drugstore drugstore, Record record) {
         int uppharmacynumber=0;
         int seldrugnamenum = outinstoreService.seldrugnamenum(drugstore);
         //先修改仓库数据number
@@ -97,25 +97,28 @@ public class OutinstoreController extends BasetimeController{
         int updatedrugnumber=0;
         int seldrugnamenum = outinstoreService.seldrugnamenum(drugstore);//出库的药品数量为最大值
         int selpharymacyname = outinstoreService.selpharymacyname(ypharmacy);//查询药品表是否已存在药出库的药
+        System.out.println(selpharymacyname+"查询是否已存在药");
         if(selpharymacyname==1){//   药房 已存在此药名 则修改数量
-            int uppharymacy = outinstoreService.uppharymacy(ypharmacy);     //修改药品数量
             updatedrugnumber = outinstoreService.updatedrugnumber(drugstore); //修改库房此药的数量
+            int uppharymacy = outinstoreService.uppharymacy(ypharmacy);     //修改药品数量
             int addjilu = rs.addjilu(record);//添加一条记录
             int selbaoqueName = outinstoreService.selbaoqueName(ypharmacy);//查询正在出库的药 有没有与报缺表冲突
             if(selbaoqueName==1){//如果点击右边出库时 查询到与报缺表药名有相同的
             int upbaoquenumber1 = outinstoreService.upbaoquenumber1(ypharmacy);//对应的报缺表药品需求数量要随之减少
             }
-            int selbaoquenamenum1 = outinstoreService.selbaoquenamenum(drugstore);//在点击出库后判断报缺表有没有此药
+            int selbaoquenamenum1 = outinstoreService.selbaoquenamenum(drugstore);//判断报缺表有没有补充完的
             if(selbaoquenamenum1==1){
                 outinstoreService.delbaoquenamenum();//删除
             }
+            if(seldrugnamenum==1){//查询库房药品有没有出库出空的
+                outinstoreService.deldrugnamenum(drugstore);//出库完则删除此批
+            }
         }
         if(selpharymacyname==0){//药房没有此药 则添加此药数据进药房
-            System.out.print("添加药品");
+            System.out.print(selpharymacyname+"添加药品");
           updatedrugnumber = outinstoreService.updatedrugnumber(drugstore);//修改库房数量
-
             int addjilu = rs.addjilu(record);//添加一条记录
-            addpharmacy = outinstoreService.addpharmacy(ypharmacy);//添加药房数量
+            addpharmacy = outinstoreService.addpharmacy(ypharmacy);//添加到药房
             int selbaoqueName = outinstoreService.selbaoqueName(ypharmacy);//报缺表是否有此药
             if(selbaoqueName==1){//如果点击右边出库时 查询到与报缺表药名有相同的
                 int upbaoquenumber1 = outinstoreService.upbaoquenumber1(ypharmacy);//对应的报缺表药品需求数量要随之减少
@@ -124,6 +127,9 @@ public class OutinstoreController extends BasetimeController{
         if(seldrugnamenum==1){//查询库房药品有没有出库出空的
          outinstoreService.deldrugnamenum(drugstore);//出库完则删除此批
         }
+        System.out.println(updatedrugnumber+"ssss");
         return updatedrugnumber;
     }
+
+
 }

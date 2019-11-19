@@ -5,8 +5,8 @@
 <mapper namespace="com.aaa.mapper.PharmacyMapper">
     <!--查询药房药品清单-->
     <select id="selpharmacy" resultType="Ypharmacy">
-        select p.pharmacyId,p.pharmacyName,sk.skullName,un.unitName,p.sellingPrice,
-        ar.areaName,ty.typeName,p.produceDate,p.validDate,p.skullbatch,p.drugstorenum from pharmacy p,drugstore dr,skull sk,warehuose wa,unit un,area ar,type ty where p.drugstoreId=dr.rugstoreId and p.skullId=sk.skullId AND
+        select DISTINCT p.pharmacyId,p.pharmacyName,sk.skullName,un.unitName,p.sellingPrice,
+        ar.areaName,ty.typeName,p.produceDate,p.validDate,p.skullbatch,p.drugstorenum from pharmacy p,drugstore dr,skull sk,warehuose wa,unit un,area ar,type ty where  p.skullId=sk.skullId AND
         p.warehouseId=wa.warehouseId and p.unit=un.unitId and p.area=ar.areaId and p.type=ty.typeId
    <if test="pharmacyName!=null and pharmacyName!=''">
           and p.pharmacyName like concat('%' ,concat(#{pharmacyName},'%'))
@@ -26,5 +26,19 @@
     <update id="upbaoquenum">
         UPDATE baoque set baoqueNum =(baoqueNum+#{baoqueNum}) where baoqueName=#{baoqueName}
     </update>
-
+<!--    回收给药房-->
+<delete id="delpharymacy" >
+delete  from pharmacy where pharmacyId =#{pharmacyId}
+</delete>
+ <!--   添加到回收表-->
+    <insert id="addhuishou" parameterType="Huishou">
+        insert into huishou(huishouname,huishounumber,huishoupihao,jbr,beizhu) VALUES(#{huishouname},#{huishounumber},#{huishoupihao},#{jbr},#{beizhu});
+    </insert>
+   <!-- 查询药房回收表数据-->
+    <select id="selhuishou" resultType="Huishou">
+        select  * from huishou
+    </select>
+    <delete id="delhuishou">
+        delete  from huishou where huishouid  =#{huishouid}
+    </delete>
 </mapper>

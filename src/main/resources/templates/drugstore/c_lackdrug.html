@@ -70,21 +70,27 @@
         table.on('tool(userTable)', function(obj){
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
-            if(layEvent === 'add'){ //
-
-                            var name=prompt("拟订"+data.drugstoreName+"添加数量");
-                            layer.closeAll('dialog');
-                      if(name!=null) {
+            if(layEvent === 'add') { //
+                layer.prompt({
+                    title: '请输入数量',
+                    formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                    value:'', //初始时的值，默认空字符
+                    maxlength: 140, //可输入文本的最大长度，默认500
+                    btn:['确认','取消','关闭'],
+                }, function (value, index, elem) {
+                    if (value!="^\d+$") {
+                        layer.msg("请输入数量")
+                    } else {
 
                         $.post("../seldrugstore/addcaigou", {
                             caigouname: data.drugstoreName,
                             gonghuoshang: data.supplierName, danwei: data.unitName,
-                            candi: data.areaName, leixing: data.typeName, shuliang: name
+                            candi: data.areaName, leixing: data.typeName, shuliang: value
                         }, function (res) {
                             if (res == 1) {
-                                layer.closeAll('dialog');
                                 layer.msg("已加入采购单");
                                 tableIns.reload();
+                                layer.close(index);
                             } else {
                                 layer.msg("加入失败");
                             }
@@ -93,8 +99,12 @@
                     }
 
 
+                });
+
             }
-        });
+
+            });
+
         tableIns=table.render({
             elem: '#userTable1'   //渲染的目标对象
             ,url:'../seldrugstore/selcaigou' //数量过少的药品有哪些

@@ -36,6 +36,11 @@ public class PathstoreController {
     public Object selectdurg() {
         return "drugstore/c_selectDrug";
     }
+    //库房药品查询
+    @RequestMapping("recycle")
+    public Object recycle() {
+        return "drugstore/c_recycle";
+    }
     //库房药品出库
     @RequestMapping("selectchuku")
     public Object selectchuku(Model model) {
