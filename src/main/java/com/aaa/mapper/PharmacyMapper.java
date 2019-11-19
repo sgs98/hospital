@@ -1,6 +1,7 @@
 package com.aaa.mapper;
 
 import com.aaa.entity.Baoque;
+import com.aaa.entity.Huishou;
 import com.aaa.entity.Ypharmacy;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,5 +15,14 @@ public interface PharmacyMapper {
     int addbaoque(Baoque baoque);
     //查询报缺表药品名称是否已存在
     int selbaoqueName(Baoque baoque);
+    //修改数量
     int upbaoquenum(Baoque baoque);
+    //回收给药房
+    int delpharymacy(Ypharmacy ypharmacy);
+    //回收表
+    int addhuishou(Huishou huishou);
+    //查询回收表
+    List<Huishou>selhuishou(Huishou huishou);
+    //删除回收表
+    int delhuishou(Huishou huishou);
 }

@@ -25,7 +25,7 @@
     <!--<input type="hidden"   >  -->
 <input type="hidden"  id="supplierId"  name ="supplierId"    ><!--供货商supplierId-->
 <input type="hidden"  id="skullId"  name ="skullId"   ><!--经办人skullId-->
-<input type="text"  id="warehouseId"  name ="warehouseId"   ><!--仓库warehouseId-->
+<input type="hidden"  id="warehouseId"  name ="warehouseId"   ><!--仓库warehouseId-->
     <input type="hidden"  id="unit"  name ="unit"   ><!--计量单位unit-->
     <input type="hidden"  id="area"  name ="area"   ><!--产地area-->
     <input type="hidden"  id="type"  name ="type"   ><!--药品类型area-->
@@ -70,7 +70,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label"  style="width:100px; ">入库数量:</label>
                 <div class="layui-input-inline">
-                    <input type="text"id="drugstorenum" name="drugstorenum"  class="layui-input" autocomplete="off">
+                    <input type="number"id="drugstorenum" name="drugstorenum"  class="layui-input" autocomplete="off">
                 </div>
             </div>
         </div>
@@ -78,7 +78,7 @@
             <div class="layui-inline">
                 <label class="layui-form-label"  style="width:100px; ">批发价:</label>
                 <div class="layui-input-inline">
-                    <input type="text"id="tradePrice" name="tradePrice"  class="layui-input" autocomplete="off">
+                    <input type="number" id="tradePrice" name="tradePrice"  class="layui-input" autocomplete="off">
                 </div>
             </div>
             <div class="layui-inline">
@@ -228,7 +228,6 @@
                 $('#tianjia').click(function() {
                     var dateAStr=$("input[name=produceDate]").val();//获取生产日期文本框内容
                     var produceDate=new Date(dateAStr);//获取时间 Date 对象用于处理日期和时间
-
                     var dateAT=produceDate.getTime();//时间戳转化为日期类型
                     var dateBStr=$("input[name=validDate]").val();//获取有效日期文本框内容
                     var validDate=new Date(dateBStr);
@@ -239,7 +238,6 @@
                     var tradePrice=$("#tradePrice").val();
                     var dgsename=$("#drugstoreName").val();
                     var shengri=$("#produceDate").val();
-
                     var youri=$("#validDate").val();
 
                     var shuliang=$("#drugstorenum").val();
@@ -285,7 +283,7 @@
                             dataType: 'JSON',
                             type: 'post',
                             success: function (data) {
-                                if (data >= 1){
+                                if (data >=0){
                                     //清空对应文本框
                                     $("#drugstoreName").val("");
                                     $("#drugstorenum").val("");
@@ -294,7 +292,10 @@
                                     $("#validDate").val("");
                                     $("#dqkucun").val("");
                                     $("#sellingPrice").val("");
-                                    layer.msg("添加成功");
+                                    setTimeout(function () {
+                                        layer.msg("添加成功");
+                                    },1000)
+
                                 }else{
                                     layer.msg("添加失败");
                                 }

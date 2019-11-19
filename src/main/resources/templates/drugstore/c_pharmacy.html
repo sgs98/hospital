@@ -8,7 +8,7 @@
 </head>
 <body>
 <!-- 导航栏-->
-
+<input id="jingbanren" type="hidden" th:value="${session.yonghu}">
 <span style="font-family: 新宋体;font-size: 1.3em;margin-left: 500px;" >药房药品详情</span>
 <form class="layui-form" method="post" id="searchFrm">
     <div class="layui-form-item">
@@ -33,8 +33,12 @@
 <div style="display: none;" id="userToolBar">
 </div>
 <div  id="userBar" style="display: none;">
+
     <a class="layui-btn layui-btn-xs" lay-event="edit">报缺</a>
+ <a class="layui-btn layui-btn-xs" lay-event="del">库房回收</a>
+<!--    <button type="button"  id="kfhs"   class="layui-btn  layui-icon "> 准备入库</button>-->
 </div>
+
 <script th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" th:inline="none">
     var tableIns;
@@ -65,10 +69,10 @@
                 , {field: 'sellingPrice', title: '售价', align: 'center', width: "6%"}
                 , {field: 'areaName', title: '产地', align: 'center', width: "10%"}
                 , {field: 'produceDate', title: '生产日期', align: 'center', width: "10%"}
-                , {field: 'validDate', title: '有效日期', align: 'center', width: "10%"}
+                , {field: 'validDate', title: '有效日期', align: 'center', width: "10%",sort:true}
                 , {field: 'skullbatch', title: '批号', align: 'center', width: "10%"}
-                , {field: 'typeName', title: '类型', align: 'center', width: "8%"}
-                , {field: 'drugstorenum', title: '数量', align: 'center', width: "8%"}
+                , {field: 'typeName', title: '类型', align: 'center', width: "7%"}
+                , {field: 'drugstorenum', title: '数量', align: 'center', width: "7%"}
                 , {fixed: 'right', title: '操作', toolbar: '#userBar', align: 'center', width: '12%'}
             ]]
         });
@@ -79,13 +83,14 @@
                 url: "../pharmacy/selectpharmacy?" + params
             })
         });
-        //监听行工具事件
+        //监听行报缺工具事件
         table.on('tool(userTable)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
             if (layEvent === 'edit') {
                 layer.confirm('确定报缺【' + data.pharmacyName + '】吗', function (index) {
                     layer.prompt({
+                        title: '请输入数量',
                         formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
                         value: '', //初始时的值，默认空字符
                         maxlength: 140, //可输入文本的最大长度，默认500
@@ -108,8 +113,44 @@
                     });
                 });
             }
+
+            else if (layEvent === 'del') {
+                var jbr= $("#jingbanren").val();
+                layer.confirm('确定回收【' + data.pharmacyName + '】吗', function (index) {
+                    layer.prompt({
+                        formType: 2, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
+                        value: '', //初始时的值，默认空字符
+                        title: '请备注回收信息',
+                        area: ['300px', '150px']
+                    }, function (value, index, elem) {
+                        /!*   huishouname,huishounumber,huishoupihao,jbr,beizhu*!/
+                        $.post("../pharmacy/delpharymary", {
+                            pharmacyId:data.pharmacyId,
+                            huishouname:data.pharmacyName,
+                            huishounumber:data.drugstorenum,
+                            huishoupihao:data.skullbatch,
+                            jbr:jbr,
+                            beizhu:value
+                        }, function (res) {
+                            if (res == 1) {
+                                layer.msg("已成功回收" + data.pharmacyName + "数量为" + data.drugstorenum);
+                                setTimeout(function () {
+                                    tableIns.reload();
+                                    location.reload();
+                                },1000)
+                            } else {
+                                layer.msg("失败");
+                                tableIns.reload();
+                            }
+                        });
+                    });
+                });
+            }
             layer.close(prompt);
         });
+
+
+
 
 
     });

@@ -1,6 +1,7 @@
 package com.aaa.service.Impl;
 
 import com.aaa.entity.Baoque;
+import com.aaa.entity.Huishou;
 import com.aaa.entity.Ypharmacy;
 import com.aaa.mapper.PharmacyMapper;
 import com.aaa.service.PharmacyService;
@@ -32,4 +33,26 @@ public class PharmacyServiceImpl  implements PharmacyService {
     public int upbaoquenum(Baoque baoque) {
         return pm.upbaoquenum(baoque);
     }
+
+    @Override
+    public int delpharymacy(Ypharmacy ypharmacy) {
+        return pm.delpharymacy(ypharmacy);
+    }
+
+    @Override
+    public int addhuishou(Huishou huishou) {
+        return pm.addhuishou(huishou);
+    }
+
+    @Override
+    public List<Huishou> selhuishou(Huishou huishou) {
+        return pm.selhuishou(huishou);
+    }
+
+    @Override
+    public int delhuishou(Huishou huishou) {
+        return pm.delhuishou(huishou);
+    }
+
+
 }

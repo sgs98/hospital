@@ -41,8 +41,8 @@ delete  from drugstore where rugstoreId=#{rugstoreId}
     </delete>
 <!--    添加到药房-->
     <insert id="addpharmacy" parameterType="Ypharmacy">
-        INSERT into pharmacy(warehouseId,pharmacyName,drugstoreId,drugstorenum,skullId,unit,sellingPrice,area,produceDate,validDate,skullbatch,type)
-        VALUES(#{warehouseId},#{pharmacyName},#{drugstoreId},#{drugstorenum},#{skullId},#{unit},#{sellingPrice},#{area},#{produceDate},#{validDate},#{skullbatch},#{type})
+        INSERT into pharmacy(warehouseId,pharmacyName,drugstorenum,skullId,unit,sellingPrice,area,produceDate,validDate,skullbatch,type)
+        VALUES(#{warehouseId},#{pharmacyName},#{drugstorenum},#{skullId},#{unit},#{sellingPrice},#{area},#{produceDate},#{validDate},#{skullbatch},#{type})
     </insert>
    <!-- //查询药房是否已存在此药-->
     <select id="selpharymacyname" parameterType="Ypharmacy" resultType="Integer">

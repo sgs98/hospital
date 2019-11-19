@@ -110,7 +110,9 @@
             if(layEvent === 'add') {
                 var durnum = data.drugstorenum;
                 var bujinum=$("#bqnum").val();//获取此条报缺的数量
+                alert(bujinum);
                 layer.prompt({
+                    title: '请输入数量',
                     formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
                     value: '', //初始时的值，默认空字符
                     maxlength: 140, //可输入文本的最大长度，默认500
@@ -156,9 +158,11 @@
                         }, function (res) {
                             if (res == 1) {
                                 layer.msg("出库成功");
+                                layer.close(index);
                                 setTimeout(function () {
                                     tableIns.reload();
                                     location.reload();
+
                                 },500)
 
                             } else {
@@ -246,11 +250,17 @@
             if(layEvent === 'add'){
              var sheng=data.produceDate;
              var you=data.validDate;
+                var date = new Date();
+
+
+
+
 
 
                 var durnum=data.drugstorenum;
                 layer.confirm('确定添加【' + data.drugstoreName + '】这个药品吗', function (index) {
                     layer.prompt({
+                        title: '请输入数量',
                         formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
                         value: '', //初始时的值，默认空字符
                         maxlength: 140, //可输入文本的最大长度，默认500
@@ -261,11 +271,9 @@
                             var jbr = $("#jingbanren").val();
                             //向服务端发送删除指令
                             $.post("../chuku/addpharmacy", {
-
                                 rugstoreId: data.rugstoreId,
                                 warehouseId: data.warehouseId,
                                 pharmacyName: data.drugstoreName,
-                                drugstoreId: data.rugstoreId,
                                 drugstorenum: value,
                                 skullId: data.skullId,
                                 unit: data.unitId,
@@ -280,15 +288,20 @@
                             }, function (res) {
                                 if (res == 1) {
                                     layer.msg("出库成功");
-                                    //刷新数据 表格
-                                    tableIns.reload();
-                                    location.reload();
+                                        tableIns.reload();
+
+                                    layer.close(index);
+
                                 } else {
                                     layer.msg("出库失败");
-                                    tableIns.reload();
-                                    location.reload();
-                                }
+                                    layer.close(index);
+                                        tableIns.reload();
 
+                                }
+                                setTimeout(function () {
+
+                                    location.reload();
+                                },1000)
                             });
                         }
                     })
