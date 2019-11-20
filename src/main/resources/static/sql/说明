@@ -1,0 +1,4 @@
+用户:admin
+密码:123456
+数据库端口:application.properties 自己定义
+运行:localhost:8080
