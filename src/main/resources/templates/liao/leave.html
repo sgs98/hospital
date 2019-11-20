@@ -69,6 +69,7 @@
     <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
             <li class="layui-this">个人详情</li>
+            <li>检查详情</li>
             <li>药品详情</li>
             <li>项目详情</li>
         </ul>
@@ -87,11 +88,12 @@
                     <li>入住时间：<span id="registerDate1"></span></li>
                     <li>身份证号：<span id="idcard1"></span></li>
                     <li>出院时间：<span id="endDate1"></span></li>
-                    <li>病因：<span id="diagnose1"></span></li>
+                    <li>初步诊断：<span id="diagnose1"></span></li>
                     <li>总费用：<span id="price1"></span>元</li>
                     <li>折扣：<span id="discount1"></span></li>
                 </ul>
             </div>
+            <div class="layui-tab-item"><table class="layui-hide" id="checkup" lay-filter="checkup"></table></div>
             <div class="layui-tab-item"><table class="layui-hide" id="yao" lay-filter="yao"></table></div>
             <div class="layui-tab-item"><table class="layui-hide" id="xiangmu" lay-filter="xiangmu"></table></div>
         </div>
@@ -216,6 +218,22 @@
                 ,{field:'htime', title:'手术时间',templet: "<div>{{layui.util.toDateString(d.htime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:"40%"}
             ]]
         })
+        //检查详情
+        table3=table.render({
+            elem: '#checkup'   //渲染的目标对象
+            ,url:'' //数据接口
+            ,title: '用户数据表'//数据导出来的标题
+            ,height:'full-200'
+            ,page: 1  //是否启用分页, limits: [10, 20, 30]
+            ,limits: [7, 20, 30]
+            ,limit: 7//默认采用3
+            ,cols: [[   //列表数据
+                {field:'cid', title:'检查序号',align:'center',width:'20%'}
+                ,{field:'userName', title:'姓名',align:'center',width:'20%'}
+                ,{field:'content', title:'检查结果',align:'center',width:'20%'}
+                ,{field:'ctime', title:'检查时间',templet: "<div>{{layui.util.toDateString(d.ctime, 'yyyy年MM月dd日 HH:mm:ss')}}</div>",align:'center',width:'40%'}
+            ]]
+        })
         //查询
         $("#doSearch").click(function(){
             if($("#shows").val()==""){
@@ -334,7 +352,7 @@
               }
             })
         });
-        //监听行单击事件（单击事件为：rowDouble）
+        //监听行双击事件（双击事件为：rowDouble）
         table.on('rowDouble(pay)', function(obj){
             //获取当前行信息
             var data = obj.data;
@@ -363,6 +381,9 @@
                         });
                         table2.reload({
                             url:"../liao/selItem?registerid="+data.registerid
+                        })
+                        table3.reload({
+                            url:"../liao/selCheckup?registerid="+data.registerid
                         })
                     }
                 });
