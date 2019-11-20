@@ -11,7 +11,7 @@
     <groupId>com.aaa</groupId>
     <artifactId>hospital</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>ar</packaging>w
+    <packaging>war</packaging>
     <name>hospital</name>
     <description>Demo project for Spring Boot</description>
 
