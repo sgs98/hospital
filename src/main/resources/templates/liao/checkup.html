@@ -193,7 +193,7 @@
             }
         })
         $("#sub").click(function(){
-            if($("#content").val()==""&&$("#content").val()==null){
+            if($("#content").val()==""||$("#content").val()==null){
                 layer.msg("请输入检查结果！");
                 return false;
             }
