@@ -20,6 +20,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("pharmacy")
 public class PharmacyController {
+    //自动注入 根据类型装配依赖对象
     @Autowired
     private   PharmacyService pharmacyService;
     @Autowired
@@ -29,9 +30,13 @@ public class PharmacyController {
     @ResponseBody
     public Object selectpharmary(Ypharmacy ypharmacy, Integer page, Integer limit) {
         System.out.print("进去查询药房方法");
+        //分页查询
         PageHelper.startPage(page, limit);
+        //查询出药房数据
         List<Ypharmacy> drugstores = pharmacyService.selpharmacy(ypharmacy);
+        //将查到的信息放到分页中
         PageInfo pageInfo = new PageInfo(drugstores);
+        //声明一个map集合
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
         drugstoresData.put("code", 0);
@@ -56,13 +61,14 @@ public class PharmacyController {
         }
 
     }
+
     @RequestMapping("delpharymary")
     @ResponseBody
     public  Integer delpharymary(Ypharmacy ypharmacy,Huishou huishou){
         //删除药房此药（回收给库房）
         System.out.println("进入回收");
-        int delpharymacy = pharmacyService.delpharymacy(ypharmacy);
-        if(delpharymacy==1){
+        int delpharymacy = pharmacyService.delpharymacy(ypharmacy);//回收处理
+        if(delpharymacy==1){//成功 回收后添加一天记录
             pharmacyService.addhuishou(huishou);
         }
         System.out.println(delpharymacy);
@@ -74,9 +80,13 @@ public class PharmacyController {
     @ResponseBody
     public Object selecthuishou(Huishou huishou, Integer page, Integer limit) {
         System.out.print("进去查询药房方法");
+        //分页查询
         PageHelper.startPage(page, limit);
+        //查询出回收药品
         List<Huishou> drugstores = pharmacyService.selhuishou(huishou);
+        //将查到的信息放到分页中
         PageInfo pageInfo = new PageInfo(drugstores);
+        //声明一个map集合
         Map<String, Object> drugstoresData = new HashMap<String, Object>();
         //这是layui要求返回的json数据格式
         drugstoresData.put("code", 0);
