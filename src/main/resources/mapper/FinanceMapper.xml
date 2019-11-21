@@ -101,8 +101,8 @@
    </select>
 	<!--/*门诊当天*/-->
 	<select id="currentFinance" resultType="currentFinance">
-		select sum(c.repicetotal) value, c.durgname name
+select sum(c.repicetotal) value, c.durgname name
          from cashier c,report r  where
-		DATE_FORMAT(ctime,"%Y-%m-%d")=#{value} and c.reportId=r.reportId and r.state=3 GROUP BY c.durgname
+		DATE_FORMAT(ctime,"%Y-%m-%d")=#{value} and c.reportId=r.reportId and r.state=3 or r.state=5 and DATE_FORMAT(ctime,"%Y-%m-%d")=#{value} and c.reportId=r.reportId GROUP BY c.durgname
 	</select>
 </mapper>

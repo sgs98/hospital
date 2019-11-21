@@ -562,7 +562,7 @@ h2.method {
 }
 
 .loginBody {
-    background: url("../images/login_bg.jpg") no-repeat center center;
+    background: url("../images/bg.jpg") no-repeat center center;
 }
 
 .loginBody form.layui-form {
