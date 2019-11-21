@@ -370,7 +370,7 @@
                             type: 'post',
                             success: function (data) {
                                 //当前药品的剩余数量
-                                $("#dqkucun").val(data + "" + dName);
+                                $("#dqkucun").val((data+0)+ "" + dName);
                             }
                         });
 

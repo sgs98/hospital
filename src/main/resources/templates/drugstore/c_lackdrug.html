@@ -76,12 +76,11 @@
                     formType: 0, //输入框类型，支持0（文本）默认1（密码）2（多行文本）
                     value:'', //初始时的值，默认空字符
                     maxlength: 140, //可输入文本的最大长度，默认500
-                    btn:['确认','取消','关闭'],
+                    btn:['确认','取消'],
                 }, function (value, index, elem) {
-                    if (value!="^\d+$") {
+                    if (value=='') {
                         layer.msg("请输入数量")
                     } else {
-
                         $.post("../seldrugstore/addcaigou", {
                             caigouname: data.drugstoreName,
                             gonghuoshang: data.supplierName, danwei: data.unitName,

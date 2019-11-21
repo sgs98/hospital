@@ -25,7 +25,7 @@ INSERT into  drugstore(drugstoreName,supplierId,skullId,warehouseId,unit,tradePr
         UPDATE drugstore set drugstorenum=(drugstorenum+#{drugstorenum}) where batch=#{batch}
     </update>
     <!-- 查询即将入库的药品 库房的库存-->
-    <select id="selnumber" resultType="Integer" >
+    <select id="selnumber" resultType="int" >
         SELECT sum(drugstorenum) from drugstore where drugstoreName=#{drugstoreName}
     </select>
 </mapper>

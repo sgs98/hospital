@@ -146,9 +146,10 @@ public class StoreController {
     //查询选中的药品的库存数量
     @RequestMapping("selnumber")
     @ResponseBody
-    public Integer selnumber(Drugstore drugstore) {
+    public int selnumber(Drugstore drugstore) {
         System.out.print("查询数量方法");
-      Integer selnumber = putinService.selnumber(drugstore);
+      int selnumber = putinService.selnumber(drugstore);
+        System.out.println(selnumber);
        return selnumber;
     }
     //查询仓库里药品数量不足的药品
