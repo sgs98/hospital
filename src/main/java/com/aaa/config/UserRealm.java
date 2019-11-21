@@ -57,21 +57,6 @@ public class UserRealm extends AuthorizingRealm {
      * */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-
-       /* //获取登陆的身份    根据登陆这id查找该用户的所有 权限
-        Subject subject = SecurityUtils.getSubject();
-        //从subject中获取登陆者的信息
-        User user = (User) subject.getPrincipal();
-        //查询该用户有哪有授权的信息
-        List<SysPermission> permission = sysPermissionService.findPermissionByUserId(user.getId());
-        //把查询出的<List>信息转化为Set放入set集合进行授权
-        Set<String> pres = new HashSet<String>();
-        for (SysPermission p : permission) {
-            pres.add(p.getPercode());
-        }
-        pres.add("user:create");
-        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.setStringPermissions(pres);*/
         return null;
     }
 
